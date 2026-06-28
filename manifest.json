@@ -1,15 +1,1 @@
-{
-  "name": "Protocolo de Treino Igor",
-  "short_name": "Protocolo",
-  "start_url": "index.html",
-  "display": "standalone",
-  "background_color": "#F4F2EC",
-  "theme_color": "#234634",
-  "icons": [
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/2964/2964514.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
-}
+{"name":"Protocolo Igor","short_name":"Protocolo","start_url":"./","display":"standalone","background_color":"#F4F2EC","theme_color":"#234634","icons":[]}

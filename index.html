@@ -3,18 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#234634">
 <title>Protocolo de Treino e Dieta — Igor Procópio</title>
-<link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F4F2EC; --surface:#FCFBF7; --surface-2:#FFFFFF;
-    --ink:#1B201D; --ink-soft:#5C635D; --ink-faint:#8A908A;
-    --line:#E3DED2; --green:#2E5A43; --green-deep:#234634;
-    --green-soft:#DDE8E0; --clay:#BC6536; --clay-soft:#F2E2D5;
+    --bg:#F4F2EC;
+    --surface:#FCFBF7;
+    --surface-2:#FFFFFF;
+    --ink:#1B201D;
+    --ink-soft:#5C635D;
+    --ink-faint:#8A908A;
+    --line:#E3DED2;
+    --green:#2E5A43;
+    --green-deep:#234634;
+    --green-soft:#DDE8E0;
+    --clay:#BC6536;
+    --clay-soft:#F2E2D5;
     --radius:14px;
     --shadow:0 1px 2px rgba(27,32,29,.04),0 8px 28px rgba(27,32,29,.05);
     --mono:'JetBrains Mono',monospace;
@@ -23,61 +29,73 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:1050px;margin:0 auto;padding:0 22px}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    font-size:15px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
   h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.18;letter-spacing:-.01em}
   .mono{font-family:var(--mono)}
   a{color:var(--green);text-decoration:none}
-  
-  /* INPUTS PWA */
-  input[type="text"], input[type="number"] {
-    background: var(--surface-2); border: 1px solid var(--line);
-    border-radius: 6px; padding: 6px 8px; font-family: var(--mono);
-    font-size: 13px; color: var(--green-deep); text-align: center;
-    width: 100%; max-width: 80px; transition: border 0.2s;
-  }
-  input[type="text"]:focus, input[type="number"]:focus {
-    outline: none; border-color: var(--green);
-  }
-  .weight-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 12px; margin-top: 16px;
-  }
-  .weight-card {
-    background: var(--surface); border: 1px solid var(--line);
-    padding: 12px; border-radius: 10px; text-align: center; box-shadow: var(--shadow);
-  }
-  .weight-card span { display: block; font-size: 12px; color: var(--ink-soft); font-weight: 500; margin-bottom: 6px; }
-  .weight-avg { background: var(--green-soft); border-color: var(--green); }
-  .weight-avg span { color: var(--green-deep); font-weight: 700; }
-  .weight-avg div { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--green-deep); margin-top: 5px; }
 
-  /* COVER */
-  .cover{background:linear-gradient(160deg,var(--green-deep),var(--green) 60%,#356b50);color:#F4F2EC;padding:72px 0 64px;position:relative;overflow:hidden;}
-  .cover:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.10) 1px,transparent 0);background-size:22px 22px;opacity:.5;}
+  /* ---------- COVER ---------- */
+  .cover{
+    background:linear-gradient(160deg,var(--green-deep),var(--green) 60%,#356b50);
+    color:#F4F2EC;
+    padding:72px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover:before{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.10) 1px,transparent 0);
+    background-size:22px 22px;opacity:.5;
+  }
   .cover .wrap{position:relative}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#B9D2C2;margin-bottom:20px;}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:#B9D2C2;margin-bottom:20px;
+  }
   .cover h1{font-size:clamp(34px,6vw,58px);font-weight:700;color:#fff;max-width:14ch}
   .cover .sub{margin-top:18px;font-size:17px;color:#D6E6DC;max-width:52ch}
-  .cover .meta{margin-top:38px;display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--mono);font-size:12.5px;color:#C8DCD0;}
+  .cover .meta{
+    margin-top:38px;display:flex;flex-wrap:wrap;gap:10px 28px;
+    font-family:var(--mono);font-size:12.5px;color:#C8DCD0;
+  }
   .cover .meta b{color:#fff;font-weight:700}
-  .badge{display:inline-block;margin-bottom:22px;padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E4F0E8;}
+  .badge{
+    display:inline-block;margin-bottom:22px;padding:6px 13px;border-radius:999px;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E4F0E8;
+  }
 
-  /* SECTIONS */
+  /* ---------- SECTIONS ---------- */
   section{padding:54px 0;border-bottom:1px solid var(--line)}
   .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px}
-  .sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--clay);border:1px solid var(--clay-soft);background:var(--clay-soft);padding:3px 9px;border-radius:7px;letter-spacing:.05em;flex:none;}
+  .sec-num{
+    font-family:var(--mono);font-size:13px;font-weight:700;color:var(--clay);
+    border:1px solid var(--clay-soft);background:var(--clay-soft);
+    padding:3px 9px;border-radius:7px;letter-spacing:.05em;flex:none;
+  }
   .sec-head h2{font-size:clamp(23px,3.4vw,31px);font-weight:600}
   .lead{color:var(--ink-soft);max-width:68ch;margin-bottom:8px}
   h3.block{font-size:18px;margin:30px 0 12px;color:var(--green-deep)}
+  h3.block:first-of-type{margin-top:6px}
   h4.mini{font-size:14px;font-family:var(--display);margin:18px 0 8px;color:var(--ink)}
   p{margin-bottom:12px}
   ul,ol{margin:0 0 14px 20px}
   li{margin-bottom:5px}
 
-  /* READOUTS */
+  /* ---------- METRIC READOUTS ---------- */
   .readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:8px 0 6px}
-  .ro{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px 14px;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+  .ro{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 16px 14px;position:relative;overflow:hidden;box-shadow:var(--shadow);
+  }
   .ro:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--green)}
   .ro.clay:before{background:var(--clay)}
   .ro .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
@@ -85,30 +103,42 @@
   .ro .val span{font-size:13px;color:var(--ink-soft);font-weight:500}
   .ro .note{font-size:11.5px;color:var(--ink-soft);margin-top:6px}
 
-  /* CARDS */
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin-bottom:16px;}
+  /* ---------- CARDS ---------- */
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 22px;box-shadow:var(--shadow);margin-bottom:16px;
+  }
   .card.tight{padding:16px 18px}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .callout{border-left:3px solid var(--clay);background:var(--clay-soft);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0;font-size:14px;}
+  .callout{
+    border-left:3px solid var(--clay);background:var(--clay-soft);
+    padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0;font-size:14px;
+  }
   .callout.green{border-left-color:var(--green);background:var(--green-soft)}
   .callout b{color:var(--green-deep)}
   .tag{font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-soft);padding:2px 8px;border-radius:6px;white-space:nowrap}
   .tag.clay{color:var(--clay);background:var(--clay-soft)}
 
-  /* TABLES */
+  /* ---------- TABLES ---------- */
   .tbl{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-  .tbl th{background:var(--green-deep);color:#EAF2EC;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:10px 12px;}
-  .tbl td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:middle}
+  .tbl th{
+    background:var(--green-deep);color:#EAF2EC;font-family:var(--mono);font-weight:500;
+    font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:10px 12px;
+  }
+  .tbl td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
   .tbl tr:nth-child(even) td{background:rgba(46,90,67,.025)}
   .tbl td.n{font-family:var(--mono);white-space:nowrap;text-align:right;color:var(--ink-soft)}
   .tbl tr.total td{background:var(--green-soft);font-weight:600;border-top:2px solid var(--green)}
   .tbl tr.total td.n{color:var(--green-deep)}
-  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch; padding-bottom: 5px;}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-  /* TIMELINE */
+  /* ---------- WEEK TIMELINE ---------- */
   .week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:6px 0}
-  .day{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px 10px;text-align:center;box-shadow:var(--shadow);}
+  .day{
+    background:var(--surface);border:1px solid var(--line);border-radius:11px;
+    padding:12px 10px;text-align:center;box-shadow:var(--shadow);
+  }
   .day .d{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
   .day .t{font-family:var(--display);font-weight:600;font-size:13px;margin-top:7px;line-height:1.25}
   .day .ic{font-size:18px;margin-top:8px}
@@ -116,25 +146,23 @@
   .day.peteca{border-top:3px solid var(--clay);background:var(--clay-soft)}
   .day.rest{border-top:3px solid var(--line);background:#F0EEE6}
 
-  /* BAR (macros) */
+  /* ---------- BAR (macros) ---------- */
   .macrobar{display:flex;height:30px;border-radius:8px;overflow:hidden;margin:14px 0 8px;border:1px solid var(--line)}
   .macrobar div{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700}
-  .m-p{background:var(--green)} .m-c{background:var(--clay)} .m-f{background:#9A8C5E}
+  .m-p{background:var(--green)}
+  .m-c{background:var(--clay)}
+  .m-f{background:#9A8C5E}
   .legend{display:flex;gap:18px;font-size:12px;flex-wrap:wrap}
   .legend span{display:flex;align-items:center;gap:6px}
   .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
 
-  /* NAV */
+  /* ---------- NAV ---------- */
   .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow)}
   .toc ol{margin:0;list-style:none;columns:2;column-gap:34px}
   .toc li{margin-bottom:7px;font-size:13.5px;break-inside:avoid}
   .toc li a{color:var(--ink);display:flex;gap:10px}
   .toc .n{font-family:var(--mono);color:var(--clay);font-weight:700;font-size:12px;min-width:22px}
   .toc li a:hover{color:var(--green)}
-
-  /* BUTTONS */
-  .btn-nav { display: inline-block; background: var(--surface); border: 1px solid var(--line); color: var(--ink); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-align: center; margin-top: 20px; box-shadow: var(--shadow); transition: 0.2s; }
-  .btn-nav:hover { background: var(--green-soft); color: var(--green-deep); border-color: var(--green); }
 
   footer{padding:40px 0 60px;color:var(--ink-soft);font-size:13px}
   .sig{font-family:var(--display);font-weight:600;color:var(--ink);font-size:16px}
@@ -145,251 +173,699 @@
     .toc ol{columns:1}
     section{padding:40px 0}
   }
+  @media print{
+    body{background:#fff}
+    .cover{background:var(--green-deep)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    section{page-break-inside:avoid}
+    .ro,.card,.tbl,.day{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
 </style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#234634">
 </head>
 <body>
 
+<!-- ===================== CAPA ===================== -->
 <header class="cover">
   <div class="wrap">
-    <div class="badge">Consultoria de Performance · Hipertrofia (PWA)</div>
+    <div class="badge">Consultoria de Performance · Hipertrofia</div>
     <div class="eyebrow">Protocolo Integrado de Treino + Nutrição</div>
     <h1>Construção de Massa Magra com Controle de Gordura</h1>
-    <p class="sub">Plano de hipertrofia baseado em evidências, com fortalecimento estrutural, dieta marmitável, métricas interativas e estratégia específica para o dia de peteca.</p>
+    <p class="sub">Plano de hipertrofia baseado em evidências, com fortalecimento estrutural, dieta marmitável e estratégia específica para o dia de peteca.</p>
     <div class="meta">
       <span><b>Aluno</b> · Igor Procópio</span>
       <span><b>Objetivo</b> · Ganho de massa magra (clean bulk)</span>
       <span><b>Frequência</b> · 5× musculação + 1× peteca</span>
+      <span><b>Validade</b> · ciclo de 8–12 semanas</span>
     </div>
-    <a href="compras.html" class="btn-nav">🛒 Abrir Lista de Compras</a>
   </div>
 </header>
 
 <div class="wrap">
 
+<!-- ===================== SUMÁRIO ===================== -->
 <section id="sumario">
   <div class="sec-head"><span class="sec-num">00</span><h2>Sumário</h2></div>
   <div class="toc">
     <ol>
-      <li><a href="#metricas"><span class="n">01</span> Métricas e acompanhamento diário</a></li>
-      <li><a href="#estrategia"><span class="n">02</span> Estratégia nutricional (Hidratação e Fibras)</a></li>
-      <li><a href="#cronograma"><span class="n">03</span> Cronograma semanal</a></li>
-      <li><a href="#dieta"><span class="n">04</span> Dieta completa — 7 dias (Atualizada)</a></li>
-      <li><a href="#peteca"><span class="n">05</span> Estratégia para o dia de peteca</a></li>
-      <li><a href="#treino"><span class="n">06</span> Treino — Registro de Cargas (Editável)</a></li>
-      <li><a href="#sono"><span class="n">07</span> Higiene do Sono e Recuperação</a></li>
+      <li><a href="#resumo"><span class="n">01</span> Resumo executivo</a></li>
+      <li><a href="#metricas"><span class="n">02</span> Métricas e composição corporal</a></li>
+      <li><a href="#estrategia"><span class="n">03</span> Estratégia nutricional (TDEE e macros)</a></li>
+      <li><a href="#cronograma"><span class="n">04</span> Cronograma semanal</a></li>
+      <li><a href="#dieta"><span class="n">05</span> Dieta completa — 7 dias</a></li>
+      <li><a href="#marmita"><span class="n">06</span> Marmitas, preparo e armazenamento</a></li>
+      <li><a href="#peteca"><span class="n">07</span> Estratégia para o dia de peteca</a></li>
+      <li><a href="#suple"><span class="n">08</span> Suplementação</a></li>
+      <li><a href="#treino"><span class="n">09</span> Treino — divisão e exercícios</a></li>
+      <li><a href="#core"><span class="n">10</span> Core, lombar e estabilizadores</a></li>
+      <li><a href="#aquece"><span class="n">11</span> Aquecimento e mobilidade</a></li>
+      <li><a href="#progressao"><span class="n">12</span> Progressão, deload e evolução</a></li>
+      <li><a href="#final"><span class="n">13</span> Considerações finais</a></li>
+          <li><a href="#hidrata"><span class="n">14</span> Hidratação, fibras e micronutrientes</a></li>
+      <li><a href="#sono"><span class="n">15</span> Higiene do sono e recuperação</a></li>
     </ol>
   </div>
 </section>
 
-<section id="metricas">
-  <div class="sec-head"><span class="sec-num">01</span><h2>Métricas e acompanhamento diário</h2></div>
-  <p class="lead">Base de partida medida via Galaxy Watch 6. Anote seu peso em jejum diariamente abaixo. O app calculará a média semanal automaticamente. A meta é subir entre <b>0,25kg e 0,4kg</b> por semana.</p>
+<!-- ===================== RESUMO ===================== -->
+<section id="resumo">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Resumo executivo</h2></div>
+  <p class="lead">Você tem boa base muscular (30,7 kg de massa esquelética) e gordura controlada (18,6%). O caminho certo aqui é um <b>superávit moderado e limpo</b>, não um bulk agressivo. A meta é ganhar músculo somando pouca gordura, corrigir a fraqueza estrutural da rotina sedentária e manter aderência real no longo prazo.</p>
 
-  <div class="weight-grid">
-    <div class="weight-card"><span>Segunda</span><input type="number" step="0.1" id="peso-seg" placeholder="kg"></div>
-    <div class="weight-card"><span>Terça</span><input type="number" step="0.1" id="peso-ter" placeholder="kg"></div>
-    <div class="weight-card"><span>Quarta</span><input type="number" step="0.1" id="peso-qua" placeholder="kg"></div>
-    <div class="weight-card"><span>Quinta</span><input type="number" step="0.1" id="peso-qui" placeholder="kg"></div>
-    <div class="weight-card"><span>Sexta</span><input type="number" step="0.1" id="peso-sex" placeholder="kg"></div>
-    <div class="weight-card"><span>Sábado</span><input type="number" step="0.1" id="peso-sab" placeholder="kg"></div>
-    <div class="weight-card"><span>Domingo</span><input type="number" step="0.1" id="peso-dom" placeholder="kg"></div>
-    <div class="weight-card weight-avg"><span>Média Semanal</span><div id="peso-media">-- kg</div></div>
+  <div class="grid3" style="margin-top:18px">
+    <div class="card tight">
+      <h4 class="mini">Treino</h4>
+      <p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Divisão híbrida (Empurrar / Puxar / Inferiores), 5×/semana. Volume sustentável, foco em progressão de carga e técnica. Cadeia posterior, core e lombar em todas as semanas.</p>
+    </div>
+    <div class="card tight">
+      <h4 class="mini">Dieta</h4>
+      <p style="font-size:13.5px;margin:0;color:var(--ink-soft)">~2.900 kcal, ~160 g de proteína. Marmitável, barata e prática. Proteína principal rotativa — nunca repete em dias seguidos.</p>
+    </div>
+    <div class="card tight">
+      <h4 class="mini">Estrutura</h4>
+      <p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Protocolo dedicado de lombar e estabilizadores para neutralizar o efeito de passar o dia sentado, prevenindo dor e melhorando postura.</p>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <b>Validação do protocolo.</b> Treino coerente com hipertrofia ✓ · Volume sustentável (não-atleta) ✓ · Superávit real (+~300 kcal) ✓ · Proteína ≈ 2,3 g/kg ✓ · Rotação de proteínas ✓ · Estratégia de peteca ✓ · Core e lombar contemplados ✓ · Dieta marmitável e barata ✓
   </div>
 </section>
 
-<section id="estrategia">
-  <div class="sec-head"><span class="sec-num">02</span><h2>Estratégia nutricional</h2></div>
-  <p class="lead">Gasto, superávit limpo e as novas diretrizes de hidratação e micronutrientes para otimizar o ecossistema intestinal com essa carga proteica.</p>
+<!-- ===================== MÉTRICAS ===================== -->
+<section id="metricas">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Métricas e composição corporal</h2></div>
+  <p class="lead">Base de partida medida via bioimpedância de wearable (Galaxy Watch 6). Há margem de erro: use estes números como referência relativa, não como verdade absoluta. O que importa é a tendência ao longo das semanas.</p>
 
   <div class="readouts">
-    <div class="ro"><div class="lab">Meta Calórica</div><div class="val">2.900<span> kcal</span></div></div>
-    <div class="ro"><div class="lab">Proteína</div><div class="val">160<span> g</span></div><div class="note">≈ 2,3 g/kg</div></div>
-    <div class="ro clay"><div class="lab">Carboidrato</div><div class="val">400<span> g</span></div><div class="note">≈ 5,8 g/kg</div></div>
-    <div class="ro"><div class="lab">Gordura</div><div class="val">72<span> g</span></div><div class="note">≈ 1,0 g/kg</div></div>
+    <div class="ro"><div class="lab">Peso atual</div><div class="val">69,5<span> kg</span></div></div>
+    <div class="ro"><div class="lab">Altura</div><div class="val">170<span> cm</span></div></div>
+    <div class="ro"><div class="lab">IMC</div><div class="val">23,9</div><div class="note">faixa saudável</div></div>
+    <div class="ro clay"><div class="lab">% Gordura</div><div class="val">18,6<span> %</span></div><div class="note">controlada</div></div>
+    <div class="ro"><div class="lab">Massa muscular</div><div class="val">30,7<span> kg</span></div></div>
+    <div class="ro clay"><div class="lab">Massa gorda</div><div class="val">12,8<span> kg</span></div></div>
+    <div class="ro"><div class="lab">Água corporal</div><div class="val">41,2<span> kg</span></div></div>
+    <div class="ro"><div class="lab">Idade</div><div class="val">28<span> anos</span></div></div>
   </div>
 
   <div class="grid2" style="margin-top:18px">
-    <div class="card tight">
-      <h4 class="mini">💧 Hidratação Diária</h4>
-      <p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Para os dias comuns (sem peteca), a meta base é de <b>2,5L a 3,0L</b> de água pura (aprox. 35-40ml/kg). A água é o veículo de transporte do glicogênio para dentro da musculatura.</p>
+    <div class="card">
+      <h4 class="mini">Perfil e biotipo</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:0">Ectomorfo — estrutura óssea fina, pulsos magros e dificuldade de manter/ganhar peso. Na prática isso significa: <b>comer com consistência é tão importante quanto treinar</b>. Você ganha bem, mas perde rápido se a dieta falha.</p>
     </div>
-    <div class="card tight">
-      <h4 class="mini">🥦 Micronutrientes e Fibras</h4>
-      <p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Para processar ~3.000 kcal e ~160g de proteína sem desconforto gastrointestinal, sua meta de fibras é de <b>30g a 40g/dia</b>. Priorize <b>vegetais verde-escuros</b> (brócolis, espinafre, rúcula) em almoços e jantares, pois são fontes densas de magnésio (vital para a contração muscular).</p>
+    <div class="card">
+      <h4 class="mini">Pontos de atenção</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:0">Rotina de T.I. sentada o dia inteiro → tendência a encurtar flexor de quadril, enfraquecer glúteo e lombar, e piorar postura. O protocolo trata isso de forma direta nas seções de core/lombar e mobilidade.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:22px">
+    <h3 class="block" style="margin-top:0">Monitoramento semanal e composição corporal</h3>
+    <p style="color:var(--ink-soft)">Preencha semanalmente para acompanhar a tendência real. Use a média da semana em jejum para evitar distorções de retenção e variações diárias.</p>
+    <div class="scroll">
+    <table class="tbl editable">
+      <tr><th>Semana</th><th>Média peso (kg)</th><th>Cintura (cm)</th><th>% gordura</th><th>Fotos</th><th>Observações</th></tr>
+      <tr><td contenteditable="true">Semana 1</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true">Frente/Lado/Costas</td><td contenteditable="true"></td></tr>
+      <tr><td contenteditable="true">Semana 2</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+      <tr><td contenteditable="true">Semana 3</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+      <tr><td contenteditable="true">Semana 4</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+    </table>
     </div>
   </div>
 </section>
 
+<!-- ===================== ESTRATÉGIA NUTRICIONAL ===================== -->
+<section id="estrategia">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Estratégia nutricional</h2></div>
+  <p class="lead">Cálculo de gasto e meta calórica. A lógica é simples: o suficiente para crescer, sem sobrar para virar gordura.</p>
+
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Etapa</th><th>Cálculo</th><th>Resultado</th></tr>
+    <tr><td>TMB (Mifflin-St Jeor)</td><td>10×69,5 + 6,25×170 − 5×28 + 5</td><td class="n">≈ 1.620 kcal</td></tr>
+    <tr><td>Fator de atividade</td><td>6 dias ativos + trabalho sentado (×1,6)</td><td class="n">—</td></tr>
+    <tr><td>TDEE (gasto total)</td><td>1.620 × 1,6</td><td class="n">≈ 2.600 kcal</td></tr>
+    <tr><td>Superávit limpo</td><td>+ ~12% (≈ +300 kcal)</td><td class="n">≈ +300 kcal</td></tr>
+    <tr class="total"><td>Meta diária</td><td>alvo para ganho magro</td><td class="n">≈ 2.900 kcal</td></tr>
+  </table>
+  </div>
+
+  <h3 class="block">Distribuição de macros</h3>
+  <div class="macrobar">
+    <div class="m-p" style="width:22%">Proteína 22%</div>
+    <div class="m-c" style="width:55%">Carboidrato 55%</div>
+    <div class="m-f" style="width:23%">Gordura 23%</div>
+  </div>
+  <div class="legend" style="margin-bottom:14px">
+    <span><i class="dot m-p"></i> Proteína</span>
+    <span><i class="dot m-c"></i> Carboidrato</span>
+    <span><i class="dot m-f"></i> Gordura</span>
+  </div>
+
+  <div class="readouts">
+    <div class="ro"><div class="lab">Calorias</div><div class="val">2.900<span> kcal</span></div></div>
+    <div class="ro"><div class="lab">Proteína</div><div class="val">160<span> g</span></div><div class="note">≈ 2,3 g/kg · 640 kcal</div></div>
+    <div class="ro clay"><div class="lab">Carboidrato</div><div class="val">400<span> g</span></div><div class="note">≈ 5,8 g/kg · 1.600 kcal</div></div>
+    <div class="ro"><div class="lab">Gordura</div><div class="val">72<span> g</span></div><div class="note">≈ 1,0 g/kg · 650 kcal</div></div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+      <h4 class="mini">Hidratação, fibras e micronutrientes</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li><b>Meta diária de água:</b> 35–45 ml/kg → alvo de ~2,5–3,2 L/dia fora da peteca. Em dias muito quentes ou com treino intenso, aumente.</li>
+        <li><b>Vegetais verde-escuros:</b> consumir diariamente 2–3 porções de brócolis, espinafre, rúcula, couve ou agrião para magnésio, potássio e suporte muscular.</li>
+        <li><b>Meta de fibras:</b> 30–40 g/dia para digestão, microbiota e estabilidade glicêmica. Baseie isso em aveia, feijão, frutas e vegetais.</li>
+        <li>Evite concentrar toda a fibra próximo ao treino/peteca para não pesar o estômago.</li>
+      </ul>
+  </div>
+
+  <div class="callout">
+    <b>Ajuste pela balança, não pela teoria.</b> Pese-se 3–4×/semana em jejum e tire a média semanal. Alvo de ganho: <b>0,25–0,4 kg por semana</b>. Subindo mais rápido que isso → tire ~150 kcal de carboidrato. Estagnado por 2 semanas → adicione ~150 kcal.
+  </div>
+</section>
+
+<!-- ===================== CRONOGRAMA ===================== -->
 <section id="cronograma">
-  <div class="sec-head"><span class="sec-num">03</span><h2>Cronograma semanal</h2></div>
+  <div class="sec-head"><span class="sec-num">04</span><h2>Cronograma semanal</h2></div>
+  <p class="lead">Visão geral da semana. Treino, esporte e descanso encaixados para respeitar a recuperação.</p>
+
   <div class="week">
     <div class="day train"><div class="d">Seg</div><div class="t">Empurrar<br>+ Core</div><div class="ic">🏋️</div></div>
     <div class="day train"><div class="d">Ter</div><div class="t">Puxar<br>+ Lombar</div><div class="ic">🏋️</div></div>
-    <div class="day train"><div class="d">Qua</div><div class="t">Inferiores A</div><div class="ic">🦵</div></div>
+    <div class="day train"><div class="d">Qua</div><div class="t">Inferiores A<br>(quadríceps)</div><div class="ic">🦵</div></div>
     <div class="day peteca"><div class="d">Qui</div><div class="t">Peteca<br>18h–20h</div><div class="ic">🏸</div></div>
-    <div class="day train"><div class="d">Sex</div><div class="t">Superiores</div><div class="ic">🏋️</div></div>
-    <div class="day train"><div class="d">Sáb</div><div class="t">Inferiores B</div><div class="ic">🦵</div></div>
-    <div class="day rest"><div class="d">Dom</div><div class="t">Descanso</div><div class="ic">😴</div></div>
+    <div class="day train"><div class="d">Sex</div><div class="t">Superiores<br>(geral)</div><div class="ic">🏋️</div></div>
+    <div class="day train"><div class="d">Sáb</div><div class="t">Inferiores B<br>(posterior)</div><div class="ic">🦵</div></div>
+    <div class="day rest"><div class="d">Dom</div><div class="t">Descanso<br>total</div><div class="ic">😴</div></div>
+  </div>
+
+  <div class="callout green">
+    <b>Lógica da divisão.</b> Cada grupo é treinado ~1,5–2× por semana — frequência ideal para hipertrofia. Pernas aparecem 2× (quadríceps na qua, posterior/glúteo no sáb). A quinta de peteca cai entre dois dias de superiores, então as pernas estão descansadas para correr. Domingo é descanso real — recuperação é onde o músculo cresce.
   </div>
 </section>
 
+<!-- ===================== DIETA ===================== -->
 <section id="dieta">
-  <div class="sec-head"><span class="sec-num">04</span><h2>Dieta completa (Exemplo Quinta-feira)</h2></div>
-  <p class="lead">Abaixo está a dieta ajustada do dia de maior gasto calórico. Os "legumes/salada" agora especificam o uso de verde-escuros. Note o <b>Lanche da Tarde extra</b> adicionado para sustentar as +1.000 kcal da Peteca sem anular o superávit semanal.</p>
+  <div class="sec-head"><span class="sec-num">05</span><h2>Dieta completa — 7 dias</h2></div>
+  <p class="lead">Cardápio rotativo. A proteína principal do almoço/jantar nunca se repete em dias consecutivos. Tudo barato, simples e marmitável. As quantidades de proteína são em peso cozido, salvo indicação.</p>
 
+  <div class="callout">
+    <b>Como ler.</b> Cada dia soma ~2.900 kcal / ~160 g proteína. Em dia de peteca (quinta), veja a seção 07 para os ajustes de pré/intra/pós. Medidas caseiras: 1 escumadeira de arroz ≈ 100 g cozido · 1 concha de feijão ≈ 80 g · 1 colher de sopa de azeite ≈ 8 g.
+  </div>
+
+  <!-- DIA 1 -->
+  <h3 class="block">Segunda — proteína: <span class="tag">Frango</span></h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos (medida caseira)</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>Aveia 80 g · 2 ovos · 1 banana · whey 30 g</td><td class="n">650</td><td class="n">47</td><td class="n">81</td><td class="n">18</td></tr>
+    <tr><td>Pré-treino</td><td>Tapioca 40 g c/ 1 col. mel · café</td><td class="n">230</td><td class="n">2</td><td class="n">52</td><td class="n">1</td></tr>
+    <tr><td>Pós-treino</td><td>Whey 30 g · 1 banana</td><td class="n">220</td><td class="n">25</td><td class="n">28</td><td class="n">2</td></tr>
+    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>frango</b> 180 g · salada c/ azeite</td><td class="n">800</td><td class="n">64</td><td class="n">95</td><td class="n">16</td></tr>
+    <tr><td>Jantar</td><td>Batata 200 g · <b>frango</b> 150 g · legumes c/ azeite</td><td class="n">600</td><td class="n">42</td><td class="n">66</td><td class="n">13</td></tr>
+    <tr><td>Ceia</td><td>Iogurte natural 170 g · aveia 40 g · 1 col. pasta de amendoim</td><td class="n">400</td><td class="n">17</td><td class="n">38</td><td class="n">18</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">2.900</td><td class="n">197</td><td class="n">360</td><td class="n">68</td></tr>
+  </table>
+  </div>
+
+  <!-- DIA 2 -->
+  <h3 class="block">Terça — proteína: <span class="tag clay">Patinho moído</span></h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos (medida caseira)</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>2 ovos mexidos · 2 fatias pão integral · 1 fruta · whey 30 g</td><td class="n">560</td><td class="n">44</td><td class="n">58</td><td class="n">16</td></tr>
+    <tr><td>Pré-treino</td><td>Pão integral 2 fatias c/ mel · café</td><td class="n">230</td><td class="n">7</td><td class="n">42</td><td class="n">3</td></tr>
+    <tr><td>Pós-treino</td><td>Whey 30 g · 1 banana</td><td class="n">220</td><td class="n">25</td><td class="n">28</td><td class="n">2</td></tr>
+    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>patinho moído</b> 170 g · salada c/ azeite</td><td class="n">820</td><td class="n">52</td><td class="n">95</td><td class="n">22</td></tr>
+    <tr><td>Jantar</td><td>Macarrão 120 g (cozido 250 g) · <b>patinho</b> 130 g · molho tomate</td><td class="n">650</td><td class="n">42</td><td class="n">78</td><td class="n">15</td></tr>
+    <tr><td>Ceia</td><td>Iogurte natural 170 g · aveia 40 g</td><td class="n">300</td><td class="n">14</td><td class="n">38</td><td class="n">8</td></tr><tr><td>Reforço calórico extra</td><td>Vitamina: leite 300 ml · banana · aveia 40 g · pasta de amendoim 1 col.</td><td class="n">420</td><td class="n">18</td><td class="n">48</td><td class="n">16</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">2.880</td><td class="n">184</td><td class="n">339</td><td class="n">66</td></tr>
+  </table>
+  </div>
+
+  <!-- DIA 3 -->
+  <h3 class="block">Quarta — proteína: <span class="tag">Peixe (tilápia/merluza)</span></h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos (medida caseira)</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>Aveia 80 g · 2 ovos · 1 banana · whey 30 g</td><td class="n">650</td><td class="n">47</td><td class="n">81</td><td class="n">18</td></tr>
+    <tr><td>Pré-treino</td><td>Tapioca 40 g c/ mel · café</td><td class="n">230</td><td class="n">2</td><td class="n">52</td><td class="n">1</td></tr>
+    <tr><td>Pós-treino</td><td>Whey 30 g · 1 banana</td><td class="n">220</td><td class="n">25</td><td class="n">28</td><td class="n">2</td></tr>
+    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>tilápia</b> 200 g · salada c/ azeite</td><td class="n">760</td><td class="n">58</td><td class="n">95</td><td class="n">14</td></tr>
+    <tr><td>Jantar</td><td>Mandioca 200 g · <b>merluza</b> 180 g · legumes c/ azeite</td><td class="n">580</td><td class="n">40</td><td class="n">62</td><td class="n">12</td></tr>
+    <tr><td>Ceia</td><td>Iogurte natural 170 g · aveia 40 g · 1 col. pasta de amendoim</td><td class="n">400</td><td class="n">17</td><td class="n">38</td><td class="n">18</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">2.840</td><td class="n">189</td><td class="n">356</td><td class="n">65</td></tr>
+  </table>
+  </div>
+
+  <!-- DIA 4 -->
   <h3 class="block">Quinta (peteca) — proteína: <span class="tag clay">Lombo suíno</span></h3>
   <div class="scroll">
   <table class="tbl">
     <tr><th>Refeição</th><th>Alimentos (medida caseira)</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
     <tr><td>Café da manhã</td><td>Aveia 80 g · 2 ovos · 1 banana · whey 30 g</td><td class="n">650</td><td class="n">47</td><td class="n">81</td><td class="n">18</td></tr>
-    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>lombo suíno</b> 170 g · salada verde-escura</td><td class="n">780</td><td class="n">52</td><td class="n">95</td><td class="n">18</td></tr>
-    <tr style="background:#fff3e0;"><td><b>Lanche (NOVO) (15h00)</b></td><td>Whey 30g · aveia 40g · 1 col. pasta de amendoim</td><td class="n">350</td><td class="n">30</td><td class="n">25</td><td class="n">15</td></tr>
-    <tr><td>Pré-peteca (16h30)</td><td>2 fatias pão · mel · 1 banana</td><td class="n">280</td><td class="n">7</td><td class="n">58</td><td class="n">2</td></tr>
-    <tr><td>Intra (18–20h)</td><td>Água + isotônico · 1 fruta</td><td class="n">120</td><td class="n">0</td><td class="n">30</td><td class="n">0</td></tr>
-    <tr><td>Pós/Jantar (20h30)</td><td>Arroz 200 g · <b>lombo suíno</b> 150 g · brócolis no vapor</td><td class="n">700</td><td class="n">62</td><td class="n">82</td><td class="n">12</td></tr>
+    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>lombo suíno</b> 170 g · salada</td><td class="n">780</td><td class="n">52</td><td class="n">95</td><td class="n">18</td></tr>
+    <tr><td>Pré-peteca (16h30)</td><td>2 fatias pão · mel · 1 banana (baixa fibra/gordura)</td><td class="n">280</td><td class="n">7</td><td class="n">58</td><td class="n">2</td></tr>
+    <tr><td>Intra (18–20h)</td><td>Água + isotônico · 1 fruta no intervalo se precisar</td><td class="n">120</td><td class="n">0</td><td class="n">30</td><td class="n">0</td></tr>
+    <tr><td>Pós/Jantar (20h30)</td><td>Arroz 200 g · <b>lombo suíno</b> 150 g · legumes · whey 30 g</td><td class="n">700</td><td class="n">62</td><td class="n">82</td><td class="n">12</td></tr>
     <tr><td>Ceia</td><td>Iogurte natural 170 g · aveia 40 g</td><td class="n">300</td><td class="n">14</td><td class="n">38</td><td class="n">8</td></tr>
-    <tr class="total"><td>Total Diário Ajustado</td><td>(Compensa gasto do jogo)</td><td class="n">3.180</td><td class="n">212</td><td class="n">409</td><td class="n">73</td></tr>
+    <tr class="total"><td>Total</td><td>+ gasto ~1.000 kcal na peteca</td><td class="n">3.250</td><td class="n">200</td><td class="n">432</td><td class="n">74</td></tr>
   </table>
+  </div>
+
+  <!-- DIA 5 -->
+  <h3 class="block">Sexta — proteína: <span class="tag">Frango (sobrecoxa s/ pele)</span></h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos (medida caseira)</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>2 ovos · 2 fatias pão integral · 1 fruta · whey 30 g</td><td class="n">560</td><td class="n">44</td><td class="n">58</td><td class="n">16</td></tr>
+    <tr><td>Pré-treino</td><td>Tapioca 40 g c/ mel · café</td><td class="n">230</td><td class="n">2</td><td class="n">52</td><td class="n">1</td></tr>
+    <tr><td>Pós-treino</td><td>Whey 30 g · 1 banana</td><td class="n">220</td><td class="n">25</td><td class="n">28</td><td class="n">2</td></tr>
+    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>frango</b> 180 g · salada c/ azeite</td><td class="n">800</td><td class="n">62</td><td class="n">95</td><td class="n">16</td></tr>
+    <tr><td>Jantar</td><td>Batata-doce 200 g · <b>frango</b> 150 g · legumes c/ azeite</td><td class="n">620</td><td class="n">42</td><td class="n">68</td><td class="n">13</td></tr>
+    <tr><td>Ceia</td><td>Iogurte natural 170 g · aveia 40 g · pasta de amendoim</td><td class="n">400</td><td class="n">17</td><td class="n">38</td><td class="n">18</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">2.830</td><td class="n">192</td><td class="n">339</td><td class="n">66</td></tr>
+  </table>
+  </div>
+
+  <!-- DIA 6 -->
+  <h3 class="block">Sábado — proteína: <span class="tag clay">Patinho / Peixe</span></h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos (medida caseira)</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>Aveia 80 g · 2 ovos · 1 banana · whey 30 g</td><td class="n">650</td><td class="n">47</td><td class="n">81</td><td class="n">18</td></tr>
+    <tr><td>Pré-treino</td><td>Pão integral 2 fatias c/ mel · café</td><td class="n">230</td><td class="n">7</td><td class="n">42</td><td class="n">3</td></tr>
+    <tr><td>Pós-treino</td><td>Whey 30 g · 1 banana</td><td class="n">220</td><td class="n">25</td><td class="n">28</td><td class="n">2</td></tr>
+    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>patinho</b> 170 g · salada c/ azeite</td><td class="n">820</td><td class="n">52</td><td class="n">95</td><td class="n">22</td></tr>
+    <tr><td>Jantar</td><td>Mandioca 200 g · <b>tilápia</b> 180 g · legumes c/ azeite</td><td class="n">560</td><td class="n">40</td><td class="n">60</td><td class="n">12</td></tr>
+    <tr><td>Ceia</td><td>Iogurte natural 170 g · aveia 40 g</td><td class="n">300</td><td class="n">14</td><td class="n">38</td><td class="n">8</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">2.780</td><td class="n">185</td><td class="n">344</td><td class="n">65</td></tr>
+  </table>
+  </div>
+
+  <!-- DIA 7 -->
+  <h3 class="block">Domingo (descanso) — proteína: <span class="tag">Ovos + Atum</span></h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos (medida caseira)</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>Omelete 3 ovos · 2 fatias pão integral · 1 fruta</td><td class="n">560</td><td class="n">32</td><td class="n">52</td><td class="n">22</td></tr>
+    <tr><td>Lanche</td><td>Whey 30 g · 1 banana · aveia 30 g</td><td class="n">320</td><td class="n">28</td><td class="n">46</td><td class="n">4</td></tr>
+    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>atum/ovos</b> · salada c/ azeite</td><td class="n">780</td><td class="n">48</td><td class="n">95</td><td class="n">18</td></tr>
+    <tr><td>Lanche tarde</td><td>Iogurte natural 170 g · pasta de amendoim · 1 fruta</td><td class="n">350</td><td class="n">12</td><td class="n">34</td><td class="n">16</td></tr>
+    <tr><td>Jantar</td><td>Batata 200 g · 2 ovos + atum · legumes c/ azeite</td><td class="n">580</td><td class="n">36</td><td class="n">58</td><td class="n">18</td></tr>
+    <tr><td>Ceia</td><td>Whey 30 g c/ leite</td><td class="n">200</td><td class="n">28</td><td class="n">12</td><td class="n">4</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">2.790</td><td class="n">184</td><td class="n">297</td><td class="n">82</td></tr>
+  </table>
+  </div>
+
+  <div class="callout green">
+    <b>Lista de compras enxuta.</b> Proteínas: frango (peito + sobrecoxa), patinho moído, tilápia/merluza, lombo suíno, ovos, atum, whey. Carboidratos: arroz, feijão, batata, mandioca, macarrão, aveia, tapioca, pão integral, banana + frutas da estação. Gorduras: azeite, pasta de amendoim. Laticínio: iogurte natural. Tudo de baixo custo e fácil de achar em qualquer mercado.
   </div>
 </section>
 
-<section id="treino">
-  <div class="sec-head"><span class="sec-num">06</span><h2>Treino — Registro de Cargas</h2></div>
-  <p class="lead">Anote os pesos na coluna "Carga Atual". O navegador salvará os valores automaticamente.</p>
-
-  <h3 class="block">Segunda — Empurrar</h3>
-  <div class="scroll">
-  <table class="tbl">
-    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
-    <tr><td>Supino reto (barra/halter)</td><td class="n">4 × 6–8</td><td class="n">2</td><td><input type="text" id="cg-seg-1" placeholder="kg"></td><td>Escápulas retraídas.</td></tr>
-    <tr><td>Supino inclinado halter</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-seg-2" placeholder="kg"></td><td>Banco ~30°.</td></tr>
-    <tr><td>Desenvolvimento halter</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-seg-3" placeholder="kg"></td><td>Core firme.</td></tr>
-    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-seg-4" placeholder="kg"></td><td>Sem balanço.</td></tr>
-    <tr><td>Crossover</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-seg-5" placeholder="kg"></td><td>Aperte o peito.</td></tr>
-    <tr><td>Tríceps na corda</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-seg-6" placeholder="kg"></td><td>Cotovelos colados.</td></tr>
-  </table>
-  </div>
-
-  <h3 class="block">Terça — Puxar</h3>
-  <div class="scroll">
-  <table class="tbl">
-    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
-    <tr><td>Barra fixa / puxada alta</td><td class="n">4 × 6–10</td><td class="n">2</td><td><input type="text" id="cg-ter-1" placeholder="kg"></td><td>Peito alto.</td></tr>
-    <tr><td>Remada curvada</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-ter-2" placeholder="kg"></td><td>Lombar neutra.</td></tr>
-    <tr><td>Remada baixa</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-ter-3" placeholder="kg"></td><td>Aperte as escápulas.</td></tr>
-    <tr><td>Pulldown braço estendido</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-ter-4" placeholder="kg"></td><td>Isola dorsal.</td></tr>
-    <tr><td>Face pull</td><td class="n">3 × 15–20</td><td class="n">1</td><td><input type="text" id="cg-ter-5" placeholder="kg"></td><td>Fortalece posterior do ombro.</td></tr>
-    <tr><td>Rosca direta</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-ter-6" placeholder="kg"></td><td>Sem balançar.</td></tr>
-  </table>
-  </div>
-
-  <h3 class="block">Quarta — Inferiores A</h3>
-  <div class="scroll">
-  <table class="tbl">
-    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
-    <tr><td>Agachamento livre</td><td class="n">4 × 6–8</td><td class="n">2</td><td><input type="text" id="cg-qua-1" placeholder="kg"></td><td>Joelho alinha ao pé.</td></tr>
-    <tr><td>Leg press 45°</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-qua-2" placeholder="kg"></td><td>Amplitude completa.</td></tr>
-    <tr><td>Cadeira extensora</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-qua-3" placeholder="kg"></td><td>Pausa de 1s no topo.</td></tr>
-    <tr><td>Afundo / búlgaro</td><td class="n">3 × 10/perna</td><td class="n">2</td><td><input type="text" id="cg-qua-4" placeholder="kg"></td><td>Corrige assimetrias.</td></tr>
-    <tr><td>Panturrilha em pé</td><td class="n">4 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-qua-5" placeholder="kg"></td><td>Pausa embaixo e em cima.</td></tr>
-  </table>
-  </div>
-
-  <h3 class="block">Sexta — Superiores</h3>
-  <div class="scroll">
-  <table class="tbl">
-    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
-    <tr><td>Supino inclinado c/ halteres</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-sex-1" placeholder="kg"></td><td>Segundo estímulo.</td></tr>
-    <tr><td>Remada cavalinho</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-sex-2" placeholder="kg"></td><td>Espessura de costas.</td></tr>
-    <tr><td>Desenvolvimento</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sex-3" placeholder="kg"></td><td>Volume extra.</td></tr>
-    <tr><td>Puxada supinada</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sex-4" placeholder="kg"></td><td>Pega fechada.</td></tr>
-    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-sex-5" placeholder="kg"></td><td>Ombro lateral.</td></tr>
-    <tr><td>Rosca alternada</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sex-6" placeholder="kg"></td><td>Controle na descida.</td></tr>
-  </table>
-  </div>
-
-  <h3 class="block">Sábado — Inferiores B</h3>
-  <div class="scroll">
-  <table class="tbl">
-    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
-    <tr><td>Levantamento terra romeno</td><td class="n">4 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-sab-1" placeholder="kg"></td><td>Lombar neutra.</td></tr>
-    <tr><td>Mesa flexora</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sab-2" placeholder="kg"></td><td>Pausa na contração.</td></tr>
-    <tr><td>Cadeira flexora</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-sab-3" placeholder="kg"></td><td>Segundo ângulo.</td></tr>
-    <tr><td>Elevação pélvica</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sab-4" placeholder="kg"></td><td>Aperte 1s no topo.</td></tr>
-    <tr><td>Cadeira abdutora</td><td class="n">3 × 15–20</td><td class="n">1</td><td><input type="text" id="cg-sab-5" placeholder="kg"></td><td>Estabilidade de quadril.</td></tr>
-    <tr><td>Panturrilha sentado</td><td class="n">4 × 15–20</td><td class="n">1</td><td><input type="text" id="cg-sab-6" placeholder="kg"></td><td>Foco no sóleo.</td></tr>
-  </table>
-  </div>
-</section>
-
-<section id="sono" style="border-bottom:none">
-  <div class="sec-head"><span class="sec-num">07</span><h2>Higiene do Sono e Recuperação</h2></div>
-  <p class="lead">O músculo é forçado na academia, alimentado na cozinha, mas **construído durante o sono**. O objetivo são 7 a 8 horas de sono profundo. Como a exposição a monitores faz parte de noites de estudos e jogos, siga as regras abaixo:</p>
+<!-- ===================== MARMITAS ===================== -->
+<section id="marmita">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Marmitas, preparo e armazenamento</h2></div>
+  <p class="lead">A dieta só funciona se for prática. A estratégia é cozinhar em lote 2× por semana e congelar. Sem isso, ectomorfo sentado o dia todo acaba pulando refeição — e aí não cresce.</p>
 
   <div class="grid2">
-    <div class="card tight">
-      <h4 class="mini">Gerenciamento de Telas (Luz Azul)</h4>
-      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:8px">O excesso de brilho noturno de monitores — seja no terminal administrando servidores na nuvem ou em um jogo multiplayer focado e tenso — bloqueia a liberação natural de melatonina. </p>
-      <ul style="font-size:13.5px;color:var(--ink-soft);margin:0">
-        <li>Ative filtros de luz azul (como <i>Night Light</i> do Windows ou software f.lux) após as 20h30.</li>
-        <li>Desligue os monitores <b>1 hora antes</b> de deitar. Troque a tela por um livro ou um alongamento leve.</li>
+    <div class="card">
+      <h4 class="mini">Rotina de batch cooking</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li><b>Domingo + quarta:</b> dois dias de preparo cobrem a semana inteira.</li>
+        <li>Cozinhe arroz e feijão em grande quantidade.</li>
+        <li>Asse/grelhe as proteínas em tabuleiro de uma vez.</li>
+        <li>Monte as marmitas e congele as que não forem comer em 3 dias.</li>
+        <li>Legumes: deixe alguns crus (saladas) e cozinhe outros no vapor.</li>
       </ul>
     </div>
-    <div class="card tight">
-      <h4 class="mini">Descompressão Mental</h4>
-      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:8px">Atividades que exigem alta carga cognitiva e reflexos rápidos elevam o cortisol e a adrenalina.</p>
-      <ul style="font-size:13.5px;color:var(--ink-soft);margin:0">
-        <li>Evite encerrar o dia direto de uma partida intensa ou de uma sessão pesada de estudos para ir deitar; o cérebro precisa de uma "ponte" de relaxamento de 30-45 minutos.</li>
-        <li>Quarto escuro total e temperatura ambiente fresca (19ºC a 21ºC).</li>
+    <div class="card">
+      <h4 class="mini">Melhores formas de preparo</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li><b>Grelhar / assar:</b> menos óleo, mantém proteína intacta.</li>
+        <li><b>Vapor:</b> preserva vitaminas dos legumes (melhor que ferver).</li>
+        <li><b>Cozimento de pressão</b> para feijão — rápido e econômico.</li>
+        <li>Tempere com alho, cebola, ervas e limão — barato e sem gordura extra.</li>
+        <li>Evite frituras: gordura calórica sem ganho nutricional.</li>
       </ul>
     </div>
   </div>
+
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Item</th><th>Geladeira</th><th>Congelador</th><th>Observação</th></tr>
+    <tr><td>Arroz / feijão</td><td class="n">3–4 dias</td><td class="n">até 3 meses</td><td>Congele em porção individual</td></tr>
+    <tr><td>Frango / patinho / suíno</td><td class="n">3 dias</td><td class="n">até 3 meses</td><td>Resfrie antes de congelar</td></tr>
+    <tr><td>Peixe cozido</td><td class="n">2 dias</td><td class="n">até 2 meses</td><td>Consuma primeiro</td></tr>
+    <tr><td>Marmita pronta completa</td><td class="n">3 dias</td><td class="n">até 1 mês</td><td>Tampa hermética</td></tr>
+    <tr><td>Legumes cozidos</td><td class="n">3–4 dias</td><td class="n">até 2 meses</td><td>Vapor mantém textura</td></tr>
+  </table>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card tight">
+      <h4 class="mini">Recipientes e congelamento</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:0">Use potes de vidro com tampa ou plástico livre de BPA, do tamanho de 1 refeição. Sempre <b>resfrie o alimento antes de congelar</b> (evita cristais e proliferação bacteriana). Etiquete com a data.</p>
+    </div>
+    <div class="card tight">
+      <h4 class="mini">Descongelamento e segurança</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:0">Descongele na geladeira na véspera, nunca em temperatura ambiente. Reaqueça bem (vapor saindo). <b>Não recongele</b> o que já foi descongelado. Comida na bancada por +2h = descarte.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PETECA ===================== -->
+<section id="peteca">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Estratégia para o dia de peteca</h2></div>
+  <p class="lead">Quinta, 18h–20h, ~1.000 kcal de gasto, FC média 150 bpm e picos de 187. É esforço intermitente de alta intensidade — exige carboidrato disponível e boa hidratação para você render nos jogos e recuperar bem.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 class="mini">Antes (pré-atividade)</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li><b>2–3h antes (almoço reforçado):</b> arroz + proteína magra + fruta.</li>
+        <li><b>~1h30 antes:</b> lanche leve de carbo de digestão rápida e baixa gordura/fibra — pão + mel + banana.</li>
+        <li>Cafeína (café ou ~3 mg/kg) ~40 min antes melhora foco e reduz percepção de esforço.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 class="mini">Durante (intra)</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li>Água + isotônico nos intervalos entre jogos.</li>
+        <li>Sessão longa (&gt;90 min): carbo rápido nas pausas — fruta, isotônico ou gel.</li>
+        <li>Goles frequentes, não esperar a sede aparecer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h4 class="mini">Depois (recuperação)</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li><b>Em até 1h:</b> jantar com carbo + proteína — repor glicogênio (~1 g carbo/kg) + 30–40 g proteína (whey ajuda na praticidade pós-jogo).</li>
+        <li>Carboidrato é prioridade aqui: você gastou muita energia.</li>
+        <li>Dormir bem fecha a recuperação — alvo 7–8h.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 class="mini">Hidratação e eletrólitos</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li>~500 ml de água 2h antes; goles a cada pausa.</li>
+        <li>Reponha ~1,5× o peso perdido em suor (pese-se antes/depois para calibrar).</li>
+        <li>Eletrólitos: isotônico pronto <i>ou</i> caseiro — 500 ml água + pitada de sal + limão + 1 col. mel.</li>
+        <li>Sódio e potássio previnem cãibra no esforço intermitente.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SUPLEMENTAÇÃO ===================== -->
+<section id="suple">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Suplementação</h2></div>
+  <p class="lead">Só o que tem respaldo e faz sentido no seu caso. Suplemento é complemento — a base é comida e treino.</p>
+
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Suplemento</th><th>Recomendação</th><th>Dose</th><th>Por quê</th></tr>
+    <tr><td>Creatina</td><td class="n"><span class="tag">Sim</span></td><td>3–5 g/dia, todo dia</td><td>Maior respaldo científico para força e hipertrofia. Horário não importa.</td></tr>
+    <tr><td>Whey protein</td><td class="n"><span class="tag">Sim</span></td><td>1–2 doses/dia</td><td>Praticidade para bater a meta de proteína; ótimo no pós-treino e pós-peteca.</td></tr>
+    <tr><td>Cafeína</td><td class="n"><span class="tag clay">Opcional</span></td><td>3–6 mg/kg pré</td><td>Útil em dias pesados e na peteca. Evite à noite para não atrapalhar o sono.</td></tr>
+    <tr><td>Eletrólitos</td><td class="n"><span class="tag">Sim (qui)</span></td><td>durante a peteca</td><td>Reposição no esforço intermitente longo e suado.</td></tr>
+    <tr><td>Ômega 3</td><td class="n"><span class="tag clay">Recom.</span></td><td>1–2 g EPA+DHA/dia</td><td>Recuperação e saúde geral, caso o consumo de peixe seja baixo.</td></tr>
+    <tr><td>Vitamina D</td><td class="n"><span class="tag clay">Avaliar</span></td><td>conforme exame</td><td>Comum estar baixa em quem fica indoor (rotina de T.I.). Cheque com exame.</td></tr>
+    <tr><td>Multivitamínico</td><td class="n"><span class="tag clay">Opcional</span></td><td>1/dia</td><td>"Apólice de seguro" se a dieta variar pouco. Não é essencial.</td></tr>
+  </table>
+  </div>
+  <div class="callout">
+    <b>Não precisa de:</b> BCAA (whey e a dieta já cobrem), pré-treinos caros (cafeína resolve), termogênicos (você quer ganhar, não emagrecer). Economize o dinheiro em comida de qualidade.
+  </div>
+</section>
+
+<!-- ===================== TREINO ===================== -->
+<section id="treino">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Treino — divisão e exercícios</h2></div>
+  <p class="lead">Divisão híbrida Empurrar / Puxar / Inferiores, 5×/semana. Volume moderado e sustentável (não-atleta), com prioridade em progressão de carga e técnica limpa. Legenda: <b>RIR</b> = repetições na reserva (quantas você ainda conseguiria fazer) · <b>cadência</b> = excêntrica-pausa-concêntrica em segundos.</p>
+
+  <!-- SEG -->
+  <h3 class="block">Segunda — Empurrar (peito · ombro · tríceps)</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
+    <tr><td>Supino reto (barra ou halteres)</td><td class="n">4 × 6–8</td><td class="n">2–3 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Escápulas retraídas, pés firmes, desça controlado ao peito.</td></tr>
+    <tr><td>Supino inclinado c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Banco ~30°, foco no peito superior.</td></tr>
+    <tr><td>Desenvolvimento c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Não trave os cotovelos no topo; core firme.</td></tr>
+    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Suba até a linha do ombro, sem balanço.</td></tr>
+    <tr><td>Crossover / crucifixo</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Aperte o peito no fim do movimento.</td></tr>
+    <tr><td>Tríceps na corda</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Cotovelos colados ao corpo.</td></tr>
+    <tr><td>Tríceps testa</td><td class="n">2 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Movimento só no cotovelo.</td></tr>
+  </table>
+  </div>
+  <p style="font-size:13px;color:var(--ink-soft)">+ Bloco de core (ver seção 10): prancha 3×40s · dead bug 3×10/lado.</p>
+
+  <!-- TER -->
+  <h3 class="block">Terça — Puxar (costas · posterior de ombro · bíceps)</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
+    <tr><td>Barra fixa ou puxada alta</td><td class="n">4 × 6–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Puxe com as costas, não com os braços; peito alto.</td></tr>
+    <tr><td>Remada curvada c/ barra</td><td class="n">3 × 8–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td><b>Lombar neutra</b>, tronco ~45°. Técnica acima de carga.</td></tr>
+    <tr><td>Remada baixa (cabo)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Aperte as escápulas no fim.</td></tr>
+    <tr><td>Pulldown braço estendido</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Isola dorsal; cotovelos quase travados.</td></tr>
+    <tr><td>Face pull / crucifixo inverso</td><td class="n">3 × 15–20</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td><b>Postura</b>: fortalece posterior do ombro, combate ombros caídos.</td></tr>
+    <tr><td>Rosca direta</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Sem balançar o corpo.</td></tr>
+    <tr><td>Rosca martelo</td><td class="n">2 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Pega neutra; pega antebraço e braquial.</td></tr>
+  </table>
+  </div>
+  <p style="font-size:13px;color:var(--ink-soft)">+ Bloco de lombar (ver seção 10): hiperextensão 3×12–15 · bird dog 3×10/lado.</p>
+
+  <!-- QUA -->
+  <h3 class="block">Quarta — Inferiores A (ênfase quadríceps)</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
+    <tr><td>Agachamento livre (ou Smith)</td><td class="n">4 × 6–8</td><td class="n">3 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Desça até coxa paralela; joelho alinha ao pé; core firme.</td></tr>
+    <tr><td>Leg press 45°</td><td class="n">3 × 10–12</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Amplitude completa sem descolar o quadril.</td></tr>
+    <tr><td>Cadeira extensora</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Pausa de 1s no topo.</td></tr>
+    <tr><td>Afundo / búlgaro</td><td class="n">3 × 10/perna</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td><b>Estabilidade</b>: corrige assimetrias, ativa glúteo.</td></tr>
+    <tr><td>Panturrilha em pé</td><td class="n">4 × 12–15</td><td class="n">60 s</td><td class="n">2-1-2</td><td class="n">1</td><td contenteditable="true"></td><td>Pausa embaixo e em cima, amplitude total.</td></tr>
+  </table>
+  </div>
+  <p style="font-size:13px;color:var(--ink-soft)">+ Core: prancha lateral 3×30s/lado · abdominal infra (elevação de pernas) 3×15.</p>
+
+  <!-- SEX -->
+  <h3 class="block">Sexta — Superiores (geral, pontos fracos)</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
+    <tr><td>Supino inclinado c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Segundo estímulo semanal de peito.</td></tr>
+    <tr><td>Remada cavalinho (ou T)</td><td class="n">3 × 8–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Espessura de costas; lombar neutra.</td></tr>
+    <tr><td>Desenvolvimento (máquina/halter)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Volume extra de ombro.</td></tr>
+    <tr><td>Puxada supinada</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Pega fechada; recruta dorsal + bíceps.</td></tr>
+    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Ombro lateral, largura.</td></tr>
+    <tr><td>Rosca alternada</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Controle na descida.</td></tr>
+    <tr><td>Tríceps mergulho no banco</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Ou paralelas, se conseguir.</td></tr>
+  </table>
+  </div>
+
+  <!-- SAB -->
+  <h3 class="block">Sábado — Inferiores B (ênfase posterior · glúteo · lombar)</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
+    <tr><td>Levantamento terra romeno (RDL)</td><td class="n">4 × 8–10</td><td class="n">2–3 min</td><td class="n">3-0-1</td><td class="n">2</td><td contenteditable="true"></td><td><b>Cadeia posterior + lombar.</b> Lombar neutra, empurre o quadril para trás, sinta o posterior alongar.</td></tr>
+    <tr><td>Mesa flexora</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Pausa na contração.</td></tr>
+    <tr><td>Cadeira flexora</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Segundo ângulo de posterior.</td></tr>
+    <tr><td>Elevação pélvica (hip thrust)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td><b>Glúteo</b>: aperte 1s no topo; ótimo para postura e lombar.</td></tr>
+    <tr><td>Cadeira abdutora</td><td class="n">3 × 15–20</td><td class="n">45 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Glúteo médio, estabilidade de quadril.</td></tr>
+    <tr><td>Panturrilha sentado</td><td class="n">4 × 15–20</td><td class="n">45 s</td><td class="n">2-1-2</td><td class="n">1</td><td contenteditable="true"></td><td>Foco no sóleo.</td></tr>
+  </table>
+  </div>
+  <p style="font-size:13px;color:var(--ink-soft)">+ Lombar/core: prancha 3×45s · ponte de glúteo 3×15 · good morning leve 3×12.</p>
+
+  <div class="callout green">
+    <b>Volume total:</b> ~16–19 séries por sessão, ~90 séries semanais bem distribuídas. É o suficiente para crescer com sua recuperação atual (trabalho sentado + peteca pesada na quinta), sem cair no excesso que atrapalha o ganho.
+  </div>
+</section>
+
+<!-- ===================== CORE / LOMBAR ===================== -->
+<section id="core">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Core, lombar e estabilizadores</h2></div>
+  <p class="lead">Esta é a peça que a maioria dos planos ignora — e a mais importante pra você. Passar o dia sentado enfraquece glúteo e lombar e encurta o flexor do quadril. O resultado são aqueles incômodos ocasionais. O protocolo abaixo trata isso de forma preventiva, distribuído nos dias de treino (não precisa de dia extra).</p>
+
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>O que trabalha</th><th>Séries</th><th>Quando</th><th>Execução</th></tr>
+    <tr><td>Prancha frontal</td><td>Core anterior, estabilidade</td><td class="n">3 × 40–45 s</td><td>Seg / Sáb</td><td>Corpo reto, glúteo e abdômen contraídos, sem cair o quadril.</td></tr>
+    <tr><td>Prancha lateral</td><td>Oblíquos, estabilizadores</td><td class="n">3 × 30 s/lado</td><td>Qua</td><td>Quadril alto, linha reta de cabeça ao pé.</td></tr>
+    <tr><td>Dead bug</td><td>Core anti-extensão</td><td class="n">3 × 10/lado</td><td>Seg</td><td>Lombar colada no chão; estenda braço e perna opostos devagar.</td></tr>
+    <tr><td>Bird dog</td><td>Lombar, coordenação</td><td class="n">3 × 10/lado</td><td>Ter</td><td>Estenda braço e perna opostos; sem rodar o quadril.</td></tr>
+    <tr><td>Hiperextensão (banco romano)</td><td>Eretores da espinha</td><td class="n">3 × 12–15</td><td>Ter</td><td>Suba até alinhar o tronco; não hiperestenda.</td></tr>
+    <tr><td>Ponte de glúteo</td><td>Glúteo, lombar</td><td class="n">3 × 15</td><td>Sáb</td><td>Aperte o glúteo no topo 1s.</td></tr>
+    <tr><td>Pallof press</td><td>Anti-rotação (estabilidade)</td><td class="n">2 × 12/lado</td><td>1× na semana</td><td>No cabo: resista à rotação mantendo o tronco firme.</td></tr>
+  </table>
+  </div>
+
+  <div class="callout">
+    <b>Hábito diário fora do treino.</b> Levante-se a cada ~50 min de trabalho, ande 1–2 min e faça 10 agachamentos no peso do corpo. Isso, sozinho, reduz muito o efeito da rotina sentada — vale mais que qualquer exercício isolado de lombar.
+  </div>
+</section>
+
+<!-- ===================== AQUECIMENTO ===================== -->
+<section id="aquece">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Aquecimento e mobilidade</h2></div>
+  <p class="lead">8–10 minutos antes de cada treino. Reduz risco de lesão, melhora a execução e prepara as articulações — ainda mais importante pra quem chega ao treino depois de horas sentado.</p>
+
+  <div class="grid3">
+    <div class="card tight">
+      <h4 class="mini">1 · Geral (3 min)</h4>
+      <p style="font-size:13px;color:var(--ink-soft);margin:0">Esteira ou bike leve para elevar a frequência cardíaca e a temperatura corporal.</p>
+    </div>
+    <div class="card tight">
+      <h4 class="mini">2 · Mobilidade (4 min)</h4>
+      <ul style="font-size:13px;color:var(--ink-soft);margin:0 0 0 16px">
+        <li>Gato-camelo · 10 reps</li>
+        <li>Rotação torácica · 8/lado</li>
+        <li>Mobilidade de quadril 90/90</li>
+        <li>Mobilidade de ombro com elástico</li>
+      </ul>
+    </div>
+    <div class="card tight">
+      <h4 class="mini">3 · Ativação (2 min)</h4>
+      <ul style="font-size:13px;color:var(--ink-soft);margin:0 0 0 16px">
+        <li>Empurrar/puxar: band pull-apart · manguito rotador</li>
+        <li>Pernas: ponte de glúteo · monster walk com elástico</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <b>Aquecimento específico.</b> No 1º exercício pesado de cada sessão, faça 2–3 séries de aproximação: a barra/peso leve, depois ~50% e ~70% da carga de trabalho, com poucas reps. Só então parte para as séries valendo. Isso prepara o padrão de movimento sem te cansar.
+  </div>
+</section>
+
+<!-- ===================== PROGRESSÃO ===================== -->
+<section id="progressao">
+  <div class="sec-head"><span class="sec-num">12</span><h2>Progressão, deload e evolução</h2></div>
+  <p class="lead">Crescer é consequência de sobrecarga progressiva ao longo do tempo. A regra é simples e mensurável.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 class="mini">Progressão de carga (dupla progressão)</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:8px">Trabalhe dentro da faixa de reps. Quando bater o <b>topo da faixa em todas as séries</b> com RIR ≥ 1, aumente a carga em 2,5–5% e volte ao fundo da faixa. Repita o ciclo.</p>
+      <p style="font-size:12.5px;color:var(--ink-faint);margin:0">Ex.: 3×8–10. Conseguiu 10/10/10 fácil → sobe a carga, volta para ~8 reps.</p>
+    </div>
+    <div class="card">
+      <h4 class="mini">Progressão de volume</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:0">A cada ~2 semanas, adicione 1 série a um grupo prioritário (costas/pernas) até o teto de ~18–20 séries semanais por grupo. Chegou no teto e estagnou → hora do deload.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h4 class="mini">Deload (a cada 6–8 semanas)</h4>
+    <p style="font-size:13.5px;color:var(--ink-soft);margin:0">Uma semana com volume e intensidade reduzidos (~50% das séries, cargas leves, RIR 3–4). Não é preguiça — é quando o corpo supercompensa e você volta mais forte. Programe sempre que sentir queda de força, sono ruim ou desânimo persistente.</p>
+  </div>
+
+  <h3 class="block">Evolução esperada</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Período</th><th>Ganho de peso</th><th>O que esperar</th></tr>
+    <tr><td>Semanas 1–4</td><td class="n">+0,25–0,4 kg/sem</td><td>Adaptação, ganho de força rápido, "memória muscular".</td></tr>
+    <tr><td>Semanas 5–8</td><td class="n">+0,2–0,3 kg/sem</td><td>Hipertrofia consistente; cargas subindo mês a mês.</td></tr>
+    <tr><td>Semanas 9–12</td><td class="n">+0,2 kg/sem</td><td>Ganho mais lento e limpo; reavaliar composição corporal.</td></tr>
+  </table>
+  </div>
+  <p style="font-size:13px;color:var(--ink-soft)">Como ectomorfo, espere ~2–4 kg de massa magra em um ciclo bem conduzido de 12 semanas. Se o peso parar de subir, o problema quase sempre é caloria — coma mais antes de mexer no treino.</p>
+</section>
+
+<!-- ===================== FINAL ===================== -->
+<section id="final" style="border-bottom:none">
+  <div class="sec-head"><span class="sec-num">13</span><h2>Considerações finais</h2></div>
+  <p class="lead">Este protocolo foi montado para ser usado na vida real — não no papel. Três coisas fazem 90% do resultado:</p>
+
+  <div class="grid3">
+    <div class="ro"><div class="lab">Prioridade 1</div><div class="val" style="font-size:18px;font-family:var(--display)">Comer todo dia</div><div class="note">Ectomorfo não cresce pulando refeição. As marmitas existem pra isso.</div></div>
+    <div class="ro clay"><div class="lab">Prioridade 2</div><div class="val" style="font-size:18px;font-family:var(--display)">Progredir carga</div><div class="note">Anote os pesos. Se a barra não sobe ao longo das semanas, não há estímulo novo.</div></div>
+    <div class="ro"><div class="lab">Prioridade 3</div><div class="val" style="font-size:18px;font-family:var(--display)">Dormir e recuperar</div><div class="note">7–8h de sono e o domingo de folga. É aí que o músculo cresce.</div></div>
+  </div>
+
+  <div class="callout">
+    <b>Importante.</b> Este é um plano educativo e de referência, baseado em estimativas de bioimpedância. Não substitui avaliação presencial. Para os incômodos lombares, vale uma avaliação com fisioterapeuta ou educador físico; para exames e suplementação (vitamina D, ômega 3), consulte um nutricionista ou médico. Ajuste tudo conforme sua resposta real ao longo das semanas.
+  </div>
+
+  <p style="font-size:13.5px;color:var(--ink-soft)">Comece leve na técnica, suba carga com paciência e confie no processo. Consistência por 12 semanas vai te levar muito mais longe do que qualquer treino "perfeito" feito pela metade. Bom treino. 💪</p>
 </section>
 
 <footer>
-  <div class="sig">Protocolo de Treino + Dieta · PWA Edition</div>
-  <p style="margin-top:6px">Seus dados são salvos localmente neste navegador.</p>
+  <div class="sig">Protocolo de Treino + Dieta · Igor Procópio</div>
+  <p style="margin-top:6px">Ciclo de 8–12 semanas · revisão recomendada ao final do período.</p>
 </footer>
 
 </div>
 
+<!-- ===================== HIDRATAÇÃO ===================== -->
+<section id="hidrata">
+  <div class="sec-head"><span class="sec-num">14</span><h2>Hidratação, fibras e micronutrientes</h2></div>
+  <p class="lead">Performance, digestão e recuperação dependem diretamente de hidratação e ingestão adequada de micronutrientes.</p>
+  <div class="grid3">
+    <div class="card tight"><h4 class="mini">Água diária</h4><p style="font-size:13.5px;color:var(--ink-soft)">Meta base: ~2,5–3,2 L/dia. Em dias de treino pesado, calor ou peteca, aumente gradualmente.</p></div>
+    <div class="card tight"><h4 class="mini">Fibras</h4><p style="font-size:13.5px;color:var(--ink-soft)">30–40 g/dia. Distribua ao longo do dia para digestão e saúde intestinal.</p></div>
+    <div class="card tight"><h4 class="mini">Vegetais verdes</h4><p style="font-size:13.5px;color:var(--ink-soft)">Brócolis, espinafre, couve, rúcula e agrião ajudam na ingestão de magnésio, potássio e antioxidantes.</p></div>
+  </div>
+</section>
+
+<!-- ===================== SONO ===================== -->
+<section id="sono">
+  <div class="sec-head"><span class="sec-num">15</span><h2>Higiene do sono e recuperação</h2></div>
+  <p class="lead">Hipertrofia depende de recuperação. Como sua rotina envolve computador, estudos e jogos à noite, o ambiente precisa ser ajustado para não sabotar o sono profundo.</p>
+  <div class="grid2">
+    <div class="card">
+      <h4 class="mini">Rotina noturna</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li>Reduza brilho e luz azul das telas 60–90 min antes de dormir.</li>
+        <li>Evite jogos competitivos e conteúdos muito estimulantes próximo da hora de deitar.</li>
+        <li>Mantenha horário consistente para dormir/acordar, inclusive finais de semana.</li>
+        <li>Quarto escuro, silencioso e fresco melhora profundidade do sono.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 class="mini">Cafeína e recuperação</h4>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0">
+        <li>Evite cafeína até 8h antes do horário de dormir.</li>
+        <li>Última refeição: moderada, sem exagerar em gordura.</li>
+        <li>Meta mínima: 7–8h/noite. Dias de peteca e treino pesado se beneficiam ainda mais.</li>
+        <li>Se acordar cansado por vários dias, reduza volume do treino antes de aumentar estimulantes.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <script>
-  // PWA Local Storage Script for Main Protocol
-  document.addEventListener("DOMContentLoaded", () => {
-    // 1. Auto-save all inputs
-    const inputs = document.querySelectorAll('input');
-    inputs.forEach(input => {
-      const saved = localStorage.getItem(input.id);
-      if (saved !== null) { input.value = saved; }
-      
-      input.addEventListener('input', () => {
-        localStorage.setItem(input.id, input.value);
-        if (input.id.startsWith('peso-')) updateAverage();
-      });
-    });
+const STORAGE_KEY='protocolo_igor_v1';
+const HISTORY_KEY='protocolo_igor_history';
 
-    // 2. Calculate Weekly Weight Average
-    function updateAverage() {
-      const days = ['seg','ter','qua','qui','sex','sab','dom'];
-      let sum = 0, count = 0;
-      days.forEach(d => {
-        const val = parseFloat(document.getElementById('peso-'+d).value);
-        if(!isNaN(val)){ sum += val; count++; }
-      });
-      const avgDisplay = document.getElementById('peso-media');
-      if(count > 0){
-        avgDisplay.innerText = (sum / count).toFixed(2) + ' kg';
-      } else {
-        avgDisplay.innerText = '-- kg';
-      }
-    }
-    updateAverage(); // init
+function saveState(){
+  const editable=document.querySelectorAll('[contenteditable="true"]');
+  const data=[...editable].map(el=>el.innerHTML);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  const history=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');
+  history.push({date:new Date().toISOString(),data});
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-20)));
+}
+
+function loadState(){
+  const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  document.querySelectorAll('[contenteditable="true"]').forEach((el,i)=>{
+    if(data[i]!==undefined){el.innerHTML=data[i];}
+    el.addEventListener('input', saveState);
   });
+}
 
-  // Service Worker Registration
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
+window.addEventListener('load',()=>{
+  loadState();
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('./service-worker.js');
   }
+});
 </script>
 </body>
 </html>
