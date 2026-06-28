@@ -3,18 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#3A7355">
 <title>Lista de Compras e Dieta Semanal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F6F3EB; --paper:#FFFDF8; --ink:#26231C; --soft:#615C50;
-    --faint:#928C7C; --line:#E6E0D2; --green:#3A7355; --green-deep:#2B5641;
-    --green-soft:#E0EBE2; --tom:#C45A33; --tom-soft:#F6E3D6; --tom-deep:#9E4828;
-    --radius:14px; --shadow:0 1px 2px rgba(38,35,28,.05),0 10px 30px rgba(38,35,28,.06);
-    --serif:'Fraunces',serif; --body:'Inter',sans-serif;
+    --bg:#F6F3EB;
+    --paper:#FFFDF8;
+    --ink:#26231C;
+    --soft:#615C50;
+    --faint:#928C7C;
+    --line:#E6E0D2;
+    --green:#3A7355;
+    --green-deep:#2B5641;
+    --green-soft:#E0EBE2;
+    --tom:#C45A33;
+    --tom-soft:#F6E3D6;
+    --tom-deep:#9E4828;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(38,35,28,.05),0 10px 30px rgba(38,35,28,.06);
+    --serif:'Fraunces',serif;
+    --body:'Inter',sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
@@ -29,7 +39,9 @@
   .kick{font-family:var(--body);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#bcd6c5;margin-bottom:14px}
   header h1{font-size:clamp(30px,5.5vw,46px);font-weight:700;color:#fff;max-width:16ch}
   header p{margin-top:14px;font-size:15.5px;color:#dcebe0;max-width:54ch}
-  
+  .to{margin-top:24px;display:inline-flex;gap:9px;align-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:9px 16px;border-radius:10px;font-size:13.5px}
+  .to b{color:#fff}
+
   section{padding:46px 0;border-bottom:1px solid var(--line)}
   .sec-head{display:flex;align-items:center;gap:13px;margin-bottom:8px}
   .sec-head .em{font-size:24px}
@@ -41,102 +53,305 @@
   .cat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;break-inside:avoid}
   .cat h3{font-size:16px;padding:13px 18px;background:var(--green-soft);color:var(--green-deep);display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--line)}
   .cat ul{list-style:none}
-  .cat li{display:flex;align-items:flex-start;gap:11px;padding:10px 18px;border-top:1px solid var(--line);font-size:14px; cursor: pointer; transition: 0.2s;}
-  .cat li:hover{background: #fdfdfd;}
+  .cat li{display:flex;align-items:flex-start;gap:11px;padding:10px 18px;border-top:1px solid var(--line);font-size:14px}
   .cat li:first-child{border-top:none}
   .cat li label{display:flex;align-items:flex-start;gap:11px;cursor:pointer;width:100%}
-  .cat input[type=checkbox]{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:2px solid var(--green);border-radius:6px;margin-top:2px;flex:none;position:relative;cursor:pointer;transition:.15s}
+  .cat input[type=checkbox]{appearance:none;-webkit-appearance:none;width:19px;height:19px;border:2px solid var(--green);border-radius:5px;margin-top:1px;flex:none;position:relative;cursor:pointer;transition:.15s}
   .cat input[type=checkbox]:checked{background:var(--green);border-color:var(--green)}
-  .cat input[type=checkbox]:checked:after{content:"✓";position:absolute;color:#fff;font-size:14px;font-weight:700;left:3px;top:-1px}
+  .cat input[type=checkbox]:checked:after{content:"✓";position:absolute;color:#fff;font-size:13px;font-weight:700;left:3px;top:-2px}
   .cat input:checked + .it{text-decoration:line-through;color:var(--faint)}
   .it{flex:1}
   .qty{font-weight:600;color:var(--green-deep);white-space:nowrap}
   .hint{display:block;font-size:11.5px;color:var(--faint);margin-top:1px}
 
-  .btn-clear { background: var(--tom-soft); color: var(--tom-deep); border: 1px solid var(--tom); padding: 10px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 20px; font-size: 14px; }
+  .note{border-left:3px solid var(--tom);background:var(--tom-soft);padding:13px 17px;border-radius:0 10px 10px 0;margin:20px 0 0;font-size:13.5px}
+  .note b{color:var(--tom-deep)}
+  .note.green{border-left-color:var(--green);background:var(--green-soft)}
+  .note.green b{color:var(--green-deep)}
 
-  @media(max-width:680px){ .cats{grid-template-columns:1fr} }
+  /* DAILY DIET */
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--soft);margin-bottom:18px}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .pill{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px}
+  .pill.marm{background:var(--tom-soft);color:var(--tom-deep)}
+  .pill.quick{background:var(--green-soft);color:var(--green-deep)}
+
+  .day{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;break-inside:avoid}
+  .day > .top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;background:var(--green-deep);color:#fdfbf6;flex-wrap:wrap}
+  .day .top .dname{font-family:var(--serif);font-weight:600;font-size:17px}
+  .day .top .prot{font-size:13px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:3px 11px;border-radius:999px}
+  .day .top .prot b{color:#fff;font-weight:600}
+  .day table{width:100%;border-collapse:collapse;font-size:13.5px}
+  .day td{padding:9px 18px;border-top:1px solid var(--line);vertical-align:top}
+  .day td.meal{width:140px;font-weight:600;color:var(--ink);white-space:nowrap}
+  .day td.meal .tag{display:inline-block;margin-top:4px;font-size:10px;font-weight:600;padding:1px 7px;border-radius:999px}
+  .day td.meal .tag.marm{background:var(--tom-soft);color:var(--tom-deep)}
+  .day td.meal .tag.quick{background:var(--green-soft);color:var(--green-deep)}
+  .day td.food{color:var(--soft)}
+  .day td.food b{color:var(--ink)}
+  .day tr.marm td{background:rgba(196,90,51,.045)}
+
+  /* PREP */
+  .steps{counter-reset:s;display:grid;gap:12px}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px 16px 56px;position:relative}
+  .step:before{counter-increment:s;content:counter(s);position:absolute;left:16px;top:15px;width:28px;height:28px;border-radius:8px;background:var(--green);color:#fff;font-family:var(--serif);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .step h4{font-family:var(--serif);font-size:15px;margin-bottom:3px}
+  .step p{font-size:13.5px;color:var(--soft);margin:0}
+
+  .storebox{margin-top:16px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .storebox table{width:100%;border-collapse:collapse;font-size:13px}
+  .storebox th{background:var(--green-soft);color:var(--green-deep);text-align:left;padding:9px 16px;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+  .storebox td{padding:8px 16px;border-top:1px solid var(--line)}
+  .storebox td.c{white-space:nowrap;font-weight:600;color:var(--green-deep)}
+
+  footer{padding:30px 0 50px;color:var(--soft);font-size:13px}
+
+  @media(max-width:680px){
+    .cats{grid-template-columns:1fr}
+    .day td.meal{width:auto;display:block}
+    .day table,.day tbody,.day tr,.day td{display:block;width:100%}
+    .day td{border-top:none;padding:6px 18px}
+    .day tr{border-top:1px solid var(--line);padding:8px 0}
+    header:before{display:none}
+  }
+  @media print{
+    body{background:#fff;font-size:12px}
+    header{background:var(--green-deep)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .cat,.day,.step,.storebox,.note,header:before{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    section{page-break-inside:auto;padding:24px 0}
+    .cat,.day,.step{page-break-inside:avoid}
+    header:before{display:none}
+  }
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap">
-    <div class="kick">Compra Semanal (PWA)</div>
-    <h1>Lista de Compras</h1>
-    <p>Marque os itens enquanto estiver no mercado. O app salvará automaticamente onde você parou.</p>
+    <div class="kick">Compra e Preparo Semanal · 1 pessoa</div>
+    <h1>Lista de Compras e Dieta da Semana</h1>
+    <p>Tudo o que precisa comprar e como montar as marmitas da semana. Os itens de almoço e jantar são preparados em casa (marmita); o restante é montado na hora.</p>
     <a href="index.html" class="btn-back">⬅ Voltar ao Protocolo Principal</a>
+    <div class="to">📋 <span><b>Marque</b> os itens conforme for comprando</span></div>
   </div>
 </header>
 
 <div class="wrap">
+
+<!-- ===== LISTA DE COMPRAS ===== -->
 <section id="compras">
-  <div class="sec-head"><span class="em">🛒</span><h2>Sua Lista</h2></div>
+  <div class="sec-head"><span class="em">🛒</span><h2>Lista de compras</h2></div>
+  <p class="lead">Quantidades para 1 pessoa por 1 semana (pesos crus, com folga). Itens com "~" são por kg/unidade — arredonde para a embalagem do mercado.</p>
+
   <div class="cats">
+
     <div class="cat">
       <h3>🥩 Proteínas</h3>
       <ul>
-        <li><label><input type="checkbox" id="c-frango"><span class="it">Frango — peito + sobrecoxa</span><span class="qty">~1 kg</span></label></li>
-        <li><label><input type="checkbox" id="c-patinho"><span class="it">Patinho moído</span><span class="qty">~800 g</span></label></li>
-        <li><label><input type="checkbox" id="c-peixe"><span class="it">Peixe — tilápia + merluza</span><span class="qty">~750 g</span></label></li>
-        <li><label><input type="checkbox" id="c-lombo"><span class="it">Lombo suíno</span><span class="qty">~450 g</span></label></li>
-        <li><label><input type="checkbox" id="c-ovos"><span class="it">Ovos</span><span class="qty">2 dúzias</span></label></li>
-        <li><label><input type="checkbox" id="c-atum"><span class="it">Atum em lata</span><span class="qty">2 latas</span></label></li>
-        <li><label><input type="checkbox" id="c-iogurte"><span class="it">Iogurte natural</span><span class="qty">~1,2 kg</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Frango — peito + sobrecoxa <span class="hint">limpo, sem pele</span></span><span class="qty">~1 kg</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Patinho moído</span><span class="qty">~800 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Peixe — tilápia + merluza (filé)</span><span class="qty">~750 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Lombo suíno</span><span class="qty">~450 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Ovos</span><span class="qty">2 dúzias</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Atum em lata</span><span class="qty">2 latas</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Whey protein <span class="hint">dura ~2 semanas</span></span><span class="qty">1 pote</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Iogurte natural</span><span class="qty">~1,2 kg</span></label></li>
       </ul>
     </div>
+
     <div class="cat">
       <h3>🍚 Carboidratos</h3>
       <ul>
-        <li><label><input type="checkbox" id="c-arroz"><span class="it">Arroz</span><span class="qty">1 kg</span></label></li>
-        <li><label><input type="checkbox" id="c-feijao"><span class="it">Feijão</span><span class="qty">500 g</span></label></li>
-        <li><label><input type="checkbox" id="c-aveia"><span class="it">Aveia em flocos</span><span class="qty">~500 g</span></label></li>
-        <li><label><input type="checkbox" id="c-pao"><span class="it">Pão integral</span><span class="qty">1 pct</span></label></li>
-        <li><label><input type="checkbox" id="c-batata"><span class="it">Batata inglesa</span><span class="qty">~500 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Arroz</span><span class="qty">1 kg</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Feijão</span><span class="qty">500 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Aveia em flocos</span><span class="qty">~500 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Goma de tapioca</span><span class="qty">500 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Pão de forma integral</span><span class="qty">1 pacote</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Macarrão</span><span class="qty">500 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Batata inglesa</span><span class="qty">~500 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Batata-doce</span><span class="qty">~300 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Mandioca <span class="hint">fresca ou congelada</span></span><span class="qty">~500 g</span></label></li>
       </ul>
     </div>
+
+    <div class="cat">
+      <h3>🍌 Frutas</h3>
+      <ul>
+        <li><label><input type="checkbox"><span class="it">Banana</span><span class="qty">~15 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Frutas variadas <span class="hint">maçã, laranja, mamão</span></span><span class="qty">~6 un</span></label></li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <h3>🫒 Gorduras</h3>
+      <ul>
+        <li><label><input type="checkbox"><span class="it">Azeite de oliva</span><span class="qty">500 ml</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Pasta de amendoim <span class="hint">dura semanas</span></span><span class="qty">1 pote</span></label></li>
+      </ul>
+    </div>
+
     <div class="cat">
       <h3>🥦 Legumes e verduras</h3>
       <ul>
-        <li><label><input type="checkbox" id="c-verdes"><span class="it">Verdes (Brócolis, espinafre, rúcula) <span class="hint">Fibras e magnésio</span></span><span class="qty">mix</span></label></li>
-        <li><label><input type="checkbox" id="c-tomate"><span class="it">Tomate</span><span class="qty">~6 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Folhas p/ salada <span class="hint">alface, rúcula</span></span><span class="qty">1–2 maços</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Tomate</span><span class="qty">~6 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Cenoura</span><span class="qty">~3 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Brócolis / abobrinha / vagem</span><span class="qty">mix</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Cebola e alho <span class="hint">tempero base</span></span><span class="qty">à vontade</span></label></li>
       </ul>
     </div>
+
     <div class="cat">
       <h3>🧂 Extras e bebidas</h3>
       <ul>
-        <li><label><input type="checkbox" id="c-isot"><span class="it">Isotônico (Peteca)</span><span class="qty">1 un</span></label></li>
-        <li><label><input type="checkbox" id="c-leite"><span class="it">Leite</span><span class="qty">1 L</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Mel</span><span class="qty">1 potinho</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Molho de tomate</span><span class="qty">1 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Isotônico <span class="hint">dia de peteca · ou caseiro</span></span><span class="qty">1 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Leite</span><span class="qty">1 L</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Café</span><span class="qty">conf. estoque</span></label></li>
       </ul>
     </div>
+
   </div>
-  <button class="btn-clear" onclick="limparLista()">Zerar Marcações para Nova Semana</button>
+
+  <div class="note">
+    <b>Não precisa comprar toda semana:</b> whey, pasta de amendoim, azeite, mel e café duram bastante. Confira o estoque em casa antes de ir ao mercado.
+  </div>
 </section>
+
+<!-- ===== DIETA DIÁRIA ===== -->
+<section id="dieta">
+  <div class="sec-head"><span class="em">🍽️</span><h2>Dieta diária — o que preparar</h2></div>
+  <p class="lead">Cardápio dos 7 dias. A <b>proteína principal muda todo dia</b> e nunca se repete em dias seguidos. Veja abaixo o que é marmita (preparada em casa) e o que é montado na hora.</p>
+  <div class="legend">
+    <span><span class="pill marm">Marmita</span> preparada em casa (almoço/jantar)</span>
+    <span><span class="pill quick">Rápido</span> montado na hora (café, lanches, ceia)</span>
+  </div>
+
+  <!-- SEG -->
+  <div class="day">
+    <div class="top"><span class="dname">Segunda</span><span class="prot">Proteína: <b>Frango</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">Aveia 4 col. sopa · 2 ovos · 1 banana · whey 1 dose</td></tr>
+      <tr><td class="meal">Pré-treino<span class="tag quick">Rápido</span></td><td class="food">Tapioca pequena c/ 1 col. mel · café</td></tr>
+      <tr><td class="meal">Pós-treino<span class="tag quick">Rápido</span></td><td class="food">Whey 1 dose · 1 banana</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 6 col. · feijão 1 concha · <b>frango grelhado 180 g</b> · salada c/ fio de azeite</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food">Batata cozida 1 média · <b>frango 150 g</b> · legumes no vapor c/ azeite</td></tr>
+      <tr><td class="meal">Ceia<span class="tag quick">Rápido</span></td><td class="food">Iogurte 1 pote · aveia 2 col. · 1 col. pasta de amendoim</td></tr>
+    </table>
+  </div>
+
+  <!-- TER -->
+  <div class="day">
+    <div class="top"><span class="dname">Terça</span><span class="prot">Proteína: <b>Patinho moído</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">2 ovos mexidos · 2 fatias pão integral · 1 fruta · whey 1 dose</td></tr>
+      <tr><td class="meal">Pré-treino<span class="tag quick">Rápido</span></td><td class="food">2 fatias pão c/ mel · café</td></tr>
+      <tr><td class="meal">Pós-treino<span class="tag quick">Rápido</span></td><td class="food">Whey 1 dose · 1 banana</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 6 col. · feijão 1 concha · <b>patinho moído 170 g</b> · salada c/ azeite</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food">Macarrão 1 prato · <b>patinho 130 g</b> · molho de tomate</td></tr>
+      <tr><td class="meal">Ceia<span class="tag quick">Rápido</span></td><td class="food">Iogurte 1 pote · aveia 2 col.</td></tr>
+    </table>
+  </div>
+
+  <!-- QUA -->
+  <div class="day">
+    <div class="top"><span class="dname">Quarta</span><span class="prot">Proteína: <b>Peixe (tilápia/merluza)</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">Aveia 4 col. · 2 ovos · 1 banana · whey 1 dose</td></tr>
+      <tr><td class="meal">Pré-treino<span class="tag quick">Rápido</span></td><td class="food">Tapioca pequena c/ mel · café</td></tr>
+      <tr><td class="meal">Pós-treino<span class="tag quick">Rápido</span></td><td class="food">Whey 1 dose · 1 banana</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 6 col. · feijão 1 concha · <b>tilápia 200 g</b> · salada c/ azeite</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food">Mandioca cozida 1 porção · <b>merluza 180 g</b> · legumes c/ azeite</td></tr>
+      <tr><td class="meal">Ceia<span class="tag quick">Rápido</span></td><td class="food">Iogurte 1 pote · aveia 2 col. · 1 col. pasta de amendoim</td></tr>
+    </table>
+  </div>
+
+  <!-- QUI -->
+  <div class="day">
+    <div class="top"><span class="dname">Quinta · dia de peteca</span><span class="prot">Proteína: <b>Lombo suíno</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">Aveia 4 col. · 2 ovos · 1 banana · whey 1 dose</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 6 col. · feijão 1 concha · <b>lombo suíno 170 g</b> · salada</td></tr>
+      <tr><td class="meal">Pré-peteca (16h30)<span class="tag quick">Rápido</span></td><td class="food">2 fatias pão c/ mel · 1 banana</td></tr>
+      <tr><td class="meal">Durante (18–20h)<span class="tag quick">Rápido</span></td><td class="food">Água + isotônico · 1 fruta no intervalo</td></tr>
+      <tr class="marm"><td class="meal">Jantar (20h30)<span class="tag marm">Marmita</span></td><td class="food">Arroz 6 col. · <b>lombo suíno 150 g</b> · legumes · whey 1 dose</td></tr>
+      <tr><td class="meal">Ceia<span class="tag quick">Rápido</span></td><td class="food">Iogurte 1 pote · aveia 2 col.</td></tr>
+    </table>
+  </div>
+
+  <!-- SEX -->
+  <div class="day">
+    <div class="top"><span class="dname">Sexta</span><span class="prot">Proteína: <b>Frango (sobrecoxa)</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">2 ovos · 2 fatias pão integral · 1 fruta · whey 1 dose</td></tr>
+      <tr><td class="meal">Pré-treino<span class="tag quick">Rápido</span></td><td class="food">Tapioca pequena c/ mel · café</td></tr>
+      <tr><td class="meal">Pós-treino<span class="tag quick">Rápido</span></td><td class="food">Whey 1 dose · 1 banana</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 6 col. · feijão 1 concha · <b>frango 180 g</b> · salada c/ azeite</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food">Batata-doce 1 porção · <b>frango 150 g</b> · legumes c/ azeite</td></tr>
+      <tr><td class="meal">Ceia<span class="tag quick">Rápido</span></td><td class="food">Iogurte 1 pote · aveia 2 col. · pasta de amendoim</td></tr>
+    </table>
+  </div>
+
+  <!-- SAB -->
+  <div class="day">
+    <div class="top"><span class="dname">Sábado</span><span class="prot">Proteína: <b>Patinho / Peixe</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">Aveia 4 col. · 2 ovos · 1 banana · whey 1 dose</td></tr>
+      <tr><td class="meal">Pré-treino<span class="tag quick">Rápido</span></td><td class="food">2 fatias pão c/ mel · café</td></tr>
+      <tr><td class="meal">Pós-treino<span class="tag quick">Rápido</span></td><td class="food">Whey 1 dose · 1 banana</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 6 col. · feijão 1 concha · <b>patinho 170 g</b> · salada c/ azeite</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food">Mandioca cozida 1 porção · <b>tilápia 180 g</b> · legumes c/ azeite</td></tr>
+      <tr><td class="meal">Ceia<span class="tag quick">Rápido</span></td><td class="food">Iogurte 1 pote · aveia 2 col.</td></tr>
+    </table>
+  </div>
+
+  <!-- DOM -->
+  <div class="day">
+    <div class="top"><span class="dname">Domingo · descanso</span><span class="prot">Proteína: <b>Ovos + Atum</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">Omelete de 3 ovos · 2 fatias pão integral · 1 fruta</td></tr>
+      <tr><td class="meal">Lanche<span class="tag quick">Rápido</span></td><td class="food">Whey 1 dose · 1 banana · aveia 2 col.</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 6 col. · feijão 1 concha · <b>atum + 2 ovos</b> · salada c/ azeite</td></tr>
+      <tr><td class="meal">Lanche da tarde<span class="tag quick">Rápido</span></td><td class="food">Iogurte 1 pote · pasta de amendoim · 1 fruta</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food">Batata cozida 1 média · <b>2 ovos + atum</b> · legumes c/ azeite</td></tr>
+      <tr><td class="meal">Ceia<span class="tag quick">Rápido</span></td><td class="food">Whey 1 dose c/ leite</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== PREPARO ===== -->
+<section id="preparo" style="border-bottom:none">
+  <div class="sec-head"><span class="em">🍳</span><h2>Como preparar as marmitas</h2></div>
+  <p class="lead">A dica é cozinhar em lote 2× por semana (sugestão: <b>domingo e quarta</b>) e congelar. Assim sempre há marmita pronta.</p>
+
+  <div class="steps">
+    <div class="step"><h4>Cozinhe a base</h4><p>Arroz e feijão em boa quantidade, de uma vez, para a semana toda.</p></div>
+    <div class="step"><h4>Asse/grelhe as proteínas juntas</h4><p>Coloque frango, patinho, peixe e suíno temperados (alho, cebola, ervas, limão) no forno ou na grelha. Sem fritura — menos óleo, mais sabor.</p></div>
+    <div class="step"><h4>Prepare os legumes</h4><p>Cozinhe no vapor (preserva os nutrientes) os que vão quentes, e deixe folhas e tomate frescos para a salada.</p></div>
+    <div class="step"><h4>Monte e guarde</h4><p>Monte as marmitas (carboidrato + proteína + legume) em potes individuais. O que não for comer em 3 dias, congele. Etiquete com a data.</p></div>
+  </div>
+
+  <div class="storebox">
+    <table>
+      <tr><th>Item</th><th>Na geladeira</th><th>No congelador</th></tr>
+      <tr><td>Arroz e feijão</td><td class="c">3–4 dias</td><td class="c">até 3 meses</td></tr>
+      <tr><td>Frango / patinho / suíno</td><td class="c">3 dias</td><td class="c">até 3 meses</td></tr>
+      <tr><td>Peixe cozido</td><td class="c">2 dias</td><td class="c">até 2 meses</td></tr>
+      <tr><td>Marmita completa</td><td class="c">3 dias</td><td class="c">até 1 mês</td></tr>
+      <tr><td>Legumes cozidos</td><td class="c">3–4 dias</td><td class="c">até 2 meses</td></tr>
+    </table>
+  </div>
+
+  <div class="note green">
+    <b>Segurança alimentar:</b> deixe o alimento esfriar antes de congelar; descongele sempre na geladeira (na véspera), nunca na bancada; reaqueça bem; e não recongele o que já foi descongelado.
+  </div>
+
+  <div class="note">
+    <b>Isotônico caseiro</b> (opção para o dia de peteca): 500 ml de água + 1 pitada de sal + suco de 1 limão + 1 colher de mel.
+  </div>
+</section>
+
 </div>
-
-<script>
-  // PWA Local Storage for Checklist
-  document.addEventListener("DOMContentLoaded", () => {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(chk => {
-      const saved = localStorage.getItem(chk.id);
-      if (saved === 'true') chk.checked = true;
-      
-      chk.addEventListener('change', () => {
-        localStorage.setItem(chk.id, chk.checked);
-      });
-    });
-  });
-
-  function limparLista() {
-    if(confirm("Deseja desmarcar todos os itens para iniciar uma nova semana de compras?")) {
-      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(chk => {
-        chk.checked = false;
-        localStorage.setItem(chk.id, 'false');
-      });
-    }
-  }
-</script>
 </body>
 </html>
