@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#234634">
+<title>Protocolo de Treino e Dieta — Igor Procópio</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F2EC; --surface:#FCFBF7; --surface-2:#FFFFFF;
+    --ink:#1B201D; --ink-soft:#5C635D; --ink-faint:#8A908A;
+    --line:#E3DED2; --green:#2E5A43; --green-deep:#234634;
+    --green-soft:#DDE8E0; --clay:#BC6536; --clay-soft:#F2E2D5;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(27,32,29,.04),0 8px 28px rgba(27,32,29,.05);
+    --mono:'JetBrains Mono',monospace;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1050px;margin:0 auto;padding:0 22px}
+  h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.18;letter-spacing:-.01em}
+  .mono{font-family:var(--mono)}
+  a{color:var(--green);text-decoration:none}
+  
+  /* INPUTS PWA */
+  input[type="text"], input[type="number"] {
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 6px; padding: 6px 8px; font-family: var(--mono);
+    font-size: 13px; color: var(--green-deep); text-align: center;
+    width: 100%; max-width: 80px; transition: border 0.2s;
+  }
+  input[type="text"]:focus, input[type="number"]:focus {
+    outline: none; border-color: var(--green);
+  }
+  .weight-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 12px; margin-top: 16px;
+  }
+  .weight-card {
+    background: var(--surface); border: 1px solid var(--line);
+    padding: 12px; border-radius: 10px; text-align: center; box-shadow: var(--shadow);
+  }
+  .weight-card span { display: block; font-size: 12px; color: var(--ink-soft); font-weight: 500; margin-bottom: 6px; }
+  .weight-avg { background: var(--green-soft); border-color: var(--green); }
+  .weight-avg span { color: var(--green-deep); font-weight: 700; }
+  .weight-avg div { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--green-deep); margin-top: 5px; }
+
+  /* COVER */
+  .cover{background:linear-gradient(160deg,var(--green-deep),var(--green) 60%,#356b50);color:#F4F2EC;padding:72px 0 64px;position:relative;overflow:hidden;}
+  .cover:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.10) 1px,transparent 0);background-size:22px 22px;opacity:.5;}
+  .cover .wrap{position:relative}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#B9D2C2;margin-bottom:20px;}
+  .cover h1{font-size:clamp(34px,6vw,58px);font-weight:700;color:#fff;max-width:14ch}
+  .cover .sub{margin-top:18px;font-size:17px;color:#D6E6DC;max-width:52ch}
+  .cover .meta{margin-top:38px;display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--mono);font-size:12.5px;color:#C8DCD0;}
+  .cover .meta b{color:#fff;font-weight:700}
+  .badge{display:inline-block;margin-bottom:22px;padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E4F0E8;}
+
+  /* SECTIONS */
+  section{padding:54px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px}
+  .sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--clay);border:1px solid var(--clay-soft);background:var(--clay-soft);padding:3px 9px;border-radius:7px;letter-spacing:.05em;flex:none;}
+  .sec-head h2{font-size:clamp(23px,3.4vw,31px);font-weight:600}
+  .lead{color:var(--ink-soft);max-width:68ch;margin-bottom:8px}
+  h3.block{font-size:18px;margin:30px 0 12px;color:var(--green-deep)}
+  h4.mini{font-size:14px;font-family:var(--display);margin:18px 0 8px;color:var(--ink)}
+  p{margin-bottom:12px}
+  ul,ol{margin:0 0 14px 20px}
+  li{margin-bottom:5px}
+
+  /* READOUTS */
+  .readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:8px 0 6px}
+  .ro{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px 14px;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+  .ro:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--green)}
+  .ro.clay:before{background:var(--clay)}
+  .ro .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+  .ro .val{font-family:var(--mono);font-weight:700;font-size:27px;color:var(--ink);margin-top:6px;line-height:1}
+  .ro .val span{font-size:13px;color:var(--ink-soft);font-weight:500}
+  .ro .note{font-size:11.5px;color:var(--ink-soft);margin-top:6px}
+
+  /* CARDS */
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin-bottom:16px;}
+  .card.tight{padding:16px 18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .callout{border-left:3px solid var(--clay);background:var(--clay-soft);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0;font-size:14px;}
+  .callout.green{border-left-color:var(--green);background:var(--green-soft)}
+  .callout b{color:var(--green-deep)}
+  .tag{font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-soft);padding:2px 8px;border-radius:6px;white-space:nowrap}
+  .tag.clay{color:var(--clay);background:var(--clay-soft)}
+
+  /* TABLES */
+  .tbl{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .tbl th{background:var(--green-deep);color:#EAF2EC;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:10px 12px;}
+  .tbl td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:middle}
+  .tbl tr:nth-child(even) td{background:rgba(46,90,67,.025)}
+  .tbl td.n{font-family:var(--mono);white-space:nowrap;text-align:right;color:var(--ink-soft)}
+  .tbl tr.total td{background:var(--green-soft);font-weight:600;border-top:2px solid var(--green)}
+  .tbl tr.total td.n{color:var(--green-deep)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch; padding-bottom: 5px;}
+
+  /* TIMELINE */
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:6px 0}
+  .day{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px 10px;text-align:center;box-shadow:var(--shadow);}
+  .day .d{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  .day .t{font-family:var(--display);font-weight:600;font-size:13px;margin-top:7px;line-height:1.25}
+  .day .ic{font-size:18px;margin-top:8px}
+  .day.train{border-top:3px solid var(--green)}
+  .day.peteca{border-top:3px solid var(--clay);background:var(--clay-soft)}
+  .day.rest{border-top:3px solid var(--line);background:#F0EEE6}
+
+  /* BAR (macros) */
+  .macrobar{display:flex;height:30px;border-radius:8px;overflow:hidden;margin:14px 0 8px;border:1px solid var(--line)}
+  .macrobar div{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700}
+  .m-p{background:var(--green)} .m-c{background:var(--clay)} .m-f{background:#9A8C5E}
+  .legend{display:flex;gap:18px;font-size:12px;flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  /* NAV */
+  .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow)}
+  .toc ol{margin:0;list-style:none;columns:2;column-gap:34px}
+  .toc li{margin-bottom:7px;font-size:13.5px;break-inside:avoid}
+  .toc li a{color:var(--ink);display:flex;gap:10px}
+  .toc .n{font-family:var(--mono);color:var(--clay);font-weight:700;font-size:12px;min-width:22px}
+  .toc li a:hover{color:var(--green)}
+
+  /* BUTTONS */
+  .btn-nav { display: inline-block; background: var(--surface); border: 1px solid var(--line); color: var(--ink); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-align: center; margin-top: 20px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-nav:hover { background: var(--green-soft); color: var(--green-deep); border-color: var(--green); }
+
+  footer{padding:40px 0 60px;color:var(--ink-soft);font-size:13px}
+  .sig{font-family:var(--display);font-weight:600;color:var(--ink);font-size:16px}
+
+  @media(max-width:720px){
+    .grid2,.grid3{grid-template-columns:1fr}
+    .week{grid-template-columns:repeat(2,1fr)}
+    .toc ol{columns:1}
+    section{padding:40px 0}
+  }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="badge">Consultoria de Performance · Hipertrofia (PWA)</div>
+    <div class="eyebrow">Protocolo Integrado de Treino + Nutrição</div>
+    <h1>Construção de Massa Magra com Controle de Gordura</h1>
+    <p class="sub">Plano de hipertrofia baseado em evidências, com fortalecimento estrutural, dieta marmitável, métricas interativas e estratégia específica para o dia de peteca.</p>
+    <div class="meta">
+      <span><b>Aluno</b> · Igor Procópio</span>
+      <span><b>Objetivo</b> · Ganho de massa magra (clean bulk)</span>
+      <span><b>Frequência</b> · 5× musculação + 1× peteca</span>
+    </div>
+    <a href="compras.html" class="btn-nav">🛒 Abrir Lista de Compras</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section id="sumario">
+  <div class="sec-head"><span class="sec-num">00</span><h2>Sumário</h2></div>
+  <div class="toc">
+    <ol>
+      <li><a href="#metricas"><span class="n">01</span> Métricas e acompanhamento diário</a></li>
+      <li><a href="#estrategia"><span class="n">02</span> Estratégia nutricional (Hidratação e Fibras)</a></li>
+      <li><a href="#cronograma"><span class="n">03</span> Cronograma semanal</a></li>
+      <li><a href="#dieta"><span class="n">04</span> Dieta completa — 7 dias (Atualizada)</a></li>
+      <li><a href="#peteca"><span class="n">05</span> Estratégia para o dia de peteca</a></li>
+      <li><a href="#treino"><span class="n">06</span> Treino — Registro de Cargas (Editável)</a></li>
+      <li><a href="#sono"><span class="n">07</span> Higiene do Sono e Recuperação</a></li>
+    </ol>
+  </div>
+</section>
+
+<section id="metricas">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Métricas e acompanhamento diário</h2></div>
+  <p class="lead">Base de partida medida via Galaxy Watch 6. Anote seu peso em jejum diariamente abaixo. O app calculará a média semanal automaticamente. A meta é subir entre <b>0,25kg e 0,4kg</b> por semana.</p>
+
+  <div class="weight-grid">
+    <div class="weight-card"><span>Segunda</span><input type="number" step="0.1" id="peso-seg" placeholder="kg"></div>
+    <div class="weight-card"><span>Terça</span><input type="number" step="0.1" id="peso-ter" placeholder="kg"></div>
+    <div class="weight-card"><span>Quarta</span><input type="number" step="0.1" id="peso-qua" placeholder="kg"></div>
+    <div class="weight-card"><span>Quinta</span><input type="number" step="0.1" id="peso-qui" placeholder="kg"></div>
+    <div class="weight-card"><span>Sexta</span><input type="number" step="0.1" id="peso-sex" placeholder="kg"></div>
+    <div class="weight-card"><span>Sábado</span><input type="number" step="0.1" id="peso-sab" placeholder="kg"></div>
+    <div class="weight-card"><span>Domingo</span><input type="number" step="0.1" id="peso-dom" placeholder="kg"></div>
+    <div class="weight-card weight-avg"><span>Média Semanal</span><div id="peso-media">-- kg</div></div>
+  </div>
+</section>
+
+<section id="estrategia">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Estratégia nutricional</h2></div>
+  <p class="lead">Gasto, superávit limpo e as novas diretrizes de hidratação e micronutrientes para otimizar o ecossistema intestinal com essa carga proteica.</p>
+
+  <div class="readouts">
+    <div class="ro"><div class="lab">Meta Calórica</div><div class="val">2.900<span> kcal</span></div></div>
+    <div class="ro"><div class="lab">Proteína</div><div class="val">160<span> g</span></div><div class="note">≈ 2,3 g/kg</div></div>
+    <div class="ro clay"><div class="lab">Carboidrato</div><div class="val">400<span> g</span></div><div class="note">≈ 5,8 g/kg</div></div>
+    <div class="ro"><div class="lab">Gordura</div><div class="val">72<span> g</span></div><div class="note">≈ 1,0 g/kg</div></div>
+  </div>
+
+  <div class="grid2" style="margin-top:18px">
+    <div class="card tight">
+      <h4 class="mini">💧 Hidratação Diária</h4>
+      <p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Para os dias comuns (sem peteca), a meta base é de <b>2,5L a 3,0L</b> de água pura (aprox. 35-40ml/kg). A água é o veículo de transporte do glicogênio para dentro da musculatura.</p>
+    </div>
+    <div class="card tight">
+      <h4 class="mini">🥦 Micronutrientes e Fibras</h4>
+      <p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Para processar ~3.000 kcal e ~160g de proteína sem desconforto gastrointestinal, sua meta de fibras é de <b>30g a 40g/dia</b>. Priorize <b>vegetais verde-escuros</b> (brócolis, espinafre, rúcula) em almoços e jantares, pois são fontes densas de magnésio (vital para a contração muscular).</p>
+    </div>
+  </div>
+</section>
+
+<section id="cronograma">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Cronograma semanal</h2></div>
+  <div class="week">
+    <div class="day train"><div class="d">Seg</div><div class="t">Empurrar<br>+ Core</div><div class="ic">🏋️</div></div>
+    <div class="day train"><div class="d">Ter</div><div class="t">Puxar<br>+ Lombar</div><div class="ic">🏋️</div></div>
+    <div class="day train"><div class="d">Qua</div><div class="t">Inferiores A</div><div class="ic">🦵</div></div>
+    <div class="day peteca"><div class="d">Qui</div><div class="t">Peteca<br>18h–20h</div><div class="ic">🏸</div></div>
+    <div class="day train"><div class="d">Sex</div><div class="t">Superiores</div><div class="ic">🏋️</div></div>
+    <div class="day train"><div class="d">Sáb</div><div class="t">Inferiores B</div><div class="ic">🦵</div></div>
+    <div class="day rest"><div class="d">Dom</div><div class="t">Descanso</div><div class="ic">😴</div></div>
+  </div>
+</section>
+
+<section id="dieta">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Dieta completa (Exemplo Quinta-feira)</h2></div>
+  <p class="lead">Abaixo está a dieta ajustada do dia de maior gasto calórico. Os "legumes/salada" agora especificam o uso de verde-escuros. Note o <b>Lanche da Tarde extra</b> adicionado para sustentar as +1.000 kcal da Peteca sem anular o superávit semanal.</p>
+
+  <h3 class="block">Quinta (peteca) — proteína: <span class="tag clay">Lombo suíno</span></h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos (medida caseira)</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>Aveia 80 g · 2 ovos · 1 banana · whey 30 g</td><td class="n">650</td><td class="n">47</td><td class="n">81</td><td class="n">18</td></tr>
+    <tr><td>Almoço</td><td>Arroz 200 g · feijão 100 g · <b>lombo suíno</b> 170 g · salada verde-escura</td><td class="n">780</td><td class="n">52</td><td class="n">95</td><td class="n">18</td></tr>
+    <tr style="background:#fff3e0;"><td><b>Lanche (NOVO) (15h00)</b></td><td>Whey 30g · aveia 40g · 1 col. pasta de amendoim</td><td class="n">350</td><td class="n">30</td><td class="n">25</td><td class="n">15</td></tr>
+    <tr><td>Pré-peteca (16h30)</td><td>2 fatias pão · mel · 1 banana</td><td class="n">280</td><td class="n">7</td><td class="n">58</td><td class="n">2</td></tr>
+    <tr><td>Intra (18–20h)</td><td>Água + isotônico · 1 fruta</td><td class="n">120</td><td class="n">0</td><td class="n">30</td><td class="n">0</td></tr>
+    <tr><td>Pós/Jantar (20h30)</td><td>Arroz 200 g · <b>lombo suíno</b> 150 g · brócolis no vapor</td><td class="n">700</td><td class="n">62</td><td class="n">82</td><td class="n">12</td></tr>
+    <tr><td>Ceia</td><td>Iogurte natural 170 g · aveia 40 g</td><td class="n">300</td><td class="n">14</td><td class="n">38</td><td class="n">8</td></tr>
+    <tr class="total"><td>Total Diário Ajustado</td><td>(Compensa gasto do jogo)</td><td class="n">3.180</td><td class="n">212</td><td class="n">409</td><td class="n">73</td></tr>
+  </table>
+  </div>
+</section>
+
+<section id="treino">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Treino — Registro de Cargas</h2></div>
+  <p class="lead">Anote os pesos na coluna "Carga Atual". O navegador salvará os valores automaticamente.</p>
+
+  <h3 class="block">Segunda — Empurrar</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
+    <tr><td>Supino reto (barra/halter)</td><td class="n">4 × 6–8</td><td class="n">2</td><td><input type="text" id="cg-seg-1" placeholder="kg"></td><td>Escápulas retraídas.</td></tr>
+    <tr><td>Supino inclinado halter</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-seg-2" placeholder="kg"></td><td>Banco ~30°.</td></tr>
+    <tr><td>Desenvolvimento halter</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-seg-3" placeholder="kg"></td><td>Core firme.</td></tr>
+    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-seg-4" placeholder="kg"></td><td>Sem balanço.</td></tr>
+    <tr><td>Crossover</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-seg-5" placeholder="kg"></td><td>Aperte o peito.</td></tr>
+    <tr><td>Tríceps na corda</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-seg-6" placeholder="kg"></td><td>Cotovelos colados.</td></tr>
+  </table>
+  </div>
+
+  <h3 class="block">Terça — Puxar</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
+    <tr><td>Barra fixa / puxada alta</td><td class="n">4 × 6–10</td><td class="n">2</td><td><input type="text" id="cg-ter-1" placeholder="kg"></td><td>Peito alto.</td></tr>
+    <tr><td>Remada curvada</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-ter-2" placeholder="kg"></td><td>Lombar neutra.</td></tr>
+    <tr><td>Remada baixa</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-ter-3" placeholder="kg"></td><td>Aperte as escápulas.</td></tr>
+    <tr><td>Pulldown braço estendido</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-ter-4" placeholder="kg"></td><td>Isola dorsal.</td></tr>
+    <tr><td>Face pull</td><td class="n">3 × 15–20</td><td class="n">1</td><td><input type="text" id="cg-ter-5" placeholder="kg"></td><td>Fortalece posterior do ombro.</td></tr>
+    <tr><td>Rosca direta</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-ter-6" placeholder="kg"></td><td>Sem balançar.</td></tr>
+  </table>
+  </div>
+
+  <h3 class="block">Quarta — Inferiores A</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
+    <tr><td>Agachamento livre</td><td class="n">4 × 6–8</td><td class="n">2</td><td><input type="text" id="cg-qua-1" placeholder="kg"></td><td>Joelho alinha ao pé.</td></tr>
+    <tr><td>Leg press 45°</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-qua-2" placeholder="kg"></td><td>Amplitude completa.</td></tr>
+    <tr><td>Cadeira extensora</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-qua-3" placeholder="kg"></td><td>Pausa de 1s no topo.</td></tr>
+    <tr><td>Afundo / búlgaro</td><td class="n">3 × 10/perna</td><td class="n">2</td><td><input type="text" id="cg-qua-4" placeholder="kg"></td><td>Corrige assimetrias.</td></tr>
+    <tr><td>Panturrilha em pé</td><td class="n">4 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-qua-5" placeholder="kg"></td><td>Pausa embaixo e em cima.</td></tr>
+  </table>
+  </div>
+
+  <h3 class="block">Sexta — Superiores</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
+    <tr><td>Supino inclinado c/ halteres</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-sex-1" placeholder="kg"></td><td>Segundo estímulo.</td></tr>
+    <tr><td>Remada cavalinho</td><td class="n">3 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-sex-2" placeholder="kg"></td><td>Espessura de costas.</td></tr>
+    <tr><td>Desenvolvimento</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sex-3" placeholder="kg"></td><td>Volume extra.</td></tr>
+    <tr><td>Puxada supinada</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sex-4" placeholder="kg"></td><td>Pega fechada.</td></tr>
+    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-sex-5" placeholder="kg"></td><td>Ombro lateral.</td></tr>
+    <tr><td>Rosca alternada</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sex-6" placeholder="kg"></td><td>Controle na descida.</td></tr>
+  </table>
+  </div>
+
+  <h3 class="block">Sábado — Inferiores B</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>RIR</th><th>Carga Atual</th><th>Observação técnica</th></tr>
+    <tr><td>Levantamento terra romeno</td><td class="n">4 × 8–10</td><td class="n">2</td><td><input type="text" id="cg-sab-1" placeholder="kg"></td><td>Lombar neutra.</td></tr>
+    <tr><td>Mesa flexora</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sab-2" placeholder="kg"></td><td>Pausa na contração.</td></tr>
+    <tr><td>Cadeira flexora</td><td class="n">3 × 12–15</td><td class="n">1</td><td><input type="text" id="cg-sab-3" placeholder="kg"></td><td>Segundo ângulo.</td></tr>
+    <tr><td>Elevação pélvica</td><td class="n">3 × 10–12</td><td class="n">1</td><td><input type="text" id="cg-sab-4" placeholder="kg"></td><td>Aperte 1s no topo.</td></tr>
+    <tr><td>Cadeira abdutora</td><td class="n">3 × 15–20</td><td class="n">1</td><td><input type="text" id="cg-sab-5" placeholder="kg"></td><td>Estabilidade de quadril.</td></tr>
+    <tr><td>Panturrilha sentado</td><td class="n">4 × 15–20</td><td class="n">1</td><td><input type="text" id="cg-sab-6" placeholder="kg"></td><td>Foco no sóleo.</td></tr>
+  </table>
+  </div>
+</section>
+
+<section id="sono" style="border-bottom:none">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Higiene do Sono e Recuperação</h2></div>
+  <p class="lead">O músculo é forçado na academia, alimentado na cozinha, mas **construído durante o sono**. O objetivo são 7 a 8 horas de sono profundo. Como a exposição a monitores faz parte de noites de estudos e jogos, siga as regras abaixo:</p>
+
+  <div class="grid2">
+    <div class="card tight">
+      <h4 class="mini">Gerenciamento de Telas (Luz Azul)</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:8px">O excesso de brilho noturno de monitores — seja no terminal administrando servidores na nuvem ou em um jogo multiplayer focado e tenso — bloqueia a liberação natural de melatonina. </p>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin:0">
+        <li>Ative filtros de luz azul (como <i>Night Light</i> do Windows ou software f.lux) após as 20h30.</li>
+        <li>Desligue os monitores <b>1 hora antes</b> de deitar. Troque a tela por um livro ou um alongamento leve.</li>
+      </ul>
+    </div>
+    <div class="card tight">
+      <h4 class="mini">Descompressão Mental</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:8px">Atividades que exigem alta carga cognitiva e reflexos rápidos elevam o cortisol e a adrenalina.</p>
+      <ul style="font-size:13.5px;color:var(--ink-soft);margin:0">
+        <li>Evite encerrar o dia direto de uma partida intensa ou de uma sessão pesada de estudos para ir deitar; o cérebro precisa de uma "ponte" de relaxamento de 30-45 minutos.</li>
+        <li>Quarto escuro total e temperatura ambiente fresca (19ºC a 21ºC).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="sig">Protocolo de Treino + Dieta · PWA Edition</div>
+  <p style="margin-top:6px">Seus dados são salvos localmente neste navegador.</p>
+</footer>
+
+</div>
+
+<script>
+  // PWA Local Storage Script for Main Protocol
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Auto-save all inputs
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      const saved = localStorage.getItem(input.id);
+      if (saved !== null) { input.value = saved; }
+      
+      input.addEventListener('input', () => {
+        localStorage.setItem(input.id, input.value);
+        if (input.id.startsWith('peso-')) updateAverage();
+      });
+    });
+
+    // 2. Calculate Weekly Weight Average
+    function updateAverage() {
+      const days = ['seg','ter','qua','qui','sex','sab','dom'];
+      let sum = 0, count = 0;
+      days.forEach(d => {
+        const val = parseFloat(document.getElementById('peso-'+d).value);
+        if(!isNaN(val)){ sum += val; count++; }
+      });
+      const avgDisplay = document.getElementById('peso-media');
+      if(count > 0){
+        avgDisplay.innerText = (sum / count).toFixed(2) + ' kg';
+      } else {
+        avgDisplay.innerText = '-- kg';
+      }
+    }
+    updateAverage(); // init
+  });
+
+  // Service Worker Registration
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
+</body>
+</html>

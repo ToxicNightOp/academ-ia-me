@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#3A7355">
+<title>Lista de Compras e Dieta Semanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F3EB; --paper:#FFFDF8; --ink:#26231C; --soft:#615C50;
+    --faint:#928C7C; --line:#E6E0D2; --green:#3A7355; --green-deep:#2B5641;
+    --green-soft:#E0EBE2; --tom:#C45A33; --tom-soft:#F6E3D6; --tom-deep:#9E4828;
+    --radius:14px; --shadow:0 1px 2px rgba(38,35,28,.05),0 10px 30px rgba(38,35,28,.06);
+    --serif:'Fraunces',serif; --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15}
+  a.btn-back { display: inline-block; margin-top: 15px; color: #fff; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; border: 1px solid rgba(255,255,255,0.3); }
+
+  /* HEADER */
+  header{background:linear-gradient(150deg,var(--green-deep),var(--green));color:#fdfbf6;padding:46px 0 40px;position:relative;overflow:hidden}
+  header:before{content:"🛒";position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:120px;opacity:.12}
+  header .wrap{position:relative}
+  .kick{font-family:var(--body);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#bcd6c5;margin-bottom:14px}
+  header h1{font-size:clamp(30px,5.5vw,46px);font-weight:700;color:#fff;max-width:16ch}
+  header p{margin-top:14px;font-size:15.5px;color:#dcebe0;max-width:54ch}
+  
+  section{padding:46px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:center;gap:13px;margin-bottom:8px}
+  .sec-head .em{font-size:24px}
+  .sec-head h2{font-size:clamp(22px,3.4vw,29px)}
+  .lead{color:var(--soft);max-width:64ch;margin:6px 0 22px}
+
+  /* SHOPPING LIST */
+  .cats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .cat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;break-inside:avoid}
+  .cat h3{font-size:16px;padding:13px 18px;background:var(--green-soft);color:var(--green-deep);display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--line)}
+  .cat ul{list-style:none}
+  .cat li{display:flex;align-items:flex-start;gap:11px;padding:10px 18px;border-top:1px solid var(--line);font-size:14px; cursor: pointer; transition: 0.2s;}
+  .cat li:hover{background: #fdfdfd;}
+  .cat li:first-child{border-top:none}
+  .cat li label{display:flex;align-items:flex-start;gap:11px;cursor:pointer;width:100%}
+  .cat input[type=checkbox]{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:2px solid var(--green);border-radius:6px;margin-top:2px;flex:none;position:relative;cursor:pointer;transition:.15s}
+  .cat input[type=checkbox]:checked{background:var(--green);border-color:var(--green)}
+  .cat input[type=checkbox]:checked:after{content:"✓";position:absolute;color:#fff;font-size:14px;font-weight:700;left:3px;top:-1px}
+  .cat input:checked + .it{text-decoration:line-through;color:var(--faint)}
+  .it{flex:1}
+  .qty{font-weight:600;color:var(--green-deep);white-space:nowrap}
+  .hint{display:block;font-size:11.5px;color:var(--faint);margin-top:1px}
+
+  .btn-clear { background: var(--tom-soft); color: var(--tom-deep); border: 1px solid var(--tom); padding: 10px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 20px; font-size: 14px; }
+
+  @media(max-width:680px){ .cats{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kick">Compra Semanal (PWA)</div>
+    <h1>Lista de Compras</h1>
+    <p>Marque os itens enquanto estiver no mercado. O app salvará automaticamente onde você parou.</p>
+    <a href="index.html" class="btn-back">⬅ Voltar ao Protocolo Principal</a>
+  </div>
+</header>
+
+<div class="wrap">
+<section id="compras">
+  <div class="sec-head"><span class="em">🛒</span><h2>Sua Lista</h2></div>
+  <div class="cats">
+    <div class="cat">
+      <h3>🥩 Proteínas</h3>
+      <ul>
+        <li><label><input type="checkbox" id="c-frango"><span class="it">Frango — peito + sobrecoxa</span><span class="qty">~1 kg</span></label></li>
+        <li><label><input type="checkbox" id="c-patinho"><span class="it">Patinho moído</span><span class="qty">~800 g</span></label></li>
+        <li><label><input type="checkbox" id="c-peixe"><span class="it">Peixe — tilápia + merluza</span><span class="qty">~750 g</span></label></li>
+        <li><label><input type="checkbox" id="c-lombo"><span class="it">Lombo suíno</span><span class="qty">~450 g</span></label></li>
+        <li><label><input type="checkbox" id="c-ovos"><span class="it">Ovos</span><span class="qty">2 dúzias</span></label></li>
+        <li><label><input type="checkbox" id="c-atum"><span class="it">Atum em lata</span><span class="qty">2 latas</span></label></li>
+        <li><label><input type="checkbox" id="c-iogurte"><span class="it">Iogurte natural</span><span class="qty">~1,2 kg</span></label></li>
+      </ul>
+    </div>
+    <div class="cat">
+      <h3>🍚 Carboidratos</h3>
+      <ul>
+        <li><label><input type="checkbox" id="c-arroz"><span class="it">Arroz</span><span class="qty">1 kg</span></label></li>
+        <li><label><input type="checkbox" id="c-feijao"><span class="it">Feijão</span><span class="qty">500 g</span></label></li>
+        <li><label><input type="checkbox" id="c-aveia"><span class="it">Aveia em flocos</span><span class="qty">~500 g</span></label></li>
+        <li><label><input type="checkbox" id="c-pao"><span class="it">Pão integral</span><span class="qty">1 pct</span></label></li>
+        <li><label><input type="checkbox" id="c-batata"><span class="it">Batata inglesa</span><span class="qty">~500 g</span></label></li>
+      </ul>
+    </div>
+    <div class="cat">
+      <h3>🥦 Legumes e verduras</h3>
+      <ul>
+        <li><label><input type="checkbox" id="c-verdes"><span class="it">Verdes (Brócolis, espinafre, rúcula) <span class="hint">Fibras e magnésio</span></span><span class="qty">mix</span></label></li>
+        <li><label><input type="checkbox" id="c-tomate"><span class="it">Tomate</span><span class="qty">~6 un</span></label></li>
+      </ul>
+    </div>
+    <div class="cat">
+      <h3>🧂 Extras e bebidas</h3>
+      <ul>
+        <li><label><input type="checkbox" id="c-isot"><span class="it">Isotônico (Peteca)</span><span class="qty">1 un</span></label></li>
+        <li><label><input type="checkbox" id="c-leite"><span class="it">Leite</span><span class="qty">1 L</span></label></li>
+      </ul>
+    </div>
+  </div>
+  <button class="btn-clear" onclick="limparLista()">Zerar Marcações para Nova Semana</button>
+</section>
+</div>
+
+<script>
+  // PWA Local Storage for Checklist
+  document.addEventListener("DOMContentLoaded", () => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(chk => {
+      const saved = localStorage.getItem(chk.id);
+      if (saved === 'true') chk.checked = true;
+      
+      chk.addEventListener('change', () => {
+        localStorage.setItem(chk.id, chk.checked);
+      });
+    });
+  });
+
+  function limparLista() {
+    if(confirm("Deseja desmarcar todos os itens para iniciar uma nova semana de compras?")) {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(chk => {
+        chk.checked = false;
+        localStorage.setItem(chk.id, 'false');
+      });
+    }
+  }
+</script>
+</body>
+</html>
