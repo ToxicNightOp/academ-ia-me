@@ -179,6 +179,97 @@
     section{page-break-inside:avoid}
     .ro,.card,.tbl,.day{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
+
+/* ===== EDITÁVEIS CENTRALIZADOS ===== */
+.center-edit,
+.center-edit td,
+.center-edit th{
+  text-align:center;
+  vertical-align:middle;
+}
+
+.load-cell{
+  text-align:center;
+  vertical-align:middle;
+}
+
+.kg-wrap{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+}
+
+.kg-input,
+.metric-input{
+  width:90px;
+  padding:6px 8px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#fff;
+  text-align:center;
+  font-family:var(--mono);
+  font-size:13px;
+}
+
+.kg-wrap::after{
+  content:"kg";
+  color:var(--ink-soft);
+  font-family:var(--mono);
+  font-size:12px;
+}
+
+.photo-upload{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+  align-items:center;
+}
+
+.photo-thumb{
+  width:44px;
+  height:44px;
+  object-fit:cover;
+  border-radius:8px;
+  cursor:pointer;
+  border:1px solid var(--line);
+}
+
+.photo-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  flex-direction:column;
+  padding:20px;
+}
+
+.photo-modal img{
+  max-width:92vw;
+  max-height:82vh;
+  transform-origin:center;
+  transition:transform .2s ease;
+  border-radius:12px;
+}
+
+.photo-controls{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+}
+
+.photo-controls button{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
 </style>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#234634">
@@ -283,13 +374,94 @@
     <h3 class="block" style="margin-top:0">Monitoramento semanal e composição corporal</h3>
     <p style="color:var(--ink-soft)">Preencha semanalmente para acompanhar a tendência real. Use a média da semana em jejum para evitar distorções de retenção e variações diárias.</p>
     <div class="scroll">
-    <table class="tbl editable">
-      <tr><th>Semana</th><th>Média peso (kg)</th><th>Cintura (cm)</th><th>% gordura</th><th>Fotos</th><th>Observações</th></tr>
-      <tr><td contenteditable="true">Semana 1</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true">Frente/Lado/Costas</td><td contenteditable="true"></td></tr>
-      <tr><td contenteditable="true">Semana 2</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-      <tr><td contenteditable="true">Semana 3</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-      <tr><td contenteditable="true">Semana 4</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-    </table>
+    
+<table class="tbl editable center-edit">
+<tr>
+<th>Semana</th>
+<th>Média peso (kg)</th>
+<th>IMC</th>
+<th>Massa muscular</th>
+<th>Massa gorda</th>
+<th>Água corporal</th>
+<th>Cintura (cm)</th>
+<th>% gordura</th>
+<th>Fotos</th>
+<th>Observações</th>
+</tr>
+
+<tr>
+<td contenteditable="true">Semana 1</td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td>
+<div class="photo-upload">
+<input type="file" accept="image/*" multiple class="photo-input" data-max="3">
+<div class="photo-preview"></div>
+</div>
+</td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true">Semana 2</td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td>
+<div class="photo-upload">
+<input type="file" accept="image/*" multiple class="photo-input" data-max="3">
+<div class="photo-preview"></div>
+</div>
+</td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true">Semana 3</td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td>
+<div class="photo-upload">
+<input type="file" accept="image/*" multiple class="photo-input" data-max="3">
+<div class="photo-preview"></div>
+</div>
+</td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true">Semana 4</td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td><input class="metric-input" type="number"></td>
+<td>
+<div class="photo-upload">
+<input type="file" accept="image/*" multiple class="photo-input" data-max="3">
+<div class="photo-preview"></div>
+</div>
+</td>
+<td contenteditable="true"></td>
+</tr>
+</table>
+
     </div>
   </div>
 </section>
@@ -611,13 +783,13 @@
   <div class="scroll">
   <table class="tbl">
     <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
-    <tr><td>Supino reto (barra ou halteres)</td><td class="n">4 × 6–8</td><td class="n">2–3 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Escápulas retraídas, pés firmes, desça controlado ao peito.</td></tr>
-    <tr><td>Supino inclinado c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Banco ~30°, foco no peito superior.</td></tr>
-    <tr><td>Desenvolvimento c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Não trave os cotovelos no topo; core firme.</td></tr>
-    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Suba até a linha do ombro, sem balanço.</td></tr>
-    <tr><td>Crossover / crucifixo</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Aperte o peito no fim do movimento.</td></tr>
-    <tr><td>Tríceps na corda</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Cotovelos colados ao corpo.</td></tr>
-    <tr><td>Tríceps testa</td><td class="n">2 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Movimento só no cotovelo.</td></tr>
+    <tr><td>Supino reto (barra ou halteres)</td><td class="n">4 × 6–8</td><td class="n">2–3 min</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Escápulas retraídas, pés firmes, desça controlado ao peito.</td></tr>
+    <tr><td>Supino inclinado c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Banco ~30°, foco no peito superior.</td></tr>
+    <tr><td>Desenvolvimento c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Não trave os cotovelos no topo; core firme.</td></tr>
+    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Suba até a linha do ombro, sem balanço.</td></tr>
+    <tr><td>Crossover / crucifixo</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Aperte o peito no fim do movimento.</td></tr>
+    <tr><td>Tríceps na corda</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Cotovelos colados ao corpo.</td></tr>
+    <tr><td>Tríceps testa</td><td class="n">2 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Movimento só no cotovelo.</td></tr>
   </table>
   </div>
   <p style="font-size:13px;color:var(--ink-soft)">+ Bloco de core (ver seção 10): prancha 3×40s · dead bug 3×10/lado.</p>
@@ -627,13 +799,13 @@
   <div class="scroll">
   <table class="tbl">
     <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
-    <tr><td>Barra fixa ou puxada alta</td><td class="n">4 × 6–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Puxe com as costas, não com os braços; peito alto.</td></tr>
-    <tr><td>Remada curvada c/ barra</td><td class="n">3 × 8–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td><b>Lombar neutra</b>, tronco ~45°. Técnica acima de carga.</td></tr>
-    <tr><td>Remada baixa (cabo)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Aperte as escápulas no fim.</td></tr>
-    <tr><td>Pulldown braço estendido</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Isola dorsal; cotovelos quase travados.</td></tr>
-    <tr><td>Face pull / crucifixo inverso</td><td class="n">3 × 15–20</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td><b>Postura</b>: fortalece posterior do ombro, combate ombros caídos.</td></tr>
-    <tr><td>Rosca direta</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Sem balançar o corpo.</td></tr>
-    <tr><td>Rosca martelo</td><td class="n">2 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Pega neutra; pega antebraço e braquial.</td></tr>
+    <tr><td>Barra fixa ou puxada alta</td><td class="n">4 × 6–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Puxe com as costas, não com os braços; peito alto.</td></tr>
+    <tr><td>Remada curvada c/ barra</td><td class="n">3 × 8–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td><b>Lombar neutra</b>, tronco ~45°. Técnica acima de carga.</td></tr>
+    <tr><td>Remada baixa (cabo)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Aperte as escápulas no fim.</td></tr>
+    <tr><td>Pulldown braço estendido</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Isola dorsal; cotovelos quase travados.</td></tr>
+    <tr><td>Face pull / crucifixo inverso</td><td class="n">3 × 15–20</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td><b>Postura</b>: fortalece posterior do ombro, combate ombros caídos.</td></tr>
+    <tr><td>Rosca direta</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Sem balançar o corpo.</td></tr>
+    <tr><td>Rosca martelo</td><td class="n">2 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Pega neutra; pega antebraço e braquial.</td></tr>
   </table>
   </div>
   <p style="font-size:13px;color:var(--ink-soft)">+ Bloco de lombar (ver seção 10): hiperextensão 3×12–15 · bird dog 3×10/lado.</p>
@@ -643,11 +815,11 @@
   <div class="scroll">
   <table class="tbl">
     <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
-    <tr><td>Agachamento livre (ou Smith)</td><td class="n">4 × 6–8</td><td class="n">3 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Desça até coxa paralela; joelho alinha ao pé; core firme.</td></tr>
-    <tr><td>Leg press 45°</td><td class="n">3 × 10–12</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Amplitude completa sem descolar o quadril.</td></tr>
-    <tr><td>Cadeira extensora</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Pausa de 1s no topo.</td></tr>
-    <tr><td>Afundo / búlgaro</td><td class="n">3 × 10/perna</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td><b>Estabilidade</b>: corrige assimetrias, ativa glúteo.</td></tr>
-    <tr><td>Panturrilha em pé</td><td class="n">4 × 12–15</td><td class="n">60 s</td><td class="n">2-1-2</td><td class="n">1</td><td contenteditable="true"></td><td>Pausa embaixo e em cima, amplitude total.</td></tr>
+    <tr><td>Agachamento livre (ou Smith)</td><td class="n">4 × 6–8</td><td class="n">3 min</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Desça até coxa paralela; joelho alinha ao pé; core firme.</td></tr>
+    <tr><td>Leg press 45°</td><td class="n">3 × 10–12</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Amplitude completa sem descolar o quadril.</td></tr>
+    <tr><td>Cadeira extensora</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Pausa de 1s no topo.</td></tr>
+    <tr><td>Afundo / búlgaro</td><td class="n">3 × 10/perna</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td><b>Estabilidade</b>: corrige assimetrias, ativa glúteo.</td></tr>
+    <tr><td>Panturrilha em pé</td><td class="n">4 × 12–15</td><td class="n">60 s</td><td class="n">2-1-2</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Pausa embaixo e em cima, amplitude total.</td></tr>
   </table>
   </div>
   <p style="font-size:13px;color:var(--ink-soft)">+ Core: prancha lateral 3×30s/lado · abdominal infra (elevação de pernas) 3×15.</p>
@@ -657,13 +829,13 @@
   <div class="scroll">
   <table class="tbl">
     <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
-    <tr><td>Supino inclinado c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Segundo estímulo semanal de peito.</td></tr>
-    <tr><td>Remada cavalinho (ou T)</td><td class="n">3 × 8–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td contenteditable="true"></td><td>Espessura de costas; lombar neutra.</td></tr>
-    <tr><td>Desenvolvimento (máquina/halter)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Volume extra de ombro.</td></tr>
-    <tr><td>Puxada supinada</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Pega fechada; recruta dorsal + bíceps.</td></tr>
-    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Ombro lateral, largura.</td></tr>
-    <tr><td>Rosca alternada</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Controle na descida.</td></tr>
-    <tr><td>Tríceps mergulho no banco</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Ou paralelas, se conseguir.</td></tr>
+    <tr><td>Supino inclinado c/ halteres</td><td class="n">3 × 8–10</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Segundo estímulo semanal de peito.</td></tr>
+    <tr><td>Remada cavalinho (ou T)</td><td class="n">3 × 8–10</td><td class="n">2 min</td><td class="n">2-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Espessura de costas; lombar neutra.</td></tr>
+    <tr><td>Desenvolvimento (máquina/halter)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Volume extra de ombro.</td></tr>
+    <tr><td>Puxada supinada</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Pega fechada; recruta dorsal + bíceps.</td></tr>
+    <tr><td>Elevação lateral</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Ombro lateral, largura.</td></tr>
+    <tr><td>Rosca alternada</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Controle na descida.</td></tr>
+    <tr><td>Tríceps mergulho no banco</td><td class="n">3 × 10–12</td><td class="n">60 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Ou paralelas, se conseguir.</td></tr>
   </table>
   </div>
 
@@ -672,12 +844,12 @@
   <div class="scroll">
   <table class="tbl">
     <tr><th>Exercício</th><th>Séries × Reps</th><th>Desc.</th><th>Cad.</th><th>RIR</th><th>Carga atual</th><th>Observação técnica</th></tr>
-    <tr><td>Levantamento terra romeno (RDL)</td><td class="n">4 × 8–10</td><td class="n">2–3 min</td><td class="n">3-0-1</td><td class="n">2</td><td contenteditable="true"></td><td><b>Cadeia posterior + lombar.</b> Lombar neutra, empurre o quadril para trás, sinta o posterior alongar.</td></tr>
-    <tr><td>Mesa flexora</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Pausa na contração.</td></tr>
-    <tr><td>Cadeira flexora</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td>Segundo ângulo de posterior.</td></tr>
-    <tr><td>Elevação pélvica (hip thrust)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td contenteditable="true"></td><td><b>Glúteo</b>: aperte 1s no topo; ótimo para postura e lombar.</td></tr>
-    <tr><td>Cadeira abdutora</td><td class="n">3 × 15–20</td><td class="n">45 s</td><td class="n">2-0-1</td><td class="n">1</td><td contenteditable="true"></td><td>Glúteo médio, estabilidade de quadril.</td></tr>
-    <tr><td>Panturrilha sentado</td><td class="n">4 × 15–20</td><td class="n">45 s</td><td class="n">2-1-2</td><td class="n">1</td><td contenteditable="true"></td><td>Foco no sóleo.</td></tr>
+    <tr><td>Levantamento terra romeno (RDL)</td><td class="n">4 × 8–10</td><td class="n">2–3 min</td><td class="n">3-0-1</td><td class="n">2</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td><b>Cadeia posterior + lombar.</b> Lombar neutra, empurre o quadril para trás, sinta o posterior alongar.</td></tr>
+    <tr><td>Mesa flexora</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Pausa na contração.</td></tr>
+    <tr><td>Cadeira flexora</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">2-1-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Segundo ângulo de posterior.</td></tr>
+    <tr><td>Elevação pélvica (hip thrust)</td><td class="n">3 × 10–12</td><td class="n">90 s</td><td class="n">2-1-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td><b>Glúteo</b>: aperte 1s no topo; ótimo para postura e lombar.</td></tr>
+    <tr><td>Cadeira abdutora</td><td class="n">3 × 15–20</td><td class="n">45 s</td><td class="n">2-0-1</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Glúteo médio, estabilidade de quadril.</td></tr>
+    <tr><td>Panturrilha sentado</td><td class="n">4 × 15–20</td><td class="n">45 s</td><td class="n">2-1-2</td><td class="n">1</td><td class="load-cell"><div class="kg-wrap"><input type="number" class="kg-input"></div></td><td>Foco no sóleo.</td></tr>
   </table>
   </div>
   <p style="font-size:13px;color:var(--ink-soft)">+ Lombar/core: prancha 3×45s · ponte de glúteo 3×15 · good morning leve 3×12.</p>
@@ -867,5 +1039,63 @@ window.addEventListener('load',()=>{
   }
 });
 </script>
+
+<div class="photo-modal" id="photoModal">
+  <img id="photoModalImg" src="">
+  <div class="photo-controls">
+    <button onclick="zoomPhoto(1.2)">+</button>
+    <button onclick="zoomPhoto(0.8)">−</button>
+    <button onclick="closePhotoModal()">Fechar</button>
+  </div>
+</div>
+
+
+<script>
+let currentZoom = 1;
+
+function openPhotoModal(src){
+  const modal = document.getElementById('photoModal');
+  const img = document.getElementById('photoModalImg');
+  currentZoom = 1;
+  img.style.transform = 'scale(1)';
+  img.src = src;
+  modal.style.display = 'flex';
+}
+
+function closePhotoModal(){
+  document.getElementById('photoModal').style.display = 'none';
+}
+
+function zoomPhoto(factor){
+  currentZoom *= factor;
+  document.getElementById('photoModalImg').style.transform = `scale(${currentZoom})`;
+}
+
+document.querySelectorAll('.photo-input').forEach((input, index)=>{
+  input.addEventListener('change', function(){
+    const preview = this.parentElement.querySelector('.photo-preview');
+    preview.innerHTML = '';
+
+    const files = [...this.files].slice(0,3);
+
+    files.forEach(file=>{
+      const reader = new FileReader();
+
+      reader.onload = function(e){
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.className = 'photo-thumb';
+        img.onclick = ()=>openPhotoModal(e.target.result);
+        preview.appendChild(img);
+
+        localStorage.setItem('photo_' + index + '_' + file.name, e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  });
+});
+</script>
+
 </body>
 </html>
