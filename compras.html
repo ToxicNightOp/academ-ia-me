@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2B5641">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Compras">
 <title>Lista de Compras e Dieta Semanal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +35,7 @@
   body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
   .wrap{max-width:900px;margin:0 auto;padding:0 22px}
   h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15}
-  a.btn-back { display: inline-block; margin-top: 15px; color: #fff; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; border: 1px solid rgba(255,255,255,0.3); }
+    a.btn-back { display: inline-block; margin-top: 15px; color: #fff; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; border: 1px solid rgba(255,255,255,0.3); }
 
   /* HEADER */
   header{background:linear-gradient(150deg,var(--green-deep),var(--green));color:#fdfbf6;padding:46px 0 40px;position:relative;overflow:hidden}
@@ -122,6 +127,30 @@
     .cat,.day,.step{page-break-inside:avoid}
     header:before{display:none}
   }
+  /* editaveis + barra de ferramentas */
+  body{padding-bottom:64px}
+  .qty-edit{background:#FFFDF5;border-radius:5px;padding:1px 6px;outline:1px dashed var(--line);cursor:text;min-width:30px;display:inline-block}
+  .qty-edit:focus{outline:2px solid var(--green)}
+  #obs-area{width:100%;min-height:80px;font-family:var(--body);font-size:14px;color:var(--ink);border:1px solid var(--line);background:#FFFDF5;border-radius:10px;padding:12px 14px;resize:vertical}
+  #obs-area:focus{outline:2px solid var(--green-soft);border-color:var(--green)}
+  #pp-bar{position:fixed;left:0;right:0;bottom:0;z-index:9000;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--green-deep);color:#fff;padding:8px 14px;font-family:var(--body);font-size:13px;box-shadow:0 -4px 18px rgba(0,0,0,.18)}
+  #pp-bar #pp-stamp{font-family:monospace;font-size:11px;color:#bcd6c5;margin-right:auto;min-width:120px}
+  #pp-bar button{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 10px;font-size:12.5px;cursor:pointer;font-family:inherit}
+  #pp-bar button:hover{background:rgba(255,255,255,.26)}
+  #pp-modal{position:fixed;inset:0;z-index:9100;background:rgba(20,24,21,.55);display:none;align-items:center;justify-content:center;padding:18px}
+  #pp-modal.open{display:flex}
+  #pp-modal .pp-card{background:#FFFDF8;border-radius:14px;max-width:480px;width:100%;max-height:82vh;overflow:auto;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .pp-head{display:flex;justify-content:space-between;align-items:center}
+  .pp-head h3{font-size:18px;color:var(--green-deep)}
+  #pp-close{border:none;background:none;font-size:18px;cursor:pointer;color:var(--soft)}
+  .pp-sub{font-size:12.5px;color:var(--soft);margin:6px 0 14px}
+  .pp-hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+  .pp-hrow span{display:block;font-size:11px;color:var(--faint);font-family:monospace;margin-top:2px}
+  .pp-hbtns{display:flex;gap:6px;flex:none}
+  .pp-hbtns button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;color:var(--ink)}
+  .pp-hbtns button.del{color:#b3402a;border-color:#e7c4bb}
+  .pp-empty{font-size:13px;color:var(--faint);padding:12px 0}
+  @media print{#pp-bar,#pp-modal{display:none!important}body{padding-bottom:0}.qty-edit{outline:none;background:none}}
 </style>
 </head>
 <body>
@@ -132,7 +161,7 @@
     <h1>Lista de Compras e Dieta da Semana</h1>
     <p>Tudo o que precisa comprar e como montar as marmitas da semana. Os itens de almoço e jantar são preparados em casa (marmita); o restante é montado na hora.</p>
     <a href="index.html" class="btn-back">⬅ Voltar ao Protocolo Principal</a>
-    <div class="to">📋 <span><b>Marque</b> os itens conforme for comprando</span></div>
+    <div class="to">📋 <span><b>Para:</b> responsável pela compra e preparo &nbsp;·&nbsp; <b>Marque</b> os itens conforme for comprando</span></div>
   </div>
 </header>
 
@@ -141,7 +170,8 @@
 <!-- ===== LISTA DE COMPRAS ===== -->
 <section id="compras">
   <div class="sec-head"><span class="em">🛒</span><h2>Lista de compras</h2></div>
-  <p class="lead">Quantidades para 1 pessoa por 1 semana (pesos crus, com folga). Itens com "~" são por kg/unidade — arredonde para a embalagem do mercado.</p>
+  <p class="lead">Quantidades para 1 pessoa por 1 semana (pesos crus, com folga). Itens com "~" são por kg/unidade — arredonde para a embalagem do mercado. <b>Toque nas quantidades para editar</b> e marque os itens conforme compra — tudo fica salvo no aparelho.</p>
+  <div style="margin:14px 0 8px"><label style="display:block;font-family:var(--serif);font-weight:600;color:var(--green-deep);margin-bottom:6px">Observações (marca preferida, troca de item, recado para quem prepara…)</label><textarea id="obs-area" data-edit placeholder="Escreva aqui suas anotações…"></textarea></div>
 
   <div class="cats">
 
@@ -352,6 +382,43 @@
   </div>
 </section>
 
+<footer>
+  <div class="wrap" style="padding:0">Lista e cardápio para 1 pessoa · 1 semana &nbsp;·&nbsp; Dúvidas sobre porções? Confirme com o Igor.</div>
+</footer>
+
 </div>
+<script>window.__DOC_NS__="lista";</script>
+<script>
+(function(){
+  "use strict";
+  var NS=window.__DOC_NS__||"doc", K_STATE=NS+":state", K_HIST=NS+":history";
+  function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function lsSet(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}}
+  // torna quantidades editaveis
+  Array.prototype.forEach.call(document.querySelectorAll('#compras .qty'),function(el){el.setAttribute('contenteditable','true');el.setAttribute('data-edit','');el.classList.add('qty-edit');});
+  function cbs(){return Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]'));}
+  function eds(){return Array.prototype.slice.call(document.querySelectorAll('[data-edit]'));}
+  function isF(el){return el.tagName==="INPUT"||el.tagName==="TEXTAREA"||el.tagName==="SELECT";}
+  function read(){var s={cb:{},ed:{}};cbs().forEach(function(el,i){s.cb[i]=el.checked;});eds().forEach(function(el,i){s.ed[i]=isF(el)?el.value:el.innerHTML;});return s;}
+  function apply(s){if(!s)return;cbs().forEach(function(el,i){if(s.cb&&i in s.cb)el.checked=!!s.cb[i];});eds().forEach(function(el,i){if(s.ed&&i in s.ed){if(isF(el))el.value=s.ed[i];else el.innerHTML=s.ed[i];}});}
+  var t;function save(){clearTimeout(t);t=setTimeout(function(){var ok=lsSet(K_STATE,JSON.stringify(read()));stamp(ok?"Salvo "+hhmm():"Sem permissao para salvar");},250);}
+  function loadState(){try{return JSON.parse(lsGet(K_STATE));}catch(e){return null;}}
+  function hist(){try{return JSON.parse(lsGet(K_HIST))||[];}catch(e){return [];}}
+  function setHist(a){lsSet(K_HIST,JSON.stringify(a.slice(0,30)));}
+  function snapshot(label){var a=hist();a.unshift({ts:Date.now(),label:label||("Versao "+now()),state:read()});setHist(a);renderHist();stamp("Versao salva");}
+  function pad(n){return (n<10?"0":"")+n;}
+  function hhmm(){var d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes());}
+  function now(){var d=new Date();return pad(d.getDate())+"/"+pad(d.getMonth()+1)+" "+hhmm();}
+  function fmt(ts){var d=new Date(ts);return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear()+" "+pad(d.getHours())+":"+pad(d.getMinutes());}
+  function stamp(x){var s=document.getElementById("pp-stamp");if(s)s.textContent=x;}
+  function exportData(){try{var blob=new Blob([JSON.stringify({ns:NS,state:read(),history:hist(),exported:new Date().toISOString()},null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download=NS+"-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1500);stamp("Backup exportado");}catch(e){alert("Nao foi possivel exportar.");}}
+  function importData(file){var r=new FileReader();r.onload=function(){try{var d=JSON.parse(r.result);if(d.state){apply(d.state);lsSet(K_STATE,JSON.stringify(d.state));}if(d.history){setHist(d.history);renderHist();}stamp("Backup importado");}catch(e){alert("Arquivo invalido.");}};r.readAsText(file);}
+  function renderHist(){var box=document.getElementById("pp-histlist");if(!box)return;var a=hist();if(!a.length){box.innerHTML='<p class="pp-empty">Nenhuma versao salva ainda.</p>';return;}box.innerHTML="";a.forEach(function(h,idx){var row=document.createElement("div");row.className="pp-hrow";var info=document.createElement("div");info.innerHTML='<b>'+(h.label||"Versao")+'</b><span>'+fmt(h.ts)+'</span>';var btns=document.createElement("div");btns.className="pp-hbtns";var rb=document.createElement("button");rb.textContent="Restaurar";rb.onclick=function(){if(confirm("Restaurar esta versao? O estado atual sera substituido.")){apply(h.state);save();}};var db=document.createElement("button");db.className="del";db.textContent="Excluir";db.onclick=function(){var arr=hist();arr.splice(idx,1);setHist(arr);renderHist();};btns.appendChild(rb);btns.appendChild(db);row.appendChild(info);row.appendChild(btns);box.appendChild(row);});}
+  function buildUI(){var bar=document.createElement("div");bar.id="pp-bar";bar.innerHTML='<span id="pp-stamp">Pronto</span><button id="pp-snap">\uD83D\uDCBE Salvar versao</button><button id="pp-hist">\uD83D\uDD58 Historico</button><button id="pp-exp">\u2B07\uFE0F Exportar</button><button id="pp-imp">\u2B06\uFE0F Importar</button><button id="pp-print">\uD83D\uDDA8\uFE0F</button><input type="file" id="pp-file" accept="application/json" hidden>';document.body.appendChild(bar);var modal=document.createElement("div");modal.id="pp-modal";modal.innerHTML='<div class="pp-card"><div class="pp-head"><h3>Historico de versoes</h3><button id="pp-close">\u2715</button></div><p class="pp-sub">As versoes ficam salvas neste navegador. Use Exportar para um backup permanente no aparelho.</p><div id="pp-histlist"></div></div>';document.body.appendChild(modal);document.getElementById("pp-snap").onclick=function(){var l=prompt("Nome da versao (opcional):","");snapshot(l&&l.trim()?l.trim():null);};document.getElementById("pp-hist").onclick=function(){renderHist();modal.classList.add("open");};document.getElementById("pp-close").onclick=function(){modal.classList.remove("open");};modal.onclick=function(e){if(e.target===modal)modal.classList.remove("open");};document.getElementById("pp-exp").onclick=exportData;document.getElementById("pp-imp").onclick=function(){document.getElementById("pp-file").click();};document.getElementById("pp-file").onchange=function(e){if(e.target.files[0])importData(e.target.files[0]);e.target.value="";};document.getElementById("pp-print").onclick=function(){window.print();};}
+  function wire(){document.addEventListener("input",function(e){var el=e.target;if(el.matches&&(el.matches('input[type=checkbox]')||el.matches('[data-edit]')))save();});document.addEventListener("change",function(e){if(e.target.matches&&e.target.matches('input[type=checkbox]'))save();});}
+  function pwa(){try{var man={name:document.title,short_name:NS,start_url:".",display:"standalone",background_color:"#F4F2EC",theme_color:"#2B5641",icons:[]};var blob=new Blob([JSON.stringify(man)],{type:"application/manifest+json"});var link=document.createElement("link");link.rel="manifest";link.href=URL.createObjectURL(blob);document.head.appendChild(link);}catch(e){}if("serviceWorker" in navigator){try{var sw="self.addEventListener('install',function(e){self.skipWaiting()});self.addEventListener('fetch',function(e){});";var b=new Blob([sw],{type:"text/javascript"});navigator.serviceWorker.register(URL.createObjectURL(b)).catch(function(){});}catch(e){}}}
+  buildUI();wire();apply(loadState());renderHist();pwa();stamp("Pronto");
+})();
+</script>
 </body>
 </html>
