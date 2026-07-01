@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7A4A63">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Protocolo Letícia">
+<title>Protocolo de Treino e Nutrição — Letícia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F2EC;--surface:#FCFBF7;--surface-2:#FFFFFF;--ink:#1B201D;--ink-soft:#5C635D;--ink-faint:#8A908A;
+    --line:#E3DED2;--green:#7A4A63;--green-deep:#5E3A4D;--green-soft:#EEDFE8;--clay:#C08457;--clay-soft:#F3E6D8;
+    --radius:14px;--shadow:0 1px 2px rgba(27,32,29,.04),0 8px 28px rgba(27,32,29,.05);
+    --mono:'JetBrains Mono',monospace;--display:'Space Grotesk',sans-serif;--body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased;padding-bottom:64px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+  h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.18;letter-spacing:-.01em}
+  .mono{font-family:var(--mono)}
+  a{color:var(--green);text-decoration:none}
+  a.btn-back { display: inline-block; margin-top: 15px; color: #fff; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; border: 1px solid rgba(255,255,255,0.3); }
+
+  .cover{background:linear-gradient(160deg,var(--green-deep),var(--green) 60%,#8f5877);color:#F4F2EC;padding:72px 0 64px;position:relative;overflow:hidden}
+  .cover:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.10) 1px,transparent 0);background-size:22px 22px;opacity:.5}
+  .cover .wrap{position:relative}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E3C9D8;margin-bottom:20px}
+  .cover h1{font-size:clamp(34px,6vw,58px);font-weight:700;color:#fff;max-width:14ch}
+  .cover .sub{margin-top:18px;font-size:17px;color:#EAD7E3;max-width:52ch}
+  .cover .meta{margin-top:38px;display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--mono);font-size:12.5px;color:#E0CBD8}
+  .cover .meta b{color:#fff;font-weight:700}
+  .badge{display:inline-block;margin-bottom:22px;padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E4F0E8}
+
+  section{padding:54px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px}
+  .sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--clay);border:1px solid var(--clay-soft);background:var(--clay-soft);padding:3px 9px;border-radius:7px;letter-spacing:.05em;flex:none}
+  .sec-head h2{font-size:clamp(23px,3.4vw,31px);font-weight:600}
+  .lead{color:var(--ink-soft);max-width:68ch;margin-bottom:8px}
+  h3.block{font-size:18px;margin:30px 0 12px;color:var(--green-deep)}
+  h3.block:first-of-type{margin-top:6px}
+  h4.mini{font-size:14px;font-family:var(--display);margin:18px 0 8px;color:var(--ink)}
+  p{margin-bottom:12px}
+  ul,ol{margin:0 0 14px 20px}
+  li{margin-bottom:5px}
+  .hint-note{font-size:12.5px;color:var(--ink-faint);margin-top:6px}
+
+  .readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:8px 0 6px}
+  .ro{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px 14px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .ro:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--green)}
+  .ro.clay:before{background:var(--clay)}
+  .ro .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+  .ro .val{font-family:var(--mono);font-weight:700;font-size:27px;color:var(--ink);margin-top:6px;line-height:1}
+  .ro .val span{font-size:13px;color:var(--ink-soft);font-weight:500}
+  .ro .note{font-size:11.5px;color:var(--ink-soft);margin-top:6px}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card.tight{padding:16px 18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .callout{border-left:3px solid var(--clay);background:var(--clay-soft);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0;font-size:14px}
+  .callout.green{border-left-color:var(--green);background:var(--green-soft)}
+  .callout b{color:var(--green-deep)}
+  .tag{font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-soft);padding:2px 8px;border-radius:6px;white-space:nowrap}
+  .tag.clay{color:var(--clay);background:var(--clay-soft)}
+
+  .tbl{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .tbl th{background:var(--green-deep);color:#EAF2EC;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:10px 12px}
+  .tbl td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+  .tbl tr:nth-child(even) td{background:rgba(46,90,67,.025)}
+  .tbl td.n{font-family:var(--mono);white-space:nowrap;text-align:right;color:var(--ink-soft)}
+  .tbl tr.total td{background:var(--green-soft);font-weight:600;border-top:2px solid var(--green)}
+  .tbl tr.total td.n{color:var(--green-deep)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:6px 0}
+  .day{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px 10px;text-align:center;box-shadow:var(--shadow)}
+  .day .d{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  .day .t{font-family:var(--display);font-weight:600;font-size:13px;margin-top:7px;line-height:1.25}
+  .day .ic{font-size:18px;margin-top:8px}
+  .day.train{border-top:3px solid var(--green)}
+  .day.peteca{border-top:3px solid var(--clay);background:var(--clay-soft)}
+  .day.rest{border-top:3px solid var(--line);background:#F0EEE6}
+
+  .macrobar{display:flex;height:30px;border-radius:8px;overflow:hidden;margin:14px 0 8px;border:1px solid var(--line)}
+  .macrobar div{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700}
+  .m-p{background:var(--green)}.m-c{background:var(--clay)}.m-f{background:#9A8C5E}
+  .legend{display:flex;gap:18px;font-size:12px;flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow)}
+  .toc ol{margin:0;list-style:none;columns:2;column-gap:34px}
+  .toc li{margin-bottom:7px;font-size:13.5px;break-inside:avoid}
+  .toc li a{color:var(--ink);display:flex;gap:10px}
+  .toc .n{font-family:var(--mono);color:var(--clay);font-weight:700;font-size:12px;min-width:22px}
+  .toc li a:hover{color:var(--green)}
+
+  footer{padding:40px 0 60px;color:var(--ink-soft);font-size:13px}
+  .sig{font-family:var(--display);font-weight:600;color:var(--ink);font-size:16px}
+
+  /* editable fields */
+  input.carga{font-family:var(--mono);font-size:12px;width:88px;border:1px solid var(--line);background:#FFFDF5;border-radius:6px;padding:4px 6px;color:var(--ink);text-align:center;display:block;margin:0 auto}
+  input.carga:focus{outline:2px solid var(--green-soft);border-color:var(--green)}
+  .tbl td.carga-cell{text-align:center;vertical-align:middle}
+  input.wcell{font-family:var(--mono);font-size:12.5px;width:54px;text-align:center;border:1px solid var(--line);background:#FFFDF5;border-radius:6px;padding:4px 3px;color:var(--ink)}
+  input.ecell{font-family:var(--mono);font-size:12.5px;width:84px;border:1px solid var(--line);background:#FFFDF5;border-radius:6px;padding:4px 6px;color:var(--ink);text-align:center}
+  input.wcell:focus,input.ecell:focus{outline:2px solid var(--green-soft);border-color:var(--green)}
+  /* botões de linha dinâmica */
+  .tbl-action{background:none;border:1px dashed var(--line);color:var(--ink-soft);border-radius:7px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:var(--body)}
+  .tbl-action:hover{border-color:var(--green);color:var(--green)}
+  .tbl-action.danger{border-color:#e0b4a8;color:#b84a30}
+  .tbl-action.danger:hover{background:#fdf0ec}
+  /* fotos composição */
+  .photo-cell{text-align:center;vertical-align:middle;padding:6px 8px!important}
+  .photo-thumbs{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+  .photo-wrap{position:relative;display:inline-flex;flex:none}
+  .photo-thumb{width:36px;height:36px;object-fit:cover;border-radius:5px;cursor:zoom-in;border:1px solid var(--line);display:block}
+  .photo-rm{position:absolute;top:-5px;right:-5px;width:16px;height:16px;border-radius:50%;background:#c0392b;color:#fff;border:none;font-size:10px;line-height:16px;text-align:center;cursor:pointer;padding:0;z-index:2}
+  .photo-rm:hover{background:#9b2318}
+  .photo-add{width:36px;height:36px;border:1px dashed var(--line);border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--ink-faint);background:#FFFDF5;flex:none}
+  .photo-add:hover{border-color:var(--green);color:var(--green)}
+  .photo-input{display:none}
+  /* modal de imagem */
+  #img-modal{position:fixed;inset:0;z-index:9200;background:rgba(10,14,11,.85);display:none;align-items:center;justify-content:center;padding:16px;touch-action:none}
+  #img-modal.open{display:flex}
+  #img-modal .im-wrap{position:relative;max-width:100%;max-height:100%;overflow:hidden;border-radius:12px;background:#000;display:flex;align-items:center;justify-content:center}
+  #img-modal img{max-width:90vw;max-height:86vh;object-fit:contain;transform-origin:center;transition:transform .15s}
+  #im-close{position:fixed;top:14px;right:18px;background:rgba(255,255,255,.18);border:none;border-radius:50%;width:36px;height:36px;font-size:18px;color:#fff;cursor:pointer;z-index:9210}
+  #im-zoom-bar{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:9210}
+  #im-zoom-bar button{background:rgba(255,255,255,.18);border:none;border-radius:8px;padding:8px 14px;color:#fff;font-size:18px;cursor:pointer}
+  #im-zoom-bar button:hover{background:rgba(255,255,255,.32)}
+  [data-edit][contenteditable=true]{background:#FFFDF5;border-radius:5px;padding:1px 6px;outline:1px dashed var(--line);min-width:34px;display:inline-block}
+  [data-edit][contenteditable=true]:focus{outline:2px solid var(--green)}
+  .wk-media{font-weight:700;color:var(--green-deep)!important}
+  .wk-delta.up{color:#2e7d4f!important}
+  .wk-delta.down{color:#c0552f!important}
+
+  /* toolbar + history */
+  #pp-bar{position:fixed;left:0;right:0;bottom:0;z-index:9000;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--green-deep);color:#fff;padding:8px 14px;font-family:var(--body);font-size:13px;box-shadow:0 -4px 18px rgba(0,0,0,.18)}
+  #pp-bar #pp-stamp{font-family:var(--mono);font-size:11px;color:#bcd6c5;margin-right:auto;min-width:120px}
+  #pp-bar button{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 10px;font-size:12.5px;cursor:pointer;font-family:inherit}
+  #pp-bar button:hover{background:rgba(255,255,255,.26)}
+  #pp-modal{position:fixed;inset:0;z-index:9100;background:rgba(20,24,21,.55);display:none;align-items:center;justify-content:center;padding:18px}
+  #pp-modal.open{display:flex}
+  #pp-modal .pp-card{background:#FFFDF8;border-radius:14px;max-width:480px;width:100%;max-height:82vh;overflow:auto;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .pp-head{display:flex;justify-content:space-between;align-items:center}
+  .pp-head h3{font-size:18px;color:var(--green-deep)}
+  #pp-close{border:none;background:none;font-size:18px;cursor:pointer;color:var(--ink-soft)}
+  .pp-sub{font-size:12.5px;color:var(--ink-soft);margin:6px 0 14px}
+  .pp-hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+  .pp-hrow span{display:block;font-size:11px;color:var(--ink-faint);font-family:var(--mono);margin-top:2px}
+  .pp-hbtns{display:flex;gap:6px;flex:none}
+  .pp-hbtns button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;color:var(--ink)}
+  .pp-hbtns button.del{color:#b3402a;border-color:#e7c4bb}
+  .pp-empty{font-size:13px;color:var(--ink-faint);padding:12px 0}
+
+  @media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}.week{grid-template-columns:repeat(2,1fr)}.toc ol{columns:1}section{padding:40px 0}}
+  @media print{
+    body{background:#fff;padding-bottom:0}
+    .cover{background:var(--green-deep)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    section{page-break-inside:avoid}
+    .ro,.card,.tbl,.day{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    #pp-bar,#pp-modal{display:none!important}
+    input.carga,input.wcell,input.ecell{border:none;background:none;padding:0}
+    .tbl-action,#img-modal,.photo-add{display:none!important}
+    [data-edit][contenteditable=true]{outline:none;background:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="badge">Consultoria · Recomposição corporal com foco em saúde</div>
+    <div class="eyebrow">Protocolo Integrado · Treino + Nutrição + Bem-estar</div>
+    <h1>Emagrecer com saúde, força e energia</h1>
+    <p class="sub">Plano de perda de gordura com preservação de massa magra, construído em torno da sua saúde cardíaca, mental e das suas rotinas reais — sustentável no longo prazo, sem radicalismo.</p>
+    <div class="meta">
+      <span><b>Aluna</b> · Letícia</span>
+      <span><b>Objetivo</b> · Perda de gordura + massa magra</span>
+      <span><b>Frequência</b> · 3–4× por semana</span>
+      <span><b>Foco</b> · Glúteos, punhos, humor e disposição</span>
+    </div>
+    <a href="compras-leticia.html" class="btn-back">🛒 Acessar Lista de Compras</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section id="sumario">
+  <div class="sec-head"><span class="sec-num">00</span><h2>Sumário</h2></div>
+  <div class="toc">
+    <ol>
+      <li><a href="#aviso"><span class="n">01</span> Aviso médico e como usar</a></li>
+      <li><a href="#resumo"><span class="n">02</span> Resumo executivo</a></li>
+      <li><a href="#metricas"><span class="n">03</span> Métricas e composição corporal</a></li>
+      <li><a href="#acompanhamento"><span class="n">04</span> Acompanhamento semanal</a></li>
+      <li><a href="#estrategia"><span class="n">05</span> Estratégia nutricional e hidratação</a></li>
+      <li><a href="#deficiencias"><span class="n">06</span> Deficiências, humor e libido</a></li>
+      <li><a href="#cronograma"><span class="n">07</span> Cronograma semanal</a></li>
+      <li><a href="#dieta"><span class="n">08</span> Dieta completa — 7 dias</a></li>
+      <li><a href="#marmita"><span class="n">09</span> Marmitas, preparo e armazenamento</a></li>
+      <li><a href="#treino"><span class="n">10</span> Treino — divisão e exercícios</a></li>
+      <li><a href="#gluteo"><span class="n">11</span> Glúteos e punhos (prioridades)</a></li>
+      <li><a href="#aerobico"><span class="n">12</span> Aeróbico seguro e movimento diário</a></li>
+      <li><a href="#progressao"><span class="n">13</span> Progressão, sono e evolução</a></li>
+      <li><a href="#final"><span class="n">14</span> Considerações finais</a></li>
+    </ol>
+  </div>
+</section>
+
+<section id="aviso">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Aviso médico e como usar este plano</h2></div>
+  <div class="callout"><b>Leia antes de começar.</b> Você tem um quadro de arritmia cardíaca em acompanhamento. Este protocolo foi desenhado seguindo as recomendações do seu médico (treino de força + aeróbico de leve a média intensidade), mas <b>não substitui a orientação dele</b>. Mostre este plano ao seu cardiologista antes de iniciar e sempre que houver ajuste. Se sentir palpitação forte, tontura, dor no peito ou falta de ar durante qualquer atividade, <b>pare imediatamente</b> e procure orientação médica.</div>
+  <div class="grid3" style="margin-top:6px">
+    <div class="card tight"><h4 class="mini">Regra de ouro nº 1</h4><p style="font-size:13.5px;margin:0;color:var(--ink-soft)"><b>Nunca prenda a respiração</b> ao fazer força (manobra de Valsalva). Solte o ar na fase de esforço. Isso protege o coração e a pressão.</p></div>
+    <div class="card tight"><h4 class="mini">Regra de ouro nº 2</h4><p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Trabalhe numa intensidade <b>confortável a moderada</b> (dá para conversar frases curtas). Sem chegar à exaustão máxima.</p></div>
+    <div class="card tight"><h4 class="mini">Regra de ouro nº 3</h4><p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Constância vence intensidade. É melhor 3 treinos leves e completos por semana do que 1 treino pesado e 6 dias parada.</p></div>
+  </div>
+</section>
+
+<section id="resumo">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Resumo executivo</h2></div>
+  <p class="lead">Seu objetivo é perder gordura sem perder saúde nem massa muscular, chegando aos 55 kg de forma gradual e sustentável. O caminho não é passar fome nem treinar até não aguentar — é um <b>déficit calórico moderado</b>, muita proteína de comida de verdade, treino de força seguro para o coração e movimento diário. O plano também foi pensado para <b>ajudar no humor, na energia e na ansiedade</b>, porque exercício e boa alimentação têm efeito direto sobre isso.</p>
+  <div class="grid3" style="margin-top:18px">
+    <div class="card tight"><h4 class="mini">Nutrição</h4><p style="font-size:13.5px;margin:0;color:var(--ink-soft)">~1.550 kcal, rica em proteína (~120 g). Marmitável, barata e simples. Fontes de ferro, B12 e vitamina D no cardápio, mais alimentos que ajudam o humor.</p></div>
+    <div class="card tight"><h4 class="mini">Treino</h4><p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Força na academia, 3–4×/semana, com ênfase em glúteos e fortalecimento de punhos e mãos. Intensidade moderada, segura para o coração.</p></div>
+    <div class="card tight"><h4 class="mini">Bem-estar</h4><p style="font-size:13.5px;margin:0;color:var(--ink-soft)">Caminhadas leves, sono e rotina que combatem depressão, burnout e ansiedade — parte do tratamento, não um extra.</p></div>
+  </div>
+  <div class="callout green"><b>Expectativa realista.</b> Perder ~20 kg de forma saudável leva tempo: cerca de <b>7 a 10 meses</b> num ritmo seguro de 0,5–0,6 kg por semana. Ir mais rápido que isso custa massa muscular, energia e humor — exatamente o que queremos preservar. Devagar e sempre é o que funciona de verdade.</div>
+</section>
+
+<section id="metricas">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Métricas e composição corporal</h2></div>
+  <p class="lead">Ponto de partida. Estes números são a base para acompanhar a evolução — o que importa é a tendência ao longo das semanas, não o número de um dia isolado.</p>
+  <div class="readouts">
+    <div class="ro"><div class="lab">Peso atual</div><div class="val">74,8<span> kg</span></div></div>
+    <div class="ro"><div class="lab">Altura</div><div class="val">160<span> cm</span></div></div>
+    <div class="ro clay"><div class="lab">IMC atual</div><div class="val">29,2</div><div class="note">sobrepeso</div></div>
+    <div class="ro clay"><div class="lab">Gordura estimada</div><div class="val">~28<span> %</span></div><div class="note">a confirmar</div></div>
+    <div class="ro"><div class="lab">Peso-meta</div><div class="val">55<span> kg</span></div><div class="note">IMC 21,5 (saudável)</div></div>
+    <div class="ro"><div class="lab">A perder</div><div class="val">~20<span> kg</span></div></div>
+    <div class="ro"><div class="lab">Ritmo-alvo</div><div class="val">0,5<span> kg/sem</span></div></div>
+    <div class="ro"><div class="lab">Idade</div><div class="val">40<span> anos</span></div></div>
+  </div>
+  <div class="grid2" style="margin-top:18px">
+    <div class="card"><h4 class="mini">Perfil e ponto de partida</h4><p style="font-size:13.5px;color:var(--ink-soft);margin:0">Rotina de dona de casa, atualmente sedentária. Nos dias que sai, caminha 3–4 km — isso já é um ótimo hábito. Nos dias em casa, o movimento cai muito. Um dos focos do plano é <b>tornar o movimento diário mais constante</b>, sem depender de sair de casa.</p></div>
+    <div class="card"><h4 class="mini">Por que preservar massa magra importa</h4><p style="font-size:13.5px;color:var(--ink-soft);margin:0">Emagrecer só na balança, perdendo músculo junto, deixa o corpo mais fraco e faz o peso voltar. Manter (e ganhar) massa magra deixa o corpo mais firme, forte, com mais energia e mantém o resultado no longo prazo. Por isso: <b>proteína alta + treino de força</b>.</p></div>
+  </div>
+</section>
+<section id="acompanhamento">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Acompanhamento semanal</h2></div>
+  <p class="lead">Esta seção é editável — toque nas células e digite. A <b>média semanal</b> é calculada sozinha e suaviza as variações do dia a dia (água, intestino, ciclo hormonal), mostrando a tendência real. Pese-se 2–3× por semana, de manhã, após o banheiro, sempre na mesma balança.</p>
+
+  <h3 class="block">Peso diário e média semanal (kg)</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Semana</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th><th>Dom</th><th>Média</th><th>Δ vs ant.</th></tr>
+    <tr class="wk-row"><td><span data-edit contenteditable="true">Sem. 1</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td class="n wk-media">—</td><td class="n wk-delta">—</td></tr>
+    <tr class="wk-row"><td><span data-edit contenteditable="true">Sem. 2</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td class="n wk-media">—</td><td class="n wk-delta">—</td></tr>
+    <tr class="wk-row"><td><span data-edit contenteditable="true">Sem. 3</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td class="n wk-media">—</td><td class="n wk-delta">—</td></tr>
+    <tr class="wk-row"><td><span data-edit contenteditable="true">Sem. 4</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td class="n wk-media">—</td><td class="n wk-delta">—</td></tr>
+    <tr class="wk-row"><td><span data-edit contenteditable="true">Sem. 5</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td class="n wk-media">—</td><td class="n wk-delta">—</td></tr>
+    <tr class="wk-row"><td><span data-edit contenteditable="true">Sem. 6</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td class="n wk-media">—</td><td class="n wk-delta">—</td></tr>
+    <tr class="wk-row"><td><span data-edit contenteditable="true">Sem. 7</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td class="n wk-media">—</td><td class="n wk-delta">—</td></tr>
+    <tr class="wk-row"><td><span data-edit contenteditable="true">Sem. 8</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="—"></td><td class="n wk-media">—</td><td class="n wk-delta">—</td></tr>
+    <tr id="wk-controls"><td colspan="10" style="padding:8px 10px;border-top:2px dashed var(--line);background:rgba(122,74,99,.04)"><button class="tbl-action" id="wk-add-row">+ Nova semana</button> <button class="tbl-action danger" id="wk-clear" style="margin-left:6px">🗑 Limpar todos os dados</button></td></tr>
+  </table>
+  </div>
+  <p class="hint-note">A média ignora dias em branco. Δ compara a média desta semana com a anterior — alvo: <b>−0,4 a −0,6 kg por semana</b>. Perdeu muito mais rápido → coma um pouco mais (não convém emagrecer rápido demais). Travou por 2–3 semanas → veja a seção 13.</p>
+
+  <h3 class="block">Atualização de composição e medidas</h3>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Data</th><th>Peso (kg)</th><th>Cintura (cm)</th><th>Quadril (cm)</th><th>% Gordura</th><th>Fotos</th><th>Como me sinto</th></tr>
+    <tr><td><input class="ecell" data-edit placeholder="dd/mm"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="74,8"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td class="photo-cell"><div class="photo-thumbs" data-photo-row="0"></div><label class="photo-add" title="Adicionar foto (frente, costas, lateral)">＋<input class="photo-input" type="file" accept=".heif,.heic,.jpg,.jpeg,.png" multiple data-photo-row="0"></label></td><td><span data-edit contenteditable="true">Início</span></td></tr>
+    <tr><td><input class="ecell" data-edit placeholder="dd/mm"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td class="photo-cell"><div class="photo-thumbs" data-photo-row="1"></div><label class="photo-add" title="Adicionar foto">＋<input class="photo-input" type="file" accept=".heif,.heic,.jpg,.jpeg,.png" multiple data-photo-row="1"></label></td><td><span data-edit contenteditable="true">—</span></td></tr>
+    <tr><td><input class="ecell" data-edit placeholder="dd/mm"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td class="photo-cell"><div class="photo-thumbs" data-photo-row="2"></div><label class="photo-add" title="Adicionar foto">＋<input class="photo-input" type="file" accept=".heif,.heic,.jpg,.jpeg,.png" multiple data-photo-row="2"></label></td><td><span data-edit contenteditable="true">—</span></td></tr>
+    <tr><td><input class="ecell" data-edit placeholder="dd/mm"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td class="photo-cell"><div class="photo-thumbs" data-photo-row="3"></div><label class="photo-add" title="Adicionar foto">＋<input class="photo-input" type="file" accept=".heif,.heic,.jpg,.jpeg,.png" multiple data-photo-row="3"></label></td><td><span data-edit contenteditable="true">—</span></td></tr>
+    <tr><td><input class="ecell" data-edit placeholder="dd/mm"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="—"></td><td class="photo-cell"><div class="photo-thumbs" data-photo-row="4"></div><label class="photo-add" title="Adicionar foto">＋<input class="photo-input" type="file" accept=".heif,.heic,.jpg,.jpeg,.png" multiple data-photo-row="4"></label></td><td><span data-edit contenteditable="true">—</span></td></tr>
+    <tr id="ec-controls"><td colspan="7" style="padding:8px 10px;border-top:2px dashed var(--line);background:rgba(122,74,99,.04)"><button class="tbl-action" id="ec-add-row">+ Nova medição</button> <button class="tbl-action danger" id="ec-clear" style="margin-left:6px">🗑 Limpar todos os dados</button></td></tr>
+  </table>
+  </div>
+  <div class="callout"><b>Dica:</b> a <b>medida da cintura</b> às vezes diz mais que a balança — em fase de treino, você pode perder gordura e ganhar músculo, e a balança quase não muda enquanto o corpo afina. Meça a cintura na altura do umbigo, relaxada, 1× por semana. Use <b>💾 Salvar versão</b> (barra inferior) para guardar fotos do progresso ao longo do tempo.</div>
+</section>
+<section id="estrategia">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Estratégia nutricional e hidratação</h2></div>
+  <p class="lead">A lógica é simples: comer o suficiente para ter energia e disposição, com um déficit moderado que faça o corpo usar a gordura estocada, sem passar fome. Muita proteína (para segurar o músculo e dar saciedade) e nada de dieta radical — dieta radical não dura e piora o humor.</p>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Etapa</th><th>Cálculo</th><th>Resultado</th></tr>
+    <tr><td>TMB (Mifflin-St Jeor)</td><td>10×74,8 + 6,25×160 − 5×40 − 161</td><td class="n">≈ 1.390 kcal</td></tr>
+    <tr><td>Fator de atividade</td><td>rotina leve + caminhadas (×1,4)</td><td class="n">—</td></tr>
+    <tr><td>Gasto total (TDEE)</td><td>1.390 × 1,4</td><td class="n">≈ 1.940 kcal</td></tr>
+    <tr><td>Déficit moderado</td><td>− ~400 kcal (seguro e sustentável)</td><td class="n">≈ −400 kcal</td></tr>
+    <tr class="total"><td>Meta diária</td><td>perda de ~0,5 kg/semana</td><td class="n">≈ 1.550 kcal</td></tr>
+  </table>
+  </div>
+
+  <h3 class="block">Distribuição de macros</h3>
+  <div class="macrobar"><div class="m-p" style="width:31%">Proteína 31%</div><div class="m-c" style="width:40%">Carboidrato 40%</div><div class="m-f" style="width:29%">Gordura 29%</div></div>
+  <div class="legend" style="margin-bottom:14px"><span><i class="dot m-p"></i> Proteína</span><span><i class="dot m-c"></i> Carboidrato</span><span><i class="dot m-f"></i> Gordura</span></div>
+  <div class="readouts">
+    <div class="ro"><div class="lab">Calorias</div><div class="val">1.550<span> kcal</span></div></div>
+    <div class="ro"><div class="lab">Proteína</div><div class="val">120<span> g</span></div><div class="note">segura o músculo · dá saciedade</div></div>
+    <div class="ro clay"><div class="lab">Carboidrato</div><div class="val">155<span> g</span></div><div class="note">energia para treino e humor</div></div>
+    <div class="ro"><div class="lab">Gordura</div><div class="val">50<span> g</span></div><div class="note">hormônios e saciedade</div></div>
+  </div>
+  <div class="callout green"><b>Por que tanta proteína?</b> Em déficit, o corpo tende a perder músculo junto com a gordura. Comer bastante proteína (aqui, ~1,6 g por kg do seu peso, vindo <b>só de comida de verdade</b>: ovos, carnes magras, frango, peixe, feijões, laticínios) protege o músculo, aumenta a saciedade e ainda gasta mais energia para ser digerida. É o nutriente mais importante do seu plano.</div>
+
+  <h3 class="block">Hidratação diária</h3>
+  <div class="readouts">
+    <div class="ro"><div class="lab">Meta base</div><div class="val">2,2<span> L</span></div><div class="note">~30 ml por kg</div></div>
+    <div class="ro clay"><div class="lab">Dias de treino</div><div class="val">2,5<span> L</span></div><div class="note">+ água na academia</div></div>
+    <div class="ro"><div class="lab">Ao acordar</div><div class="val">1<span> copo</span></div><div class="note">começa o dia hidratada</div></div>
+  </div>
+  <div class="callout"><b>Água ajuda no emagrecimento e na disposição.</b> Muitas vezes o corpo confunde sede com fome. Beber água ao longo do dia reduce a "fome falsa", ajuda o intestino e combate o cansaço. Deixe uma garrafa sempre à vista. <b>Café</b> pode, com moderação — mas evite à tarde/noite para não atrapalhar o sono nem acelerar o coração.</div>
+</section>
+
+<section id="deficiencias">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Deficiências, humor e libido</h2></div>
+  <p class="lead">Você tem deficiência de ferro, vitamina B12 e vitamina D — e convive com depressão, burnout, ansiedade e baixa libido. Essas coisas estão mais ligadas do que parecem: as três deficiências causam cansaço, desânimo e queda de libido. Corrigi-las (com o acompanhamento do seu médico) e comer os alimentos certos faz diferença real no dia a dia. <b>A suplementação já foi prescrita pelo seu médico — continue exatamente como ele orientou.</b> A dieta abaixo reforça pela comida.</p>
+  <div class="scroll">
+  <table class="tbl">
+    <tr><th>Nutriente</th><th>Por que importa para você</th><th>Onde encontrar na comida</th><th>Dica de absorção</th></tr>
+    <tr><td><b>Ferro</b></td><td>Falta de ferro causa cansaço, falta de ar e desânimo — piora a sensação de fadiga da depressão.</td><td>Carne vermelha magra, fígado, ovo, folhas verde-escuras (couve, espinafre, agrião), sardinha.</td><td>Coma com <b>vitamina C</b> (laranja, limão, tomate) na mesma refeição. Evite café/chá junto — atrapalham a absorção.</td></tr>
+    <tr><td><b>Vitamina B12</b></td><td>Ligada à energia, memória e humor. A falta causa cansaço e "névoa mental".</td><td>Carne, ovo, peixe, leite e derivados. (Vem só de origem animal — importante você não cortar isso.)</td><td>Consumo diário de ovos e carnes/laticínios cobre bem. A reposição prescrita cuida do resto.</td></tr>
+    <tr><td><b>Vitamina D</b></td><td>Baixa vitamina D está associada a humor deprimido, cansaço e dores. Comum em quem fica muito dentro de casa.</td><td>Ovos (gema), peixes, laticínios. Mas a <b>maior fonte é o sol</b>.</td><td>Tome <b>10–20 min de sol</b> nos braços/pernas algumas vezes por semana (de manhã ou fim de tarde). Combina com a caminhada.</td></tr>
+  </table>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card"><h4 class="mini">Comida e humor</h4><p style="font-size:13.5px;color:var(--ink-soft);margin:0">Alguns hábitos alimentares ajudam o cérebro: <b>proteína em todas as refeições</b> (estabiliza energia e humor), <b>ômega-3</b> (sardinha, ovos, peixe — ligado a menos sintomas depressivos), e <b>evitar picos de açúcar</b> (doces e refrigerante dão energia que despenca depois, piorando ansiedade e cansaço). Não é sobre proibir — é sobre a base do prato ser comida de verdade.</p></div>
+    <div class="card"><h4 class="mini">Exercício como remédio para a mente</h4><p style="font-size:13.5px;color:var(--ink-soft);margin:0">Isto não é motivacional vazio: exercício tem <b>efeito comprovado</b> contra depressão e ansiedade — combinar musculação com caminhada é uma das formas mais eficazes. Além disso, treino de força melhora a autoestima e a libido. Nos dias difíceis, mesmo 15 minutos já ajudam. <b>Movimento é parte do seu tratamento</b>, junto com o acompanhamento médico.</p></div>
+  </div>
+  <div class="callout"><b>Importante sobre a libido e o humor.</b> Baixa libido pode vir das deficiências, do cansaço, da depressão e de alguns medicamentos. Conforme o ferro, a B12 e a vitamina D normalizam e o corpo ganha energia com o treino, é comum melhorar. Se persistir, vale conversar abertamente com seu médico — é uma questão de saúde como qualquer outra, e tem solução.</div>
+</section>
+<section id="cronograma">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Cronograma semanal</h2></div>
+  <p class="lead">Uma semana equilibrada: 3 treinos de força fixos, 1 opcional, caminhadas leves e descanso. Montada para caber na rotina de casa e ser segura para o coração.</p>
+  <div class="week">
+    <div class="day train"><div class="d">Seg</div><div class="t">Treino A<br>(pernas/glúteo)</div><div class="ic">🏋️</div></div>
+    <div class="day rest"><div class="d">Ter</div><div class="t">Caminhada<br>leve</div><div class="ic">🚶‍♀️</div></div>
+    <div class="day train"><div class="d">Qua</div><div class="t">Treino B<br>(superior)</div><div class="ic">🏋️</div></div>
+    <div class="day rest"><div class="d">Qui</div><div class="t">Caminhada<br>+ sol</div><div class="ic">☀️</div></div>
+    <div class="day train"><div class="d">Sex</div><div class="t">Treino C<br>(corpo todo/glúteo)</div><div class="ic">🏋️</div></div>
+    <div class="day train"><div class="d">Sáb</div><div class="t">Opcional:<br>caminhada longa</div><div class="ic">🚶‍♀️</div></div>
+    <div class="day rest"><div class="d">Dom</div><div class="t">Descanso<br>total</div><div class="ic">😴</div></div>
+  </div>
+  <div class="callout green"><b>Lógica.</b> São <b>3 treinos de força</b> (seg, qua, sex) em dias não-consecutivos — o que dá tempo de recuperar e é o formato recomendado para quem tem condição cardíaca. Nos dias intermediários, <b>caminhada leve</b> (o aeróbico de baixa intensidade que seu médico liberou), que ainda ajuda o humor e a queima de gordura. O 4º dia (sábado) é flexível: se estiver bem, uma caminhada mais longa; se não, descanse sem culpa. Domingo é descanso de verdade.</div>
+  <div class="callout"><b>Flexibilidade é regra, não exceção.</b> Se um dia render menos, tudo bem. O importante é não sumir a semana inteira. Faltou segunda? Faça terça. A meta é <b>3 treinos por semana</b>, o dia exato importa menos.</div>
+</section>
+
+<section id="dieta">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Dieta completa — 7 dias</h2></div>
+  <p class="lead">Cardápio de ~1.500 kcal por dia, com ~110–120 g de proteína, tudo de comida de verdade — sem pó de proteína, sem feijão, sem tapioca, sem nada difícil ou caro. Quatro refeições por dia. A proteína principal varia para não enjoar e cobrir ferro, B12 e ômega-3. Quantidades em peso <b>já cozido/pronto</b>, salvo indicação.</p>
+  <div class="callout"><b>Como ler.</b> Cada dia soma perto de 1.500 kcal. As marmitas (almoço e jantar) são as que você prepara em lote e congela. Café e lanche são montados na hora, rápidos. Sempre inclua uma fonte de <b>vitamina C</b> (laranja, tomate, limão) junto do almoço/jantar para absorver melhor o ferro. O <b>queijo minas</b> (ou ricota) aparece no café da manhã e em alguns lanches — é uma boa fonte de proteína e cálcio.</div>
+
+  <h3 class="block">Segunda — <span class="tag">Frango</span></h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>2 ovos mexidos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td><td class="n">370</td><td class="n">21</td><td class="n">34</td><td class="n">17</td></tr>
+    <tr><td>Almoço</td><td>Arroz 120 g · <b>frango grelhado 140 g</b> · couve/espinafre refogado · salada de folhas + tomate c/ 1 fio de azeite</td><td class="n">500</td><td class="n">50</td><td class="n">43</td><td class="n">13</td></tr>
+    <tr><td>Lanche da tarde</td><td>Iogurte natural 170 g · 1 fruta · 1 col. (10 g) aveia</td><td class="n">230</td><td class="n">12</td><td class="n">39</td><td class="n">4</td></tr>
+    <tr><td>Jantar</td><td><b>Frango 100 g</b> · legumes refogados (abobrinha, cenoura) · arroz 100 g · 1 fio de azeite</td><td class="n">400</td><td class="n">36</td><td class="n">36</td><td class="n">12</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">1.500</td><td class="n">119</td><td class="n">152</td><td class="n">46</td></tr>
+  </table></div>
+
+  <h3 class="block">Terça — <span class="tag clay">Carne moída (patinho)</span></h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>2 ovos mexidos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td><td class="n">370</td><td class="n">21</td><td class="n">34</td><td class="n">17</td></tr>
+    <tr><td>Almoço</td><td>Arroz 120 g · <b>carne moída patinho 120 g</b> · couve refogada · salada + tomate c/ 1 fio de azeite</td><td class="n">490</td><td class="n">43</td><td class="n">43</td><td class="n">16</td></tr>
+    <tr><td>Lanche da tarde</td><td>Iogurte natural 170 g · 1 punhado (20 g) castanhas</td><td class="n">240</td><td class="n">14</td><td class="n">16</td><td class="n">15</td></tr>
+    <tr><td>Jantar</td><td>Omelete de 3 ovos c/ queijo minas 30 g · legumes · 1 fatia pão integral</td><td class="n">420</td><td class="n">28</td><td class="n">22</td><td class="n">25</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">1.520</td><td class="n">106</td><td class="n">115</td><td class="n">73</td></tr>
+  </table></div>
+
+  <h3 class="block">Quarta — <span class="tag">Peixe (tilápia/sardinha)</span></h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>2 ovos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td><td class="n">370</td><td class="n">21</td><td class="n">34</td><td class="n">17</td></tr>
+    <tr><td>Almoço</td><td>Arroz 120 g · <b>tilápia 150 g</b> · couve refogada · salada + limão espremido · 1 fio de azeite</td><td class="n">460</td><td class="n">46</td><td class="n">43</td><td class="n">12</td></tr>
+    <tr><td>Lanche da tarde</td><td>Iogurte natural 170 g · 1 col. (10 g) aveia · 1 fruta</td><td class="n">230</td><td class="n">12</td><td class="n">39</td><td class="n">4</td></tr>
+    <tr><td>Jantar</td><td><b>Sardinha 1 lata (em água) ou 120 g</b> · salada verde-escura · couve · arroz 100 g</td><td class="n">375</td><td class="n">28</td><td class="n">37</td><td class="n">13</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">1.435</td><td class="n">107</td><td class="n">153</td><td class="n">46</td></tr>
+  </table></div>
+
+  <h3 class="block">Quinta — <span class="tag clay">Fígado / carne (ferro)</span></h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>Vitamina: leite 200 ml · 1 banana · 1 col. aveia · queijo minas 30 g · café à parte</td><td class="n">330</td><td class="n">14</td><td class="n">40</td><td class="n">13</td></tr>
+    <tr><td>Almoço</td><td>Arroz 120 g · <b>fígado acebolado 120 g</b> (ou patinho) · couve refogada · salada + tomate · 1 fio de azeite</td><td class="n">475</td><td class="n">39</td><td class="n">48</td><td class="n">14</td></tr>
+    <tr><td>Lanche da tarde</td><td>1 fatia pão integral · 1 ovo cozido · queijo minas 30 g · 1 fruta</td><td class="n">297</td><td class="n">15</td><td class="n">34</td><td class="n">12</td></tr>
+    <tr><td>Jantar</td><td><b>Frango desfiado 120 g</b> · legumes no vapor · arroz 100 g</td><td class="n">388</td><td class="n">42</td><td class="n">36</td><td class="n">8</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">1.490</td><td class="n">110</td><td class="n">158</td><td class="n">47</td></tr>
+  </table></div>
+  <p style="font-size:13px;color:var(--ink-soft)">O <b>fígado</b> é a fonte mais barata e potente de ferro e B12 que existe. Uma vez por semana já ajuda bastante. Se não gostar, troque por carne vermelha magra (patinho/coxão).</p>
+
+  <h3 class="block">Sexta — <span class="tag">Frango</span></h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>2 ovos mexidos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td><td class="n">370</td><td class="n">21</td><td class="n">34</td><td class="n">17</td></tr>
+    <tr><td>Almoço</td><td>Batata 150 g · <b>frango grelhado 130 g</b> · couve refogada · salada + tomate · 1 fio de azeite</td><td class="n">453</td><td class="n">47</td><td class="n">39</td><td class="n">12</td></tr>
+    <tr><td>Lanche da tarde</td><td>Iogurte natural 170 g · 1 fruta · 1 col. (10 g) aveia</td><td class="n">230</td><td class="n">12</td><td class="n">39</td><td class="n">4</td></tr>
+    <tr><td>Jantar</td><td>Omelete de 2 ovos + queijo minas 40 g · salada verde-escura · 1 fatia pão integral</td><td class="n">381</td><td class="n">26</td><td class="n">23</td><td class="n">21</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">1.435</td><td class="n">106</td><td class="n">135</td><td class="n">54</td></tr>
+  </table></div>
+
+  <h3 class="block">Sábado — <span class="tag clay">Carne / peixe</span></h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>2 ovos mexidos · 1 fatia pão integral · 1 fruta · queijo minas 30 g · café</td><td class="n">370</td><td class="n">21</td><td class="n">34</td><td class="n">17</td></tr>
+    <tr><td>Almoço</td><td>Arroz 120 g · <b>patinho 120 g</b> · couve refogada · salada + tomate + limão · 1 fio de azeite</td><td class="n">493</td><td class="n">43</td><td class="n">43</td><td class="n">16</td></tr>
+    <tr><td>Lanche da tarde</td><td>Iogurte natural 170 g · 20 g castanhas · café</td><td class="n">240</td><td class="n">14</td><td class="n">16</td><td class="n">15</td></tr>
+    <tr><td>Jantar</td><td><b>Tilápia 130 g</b> · legumes refogados · arroz 100 g · 1 fio de azeite</td><td class="n">403</td><td class="n">38</td><td class="n">36</td><td class="n">12</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">1.505</td><td class="n">116</td><td class="n">129</td><td class="n">60</td></tr>
+  </table></div>
+
+  <h3 class="block">Domingo — <span class="tag">Ovos + livre leve</span></h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Refeição</th><th>Alimentos</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+    <tr><td>Café da manhã</td><td>Omelete de 3 ovos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td><td class="n">440</td><td class="n">27</td><td class="n">34</td><td class="n">22</td></tr>
+    <tr><td>Almoço</td><td>Arroz 120 g · <b>carne ou frango 130 g</b> · couve refogada · salada colorida · 1 fio de azeite</td><td class="n">480</td><td class="n">47</td><td class="n">43</td><td class="n">12</td></tr>
+    <tr><td>Lanche da tarde</td><td>Iogurte natural 170 g · 1 fruta</td><td class="n">190</td><td class="n">11</td><td class="n">32</td><td class="n">3</td></tr>
+    <tr><td>Jantar (leve)</td><td>Sopa de legumes c/ <b>frango desfiado 120 g</b> · 1 fatia pão integral</td><td class="n">323</td><td class="n">42</td><td class="n">20</td><td class="n">8</td></tr>
+    <tr class="total"><td>Total</td><td>—</td><td class="n">1.435</td><td class="n">127</td><td class="n">129</td><td class="n">45</td></tr>
+  </table></div>
+
+  <div class="callout green"><b>Regras que facilitam a vida:</b> a base é sempre <b>uma proteína + um carboidrato + vegetais/salada</b>. Você pode trocar as proteínas entre os dias conforme o preço no mercado (frango ↔ carne ↔ peixe ↔ ovos). O que não muda: proteína em toda refeição, salada colorida no almoço/jantar, fruta nos lanches, e vitamina C junto do ferro.</div>
+  <div class="callout"><b>Sobre o queijo.</b> Prefira <b>queijo minas frescal ou ricota</b> — são mais magros e com menos sódio, ideais para o dia a dia. O <b>cottage</b> é ainda mais magro e proteico, se você gostar. O melhor horário é no <b>café da manhã</b> (ajuda a bater proteína logo cedo) ou no <b>lanche da tarde</b> (segura a fome até o jantar) — que é como está no cardápio. Evite abusar dos queijos amarelos gordurosos (prato, muçarela em grande quantidade).</div>
+  <div class="callout"><b>E se bater vontade de doce?</b> Não precisa ser 8 ou 80. Uma fruta, um iogurte, um quadradinho de chocolate 70% cabem. O problema é o excesso diário, não o docinho ocasional. Restrição total gera compulsão — e isso atrapalha mais que ajuda, ainda mais no seu caso.</div>
+</section>
+<section id="marmita">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Marmitas, preparo e armazenamento</h2></div>
+  <p class="lead">O segredo para a dieta funcionar em casa é <b>cozinhar em lote e congelar</b>. Assim, no dia a dia você só esquenta — sem desculpa para pular refeição ou pedir delivery.</p>
+  <div class="grid2">
+    <div class="card"><h4 class="mini">Rotina de preparo (2× na semana)</h4><ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0"><li><b>Domingo e quarta:</b> dois dias de preparo cobrem a semana.</li><li>Faça arroz em quantidade maior.</li><li>Grelhe/asse as proteínas de uma vez (frango, carne, peixe).</li><li>Deixe legumes higienizados e picados na geladeira.</li><li>Monte as marmitas em potes individuais e congele.</li></ul></div>
+    <div class="card"><h4 class="mini">Preparo simples e barato</h4><ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0"><li><b>Grelhar ou assar</b> a proteína — pouco óleo, fica pronto fácil.</li><li>Tempere com alho, cebola, sal, limão e ervas — barato e sem gordura extra.</li><li>Legumes no <b>vapor ou refogados</b> com pouco azeite.</li><li>Nada de fritura nem receita complicada — comida simples de vó funciona.</li></ul></div>
+  </div>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Item</th><th>Geladeira</th><th>Congelador</th><th>Observação</th></tr>
+    <tr><td>Arroz</td><td class="n">3–4 dias</td><td class="n">até 3 meses</td><td>Congele em porção individual</td></tr>
+    <tr><td>Frango / carne</td><td class="n">3 dias</td><td class="n">até 3 meses</td><td>Deixe esfriar antes de congelar</td></tr>
+    <tr><td>Peixe cozido</td><td class="n">2 dias</td><td class="n">até 2 meses</td><td>Consuma primeiro</td></tr>
+    <tr><td>Marmita completa</td><td class="n">3 dias</td><td class="n">até 1 mês</td><td>Pote com tampa</td></tr>
+    <tr><td>Legumes cozidos</td><td class="n">3–4 dias</td><td class="n">até 2 meses</td><td>Vapor mantém melhor</td></tr>
+  </table></div>
+  <div class="callout"><b>Segurança:</b> deixe a comida esfriar antes de congelar; descongele na geladeira na véspera, nunca na bancada; reaqueça bem; não recongele o que já descongelou. Etiquete os potes com a data.</div>
+</section>
+
+<section id="treino">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Treino — divisão e exercícios</h2></div>
+  <p class="lead">Três treinos de força na academia, com <b>ênfase em glúteos</b> e <b>fortalecimento de punhos e mãos</b>. Tudo em intensidade moderada e seguro para o coração. Legenda: <b>Séries × Reps</b> · <b>Percepção</b> = quão difícil deve parecer (escala "leve → moderado") · <b>Carga atual</b> = campo editável, anote o peso. Faça <b>10–15 repetições</b> confortáveis, parando 2–3 antes da falha (nunca até não aguentar mais).</p>
+  <div class="callout"><b>Antes de cada série, lembre-se:</b> <b>solte o ar na hora do esforço</b> (empurrar/levantar) e puxe o ar na volta. Nunca prenda a respiração. Descanse 60–90 s entre séries — sem pressa. Se sentir o coração disparar de forma estranha, tontura ou falta de ar, pare e descanse.</p></div>
+
+  <h3 class="block">Treino A — Pernas e glúteos (segunda)</h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>Descanso</th><th>Percepção</th><th>Carga atual</th><th>Como fazer</th></tr>
+    <tr><td>Leg press (máquina)</td><td class="n">3 × 12–15</td><td class="n">90 s</td><td class="n">moderado</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Empurre soltando o ar; não trave o joelho no fim. Glúteo e coxa.</td></tr>
+    <tr><td>Elevação pélvica / hip thrust</td><td class="n">3 × 12–15</td><td class="n">90 s</td><td class="n">moderado</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td><b>Principal para glúteo.</b> Apoie as costas no banco, suba o quadril apertando o glúteo 1 s no topo.</td></tr>
+    <tr><td>Cadeira abdutora</td><td class="n">3 × 15</td><td class="n">60 s</td><td class="n">leve-mod.</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Abre as pernas contra o apoio. Glúteo médio (parte lateral).</td></tr>
+    <tr><td>Cadeira extensora</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">leve-mod.</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Estende o joelho devagar. Frente da coxa.</td></tr>
+    <tr><td>Mesa flexora</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">leve-mod.</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Dobra o joelho. Parte de trás da coxa.</td></tr>
+    <tr><td>Panturrilha na máquina</td><td class="n">3 × 15–20</td><td class="n">45 s</td><td class="n">leve</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Sobe na ponta do pé, desce controlado.</td></tr>
+  </table></div>
+
+  <h3 class="block">Treino B — Parte superior + punhos (quarta)</h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>Descanso</th><th>Percepção</th><th>Carga atual</th><th>Como fazer</th></tr>
+    <tr><td>Puxada frente (máquina)</td><td class="n">3 × 12–15</td><td class="n">90 s</td><td class="n">moderado</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Puxa a barra até o peito, soltando o ar. Costas.</td></tr>
+    <tr><td>Remada sentada (máquina)</td><td class="n">3 × 12–15</td><td class="n">90 s</td><td class="n">moderado</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Puxa em direção à barriga, aperta as costas.</td></tr>
+    <tr><td>Supino máquina ou peito</td><td class="n">3 × 12–15</td><td class="n">90 s</td><td class="n">moderado</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Empurra soltando o ar. Peito e braços.</td></tr>
+    <tr><td>Elevação lateral (halter leve)</td><td class="n">3 × 12–15</td><td class="n">60 s</td><td class="n">leve</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Sobe os braços até a altura do ombro. Ombros.</td></tr>
+    <tr><td>Rosca de punho (flexão)</td><td class="n">3 × 15</td><td class="n">45 s</td><td class="n">leve</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td><b>Punho:</b> antebraço apoiado, halter leve na mão, dobra o punho para cima e desce devagar.</td></tr>
+    <tr><td>Rosca de punho invertida</td><td class="n">3 × 15</td><td class="n">45 s</td><td class="n">leve</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td><b>Punho:</b> palma virada para baixo, levanta o dorso da mão. Fortalece o outro lado.</td></tr>
+    <tr><td>Preensão (bolinha/hand grip)</td><td class="n">3 × 15</td><td class="n">45 s</td><td class="n">leve</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td><b>Mãos:</b> aperta e solta a bolinha ou hand grip. Força de pegada.</td></tr>
+  </table></div>
+
+  <h3 class="block">Treino C — Corpo todo + glúteo (sexta)</h3>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Exercício</th><th>Séries × Reps</th><th>Descanso</th><th>Percepção</th><th>Carga atual</th><th>Como fazer</th></tr>
+    <tr><td>Agachamento no Smith ou máquina</td><td class="n">3 × 12–15</td><td class="n">90 s</td><td class="n">moderado</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Desce até onde for confortável, sem forçar o joelho. Glúteo e coxa.</td></tr>
+    <tr><td>Elevação pélvica / hip thrust</td><td class="n">3 × 12–15</td><td class="n">90 s</td><td class="n">moderado</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td><b>Glúteo de novo</b> — é a prioridade, então aparece 2× na semana.</td></tr>
+    <tr><td>Coice no cabo / glúteo na máquina</td><td class="n">3 × 15/perna</td><td class="n">60 s</td><td class="n">leve-mod.</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Empurra a perna para trás, aperta o glúteo. Um lado de cada vez.</td></tr>
+    <tr><td>Puxada ou remada (escolha 1)</td><td class="n">3 × 12–15</td><td class="n">90 s</td><td class="n">moderado</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Trabalha as costas de novo, em outro ângulo.</td></tr>
+    <tr><td>Abdominal na máquina ou prancha</td><td class="n">3 × 12 (ou 30 s)</td><td class="n">45 s</td><td class="n">leve-mod.</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td>Fortalece o centro do corpo. Na prancha, respire normal (não prenda o ar).</td></tr>
+    <tr><td>Rosca de punho + preensão</td><td class="n">2 × 15</td><td class="n">45 s</td><td class="n">leve</td><td class="carga-cell"><input class="carga" data-edit inputmode="decimal" placeholder="—"></td><td><b>Punho:</b> repete o trabalho de punho/mão para reforçar 2× na semana.</td></tr>
+  </table></div>
+
+  <div class="callout green"><b>Como começar (primeiras 2 semanas).</b> Comece <b>leve</b>, aprendendo o movimento de cada máquina — pode ser só 1–2 séries por exercício e cargas baixas. O objetivo inicial é o corpo (e o coração) se acostumarem, e você ganhar confiança. A partir da 3ª semana, vá aumentando para as 3 séries e um pouco mais de carga, sempre confortável. <b>Se possível, peça a um instrutor da academia para conferir a postura</b> nas primeiras vezes.</div>
+</section>
+<section id="gluteo">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Glúteos e punhos — suas prioridades</h2></div>
+  <p class="lead">Você pediu ênfase em glúteos e no fortalecimento dos punhos (mãos fracas). Aqui está o porquê e o como, de forma direta.</p>
+  <div class="grid2">
+    <div class="card"><h4 class="mini">Glúteos — por que e como</h4><p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:8px">Glúteo forte não é só estética: melhora a postura, protege a lombar e dá firmeza ao corpo conforme você emagrece. Por isso a <b>elevação pélvica (hip thrust)</b> aparece 2× na semana — é o exercício mais eficiente para glúteo.</p><p style="font-size:12.5px;color:var(--ink-faint);margin:0">Segredo: em cada repetição, <b>aperte o glúteo com força no topo</b> e segure 1 segundo. O músculo responde ao "apertar", não só a subir e descer.</p></div>
+    <div class="card"><h4 class="mini">Punhos e mãos — por que e como</h4><p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:8px">Mãos e punhos fracos atrapalham no dia a dia (carregar sacola, abrir potes) e no próprio treino. O trabalho de <b>rosca de punho</b> (nos dois sentidos) e <b>preensão</b> (apertar bolinha/hand grip) fortalece de forma simples e segura.</p><p style="font-size:12.5px;color:var(--ink-faint);margin:0">Bônus caseiro: apertar uma bolinha de tênis ou massinha enquanto assiste TV já ajuda. Faça alguns apertos com cada mão, algumas vezes ao dia.</p></div>
+  </div>
+  <div class="callout"><b>Movimento extra em casa (opcional e leve):</b> a <b>ponte de glúteo no chão</b> — deitada, joelhos dobrados, sobe o quadril apertando o glúteo — pode ser feita em casa, sem peso, 2–3 séries de 15. Ótima nos dias sem academia.</div>
+</section>
+
+<section id="aerobico">
+  <div class="sec-head"><span class="sec-num">12</span><h2>Aeróbico seguro e movimento diário</h2></div>
+  <p class="lead">Seu médico liberou aeróbico de <b>leve a média intensidade</b> — perfeito, porque é justamente o que ajuda a queimar gordura, melhorar o coração e levantar o humor, sem sobrecarregar. A caminhada é sua melhor amiga aqui.</p>
+  <div class="grid3">
+    <div class="card tight"><h4 class="mini">Caminhada leve</h4><p style="font-size:13px;color:var(--ink-soft);margin:0">20–40 min, ritmo em que <b>dá para conversar</b> sem ofegar. Você já faz 3–4 km nos dias que sai — mantenha e transforme em hábito quase diário.</p></div>
+    <div class="card tight"><h4 class="mini">O "teste da fala"</h4><p style="font-size:13px;color:var(--ink-soft);margin:0">É seu medidor de segurança: se consegue falar frases, a intensidade está boa. Se não consegue falar, <b>diminua o ritmo</b>. Simples e seguro para o coração.</p></div>
+    <div class="card tight"><h4 class="mini">Aproveite o sol</h4><p style="font-size:13px;color:var(--ink-soft);margin:0">Caminhe de manhã ou fim de tarde e pegue <b>10–20 min de sol</b> — ajuda na vitamina D (que você precisa repor) e no humor.</p></div>
+  </div>
+  <h3 class="block">Movimento nos dias em casa</h3>
+  <p>Nos dias que você fica em casa, o movimento cai muito — e é aí que está a maior oportunidade. Não precisa de treino formal, só <b>quebrar o tempo parada</b>:</p>
+  <div class="grid2">
+    <div class="card tight"><h4 class="mini">Metas simples de movimento</h4><ul style="font-size:13.5px;color:var(--ink-soft);margin:0 0 0 16px"><li>A cada ~1 h sentada ou na cama, levante e ande 2–3 min pela casa.</li><li>Tarefas de casa contam: varrer, estender roupa, arrumar — mexa-se com disposição.</li><li>Uma caminhada curta (10–15 min) depois do almoço já faz diferença.</li></ul></div>
+    <div class="card tight"><h4 class="mini">Por que isso importa tanto</h4><p style="font-size:13.5px;color:var(--ink-soft);margin:0">Ficar muito tempo na cama alimenta o cansaço e o desânimo — vira um ciclo. Pequenos movimentos ao longo do dia gastam calorias, melhoram a circulação e <b>ajudam a sair do ciclo da apatia</b>. Não é sobre se exercitar muito, é sobre parar menos.</p></div>
+  </div>
+</section>
+
+<section id="progressao">
+  <div class="sec-head"><span class="sec-num">13</span><h2>Progressão, sono e evolução</h2></div>
+  <p class="lead">Resultado vem de constância + pequenos aumentos ao longo do tempo + boa recuperação. Aqui está como progredir com segurança.</p>
+  <div class="grid2">
+    <div class="card"><h4 class="mini">Como progredir no treino</h4><p style="font-size:13.5px;color:var(--ink-soft);margin:0">Quando as 12–15 repetições ficarem <b>fáceis</b> em todas as séries, aumente um pouquinho a carga (o menor incremento disponível) na próxima vez. Anote na coluna "Carga atual". Progressão devagar e segura — sem pressa, sem pular etapas.</p></div>
+    <div class="card"><h4 class="mini">Como ajustar a dieta</h4><p style="font-size:13.5px;color:var(--ink-soft);margin:0">Se o peso <b>parar de cair por 2–3 semanas</b> seguidas (olhando a média, não o dia), tire ~100 kcal (ex.: uma colher de arroz a menos no almoço e jantar) ou adicione uma caminhada. Nunca corte demais de uma vez.</p></div>
+  </div>
+  <h3 class="block">Sono e recuperação</h3>
+  <p class="lead">Sono ruim aumenta a fome, piora o humor e a ansiedade, e atrapalha o emagrecimento. Cuidar do sono é tão importante quanto treinar — especialmente no seu caso.</p>
+  <div class="grid2">
+    <div class="card"><h4 class="mini">Higiene do sono</h4><ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0"><li>Horário mais ou menos fixo para deitar e acordar.</li><li>Evite telas e notícias pesadas na última hora antes de dormir.</li><li>Quarto escuro, fresco e silencioso.</li><li>Evite café/estimulantes à tarde e à noite (também protege o coração).</li></ul></div>
+    <div class="card"><h4 class="mini">Cuidando da cabeça</h4><ul style="font-size:13.5px;color:var(--ink-soft);margin-bottom:0"><li>Mantenha o acompanhamento médico e psicológico — o treino soma, não substitui.</li><li>Nos dias difíceis, faça o mínimo (uma caminhada curta) em vez de nada.</li><li>Comemore pequenas vitórias: uma medida a menos, um treino feito, uma semana constante.</li></ul></div>
+  </div>
+  <div class="callout green"><b>Evolução esperada.</b> Nas primeiras semanas, a perda costuma ser mais visível (parte é água). Depois estabiliza em torno de <b>0,5 kg por semana</b> — esse é o ritmo saudável que preserva músculo e energia. Ao longo dos meses, além do peso, você deve notar <b>mais disposição, roupas mais folgadas, mais força e melhora no humor</b>. Esses sinais valem tanto quanto a balança.</div>
+</section>
+
+<section id="final" style="border-bottom:none">
+  <div class="sec-head"><span class="sec-num">14</span><h2>Considerações finais</h2></div>
+  <p class="lead">Este plano foi feito para a sua vida real — com sua saúde do coração, sua rotina de casa e seu bem-estar em primeiro lugar. Três coisas sustentam tudo:</p>
+  <div class="grid3">
+    <div class="ro"><div class="lab">Prioridade 1</div><div class="val" style="font-size:18px;font-family:var(--display)">Constância</div><div class="note">3 treinos e comida boa na maioria dos dias vencem qualquer plano perfeito feito pela metade.</div></div>
+    <div class="ro clay"><div class="lab">Prioridade 2</div><div class="val" style="font-size:18px;font-family:var(--display)">Proteína + força</div><div class="note">É o que faz você perder gordura e não músculo — e ficar mais firme e forte.</div></div>
+    <div class="ro"><div class="lab">Prioridade 3</div><div class="val" style="font-size:18px;font-family:var(--display)">Paciência e carinho</div><div class="note">São ~20 kg em vários meses. Trate o processo (e você mesma) com gentileza.</div></div>
+  </div>
+  <div class="callout"><b>Importante.</b> Este é um material educativo e de apoio, feito com base nas melhores evidências atuais, mas <b>não substitui o acompanhamento do seu médico, cardiologista e nutricionista</b>. Por causa da arritmia, valide o treino com seu cardiologista antes de começar. Mantenha a suplementação e o tratamento de saúde mental exatamente como prescritos. Ajuste o plano conforme a sua resposta e as orientações da sua equipe de saúde.</div>
+  <p style="font-size:13.5px;color:var(--ink-soft)">Você está dando um passo enorme ao cuidar do corpo e da mente ao mesmo tempo. Vá no seu ritmo, confie no processo e seja paciente com você. Cada semana constante te deixa mais perto — não só dos 55 kg, mas de mais energia, força e bem-estar. Você consegue. 💜</p>
+</section>
+
+<footer>
+  <div class="sig">Protocolo de Treino + Nutrição · Letícia</div>
+  <p style="margin-top:6px">Material educativo · revalide com sua equipe médica. As edições (peso, medidas, cargas) ficam salvas neste navegador — exporte um backup pela barra inferior.</p>
+</footer>
+
+</div>
+
+<script>window.__DOC_NS__="leticia";</script>
+<script>
+(function(){
+  "use strict";
+  var NS=window.__DOC_NS__||"doc", K_STATE=NS+":state", K_HIST=NS+":history", K_PHOTO=NS+":photos";
+  function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function lsSet(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}}
+  function cbs(){return Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]'));}
+  function eds(){return Array.prototype.slice.call(document.querySelectorAll('[data-edit]'));}
+  function isF(el){return el.tagName==="INPUT"||el.tagName==="TEXTAREA"||el.tagName==="SELECT";}
+  function read(){var s={cb:{},ed:{}};cbs().forEach(function(el,i){s.cb[i]=el.checked;});eds().forEach(function(el,i){s.ed[i]=isF(el)?el.value:el.innerHTML;});return s;}
+  function apply(s){if(!s)return;cbs().forEach(function(el,i){if(s.cb&&i in s.cb)el.checked=!!s.cb[i];});eds().forEach(function(el,i){if(s.ed&&i in s.ed){if(isF(el))el.value=s.ed[i];else el.innerHTML=s.ed[i];}});recompute();}
+  var t;function save(){clearTimeout(t);t=setTimeout(function(){var ok=lsSet(K_STATE,JSON.stringify(read()));stamp(ok?"Salvo "+hhmm():"Sem permissao para salvar");},250);}
+  function loadState(){try{return JSON.parse(lsGet(K_STATE));}catch(e){return null;}}
+  function hist(){try{return JSON.parse(lsGet(K_HIST))||[];}catch(e){return [];}}
+  function setHist(a){lsSet(K_HIST,JSON.stringify(a.slice(0,30)));}
+  function snapshot(label){var a=hist();a.unshift({ts:Date.now(),label:label||("Versao "+now()),state:read()});setHist(a);renderHist();stamp("Versao salva");}
+
+  /* recompute wk-row medias */
+  function recompute(){var rows=document.querySelectorAll(".wk-row");if(!rows.length)return;var prev=null;Array.prototype.forEach.call(rows,function(r){var cells=r.querySelectorAll(".wcell"),sum=0,n=0;Array.prototype.forEach.call(cells,function(c){var v=parseFloat((c.value||"").replace(",","."));if(!isNaN(v)){sum+=v;n++;}});var med=r.querySelector(".wk-media"),del=r.querySelector(".wk-delta");if(n>0){var avg=sum/n;if(med)med.textContent=avg.toFixed(2).replace(".",",");if(del){if(prev!=null){var d=avg-prev;del.textContent=(d>=0?"+":"")+d.toFixed(2).replace(".",",");del.className="n wk-delta "+(d>0.0001?"up":(d<-0.0001?"down":""));}else{del.textContent="\u2014";del.className="n wk-delta";}}prev=avg;}else{if(med)med.textContent="\u2014";if(del){del.textContent="\u2014";del.className="n wk-delta";}}});}
+
+  /* adicionar linha semana */
+  function addWkRow(){var ctrl=document.getElementById("wk-controls");if(!ctrl)return;var n=document.querySelectorAll(".wk-row").length+1;var tr=document.createElement("tr");tr.className="wk-row";tr.innerHTML='<td><span data-edit contenteditable="true">Sem. '+n+'</span></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="wcell" data-edit inputmode="decimal" placeholder="\u2014"></td><td class="n wk-media">\u2014</td><td class="n wk-delta">\u2014</td>';ctrl.parentNode.insertBefore(tr,ctrl);recompute();save();}
+
+  /* limpar tabela peso — apaga inputs E redefine nomes das semanas */
+  function clearWk(){if(!confirm("Apagar todos os dados de peso? Esta acao nao pode ser desfeita."))return;var n=1;document.querySelectorAll(".wk-row").forEach(function(r){r.querySelectorAll(".wcell").forEach(function(c){c.value="";});var lbl=r.querySelector("span[contenteditable]");if(lbl)lbl.textContent="Sem. "+n;n++;var med=r.querySelector(".wk-media"),del=r.querySelector(".wk-delta");if(med)med.textContent="\u2014";if(del){del.textContent="\u2014";del.className="n wk-delta";}});save();}
+
+  /* limpar tabela composição corporal */
+  function clearEc(){if(!confirm("Apagar todos os dados de composição corporal e fotos? Esta acao nao pode ser desfeita."))return;document.querySelectorAll("#ec-controls").forEach(function(ctrl){var tbl=ctrl.closest("table");if(!tbl)return;Array.prototype.forEach.call(tbl.querySelectorAll("tr:not(#ec-controls):not(:first-child)"),function(r){r.querySelectorAll("input.ecell").forEach(function(c){c.value="";});r.querySelectorAll("span[contenteditable]").forEach(function(s){s.textContent="\u2014";});var thumbs=r.querySelector(".photo-thumbs");if(thumbs){var rk=thumbs.getAttribute("data-photo-row");if(rk){photoStore[rk]=[];savePhotos();}thumbs.innerHTML="";}});});save();}
+
+  /* adicionar linha composicao */
+  function addEcRow(){var ctrl=document.getElementById("ec-controls");if(!ctrl)return;var idx=document.querySelectorAll(".photo-input").length;var tr=document.createElement("tr");tr.innerHTML='<td><input class="ecell" data-edit placeholder="dd/mm"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="\u2014"></td><td><input class="ecell" data-edit inputmode="decimal" placeholder="\u2014"></td><td class="photo-cell"><div class="photo-thumbs" data-photo-row="'+idx+'"></div><label class="photo-add" title="Adicionar foto">\uFF0B<input class="photo-input" type="file" accept=".heif,.heic,.jpg,.jpeg,.png" multiple data-photo-row="'+idx+'"></label></td><td><span data-edit contenteditable="true">\u2014</span></td>';ctrl.parentNode.insertBefore(tr,ctrl);wirePhotoRow(String(idx));save();}
+
+  /* ---- FOTOS ---- */
+  var photoStore={};
+  function loadPhotos(){try{var d=JSON.parse(lsGet(K_PHOTO));if(d&&typeof d==="object")photoStore=d;}catch(e){photoStore={};}}
+  function savePhotos(){lsSet(K_PHOTO,JSON.stringify(photoStore));}
+
+  function addThumb(box,src,rowKey,pi){var wrap=document.createElement("div");wrap.className="photo-wrap";var img=document.createElement("img");img.src=src;img.className="photo-thumb";img.title="Clique para ampliar";img.onclick=function(){openImgModal(src);};var rm=document.createElement("button");rm.className="photo-rm";rm.title="Remover foto";rm.textContent="\u00D7";rm.onclick=function(e){e.stopPropagation();if(!photoStore[rowKey])return;photoStore[rowKey].splice(pi,1);savePhotos();renderPhotos();};wrap.appendChild(img);wrap.appendChild(rm);box.appendChild(wrap);}
+  function renderPhotos(){Object.keys(photoStore).forEach(function(rowKey){var thumbBox=document.querySelector('.photo-thumbs[data-photo-row="'+rowKey+'"]');if(!thumbBox)return;thumbBox.innerHTML="";(photoStore[rowKey]||[]).forEach(function(src,pi){addThumb(thumbBox,src,rowKey,pi);});});}
+  function wirePhotoRow(rowKey){var inp=document.querySelector('.photo-input[data-photo-row="'+rowKey+'"]');if(!inp||inp._wired)return;inp._wired=true;inp.onchange=function(e){var files=Array.prototype.slice.call(e.target.files);if(!files.length)return;if(!photoStore[rowKey])photoStore[rowKey]=[];var remaining=3-(photoStore[rowKey].length);if(remaining<=0){alert("Limite de 3 fotos atingido. Remova uma antes de adicionar.");e.target.value="";return;}files=files.slice(0,remaining);var loaded=0;files.forEach(function(f){var rr=new FileReader();rr.onload=function(ev){photoStore[rowKey].push(ev.target.result);loaded++;if(loaded===files.length){savePhotos();renderPhotos();}};rr.readAsDataURL(f);});e.target.value="";};}
+
+  /* eventos gerais */
+  function wire(){document.addEventListener("input",function(e){var el=e.target;if(el.matches&&(el.matches('input[type=checkbox]')||el.matches('[data-edit]'))){if(el.classList&&el.classList.contains("wcell"))recompute();save();}});document.addEventListener("change",function(e){if(e.target.matches&&e.target.matches('input[type=checkbox]'))save();});var wkAdd=document.getElementById("wk-add-row");if(wkAdd)wkAdd.onclick=addWkRow;var wkClear=document.getElementById("wk-clear");if(wkClear)wkClear.onclick=clearWk;var ecAdd=document.getElementById("ec-add-row");if(ecAdd)ecAdd.onclick=addEcRow;var ecClear=document.getElementById("ec-clear");if(ecClear)ecClear.onclick=clearEc;}
+  function wireAllPhotoRows(){document.querySelectorAll(".photo-input").forEach(function(inp){wirePhotoRow(inp.getAttribute("data-photo-row"));});}
+
+  /* ---- MODAL IMAGEM ---- */
+  var imgScale=1;
+  function buildImgModal(){var m=document.createElement("div");m.id="img-modal";m.innerHTML='<div class="im-wrap"><img id="im-img" src="" alt="foto"></div><button id="im-close">\u2715</button><div id="im-zoom-bar"><button id="im-zoom-out">\u2212</button><button id="im-zoom-in">\uFF0B</button></div>';document.body.appendChild(m);document.getElementById("im-close").onclick=closeImgModal;m.onclick=function(e){if(e.target===m)closeImgModal();};document.getElementById("im-zoom-in").onclick=function(){imgScale=Math.min(imgScale+0.25,5);applyZoom();};document.getElementById("im-zoom-out").onclick=function(){imgScale=Math.max(imgScale-0.25,0.25);applyZoom();};}
+  function applyZoom(){var img=document.getElementById("im-img");if(img)img.style.transform="scale("+imgScale+")";}
+  function openImgModal(src){imgScale=1;var m=document.getElementById("img-modal"),img=document.getElementById("im-img");if(!m||!img)return;img.src=src;img.style.transform="scale(1)";m.classList.add("open");}
+  function closeImgModal(){var m=document.getElementById("img-modal");if(m)m.classList.remove("open");}
+
+  /* ---- CARGA KG AUTOCOMPLETE ---- */
+  function wireKgInputs(){document.addEventListener("change",function(e){var el=e.target;if(el.classList&&el.classList.contains("carga")){var v=el.value.trim().replace(",",".");if(v&&!isNaN(parseFloat(v))&&!/kg/i.test(v)){el.value=parseFloat(v).toString().replace(".",",")+" kg";}save();}});}
+
+  /* helpers de tempo */
+  function pad(n){return (n<10?"0":"")+n;}
+  function hhmm(){var d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes());}
+  function now(){var d=new Date();return pad(d.getDate())+"/"+pad(d.getMonth()+1)+" "+hhmm();}
+  function fmt(ts){var d=new Date(ts);return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear()+" "+pad(d.getHours())+":"+pad(d.getMinutes());}
+  function stamp(x){var s=document.getElementById("pp-stamp");if(s)s.textContent=x;}
+
+  /* export / import */
+  function exportData(){try{var blob=new Blob([JSON.stringify({ns:NS,state:read(),history:hist(),photos:photoStore,exported:new Date().toISOString()},null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download=NS+"-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1500);stamp("Backup exportado");}catch(e){alert("Nao foi possivel exportar.");}}
+  function importData(file){var r=new FileReader();r.onload=function(){try{var d=JSON.parse(r.result);if(d.state){apply(d.state);lsSet(K_STATE,JSON.stringify(d.state));}if(d.history){setHist(d.history);renderHist();}if(d.photos){photoStore=d.photos;savePhotos();renderPhotos();}stamp("Backup importado");}catch(e){alert("Arquivo invalido.");}};r.readAsText(file);}
+
+  /* historico */
+  function renderHist(){var box=document.getElementById("pp-histlist");if(!box)return;var a=hist();if(!a.length){box.innerHTML='<p class="pp-empty">Nenhuma versao salva ainda.</p>';return;}box.innerHTML="";a.forEach(function(h,idx){var row=document.createElement("div");row.className="pp-hrow";var info=document.createElement("div");info.innerHTML='<b>'+(h.label||"Versao")+'</b><span>'+fmt(h.ts)+'</span>';var btns=document.createElement("div");btns.className="pp-hbtns";var rb=document.createElement("button");rb.textContent="Restaurar";rb.onclick=function(){if(confirm("Restaurar esta versao? O estado atual sera substituido.")){apply(h.state);save();}};var db=document.createElement("button");db.className="del";db.textContent="Excluir";db.onclick=function(){var arr=hist();arr.splice(idx,1);setHist(arr);renderHist();};btns.appendChild(rb);btns.appendChild(db);row.appendChild(info);row.appendChild(btns);box.appendChild(row);});}
+
+  /* barra de ferramentas */
+  function buildUI(){var bar=document.createElement("div");bar.id="pp-bar";bar.innerHTML='<span id="pp-stamp">Pronto</span><button id="pp-snap">\uD83D\uDCBE Salvar versao</button><button id="pp-hist">\uD83D\uDD58 Historico</button><button id="pp-exp">\u2B07\uFE0F Exportar</button><button id="pp-imp">\u2B06\uFE0F Importar</button><button id="pp-print">\uD83D\uDDA8\uFE0F</button><input type="file" id="pp-file" accept="application/json" hidden>';document.body.appendChild(bar);var modal=document.createElement("div");modal.id="pp-modal";modal.innerHTML='<div class="pp-card"><div class="pp-head"><h3>Historico de versoes</h3><button id="pp-close">\u2715</button></div><p class="pp-sub">As versoes ficam salvas neste navegador. Use Exportar para um backup permanente no aparelho.</p><div id="pp-histlist"></div></div>';document.body.appendChild(modal);document.getElementById("pp-snap").onclick=function(){var l=prompt("Nome da versao (opcional):","");snapshot(l&&l.trim()?l.trim():null);};document.getElementById("pp-hist").onclick=function(){renderHist();modal.classList.add("open");};document.getElementById("pp-close").onclick=function(){modal.classList.remove("open");};modal.onclick=function(e){if(e.target===modal)modal.classList.remove("open");};document.getElementById("pp-exp").onclick=exportData;document.getElementById("pp-imp").onclick=function(){document.getElementById("pp-file").click();};document.getElementById("pp-file").onchange=function(e){if(e.target.files[0])importData(e.target.files[0]);e.target.value="";};document.getElementById("pp-print").onclick=function(){window.print();};}
+
+  /* eventos gerais */
+  function wire(){document.addEventListener("input",function(e){var el=e.target;if(el.matches&&(el.matches('input[type=checkbox]')||el.matches('[data-edit]'))){if(el.classList&&el.classList.contains("wcell"))recompute();save();}});document.addEventListener("change",function(e){if(e.target.matches&&e.target.matches('input[type=checkbox]'))save();});var wkAdd=document.getElementById("wk-add-row");if(wkAdd)wkAdd.onclick=addWkRow;var wkClear=document.getElementById("wk-clear");if(wkClear)wkClear.onclick=clearWk;var ecAdd=document.getElementById("ec-add-row");if(ecAdd)ecAdd.onclick=addEcRow;}
+
+  function pwa(){try{var man={name:document.title,short_name:NS,start_url:".",display:"standalone",background_color:"#F4F2EC",theme_color:"#7A4A63",icons:[]};var blob=new Blob([JSON.stringify(man)],{type:"application/manifest+json"});var link=document.createElement("link");link.rel="manifest";link.href=URL.createObjectURL(blob);document.head.appendChild(link);}catch(e){}if("serviceWorker" in navigator){try{var sw="self.addEventListener('install',function(e){self.skipWaiting()});self.addEventListener('fetch',function(e){});";var b=new Blob([sw],{type:"text/javascript"});navigator.serviceWorker.register(URL.createObjectURL(b)).catch(function(){});}catch(e){}}}
+
+  document.addEventListener("DOMContentLoaded",function(){
+    buildUI();buildImgModal();wire();wireKgInputs();
+    loadPhotos();apply(loadState());recompute();
+    wireAllPhotoRows();renderPhotos();renderHist();pwa();stamp("Pronto");
+  });
+})();
+</script>
+</body>
+</html>

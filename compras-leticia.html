@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6A4257">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Compras">
+<title>Lista de Compras — Letícia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F3EB;
+    --paper:#FFFDF8;
+    --ink:#26231C;
+    --soft:#615C50;
+    --faint:#928C7C;
+    --line:#E6E0D2;
+    --green:#8A5570;
+    --green-deep:#6A4257;
+    --green-soft:#EEDFE8;
+    --tom:#C45A33;
+    --tom-soft:#F6E3D6;
+    --tom-deep:#9E4828;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(38,35,28,.05),0 10px 30px rgba(38,35,28,.06);
+    --serif:'Fraunces',serif;
+    --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15}
+    a.btn-back { display: inline-block; margin-top: 15px; color: #fff; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; border: 1px solid rgba(255,255,255,0.3); }
+
+  /* HEADER */
+  header{background:linear-gradient(150deg,var(--green-deep),var(--green));color:#fdfbf6;padding:46px 0 40px;position:relative;overflow:hidden}
+  header:before{content:"🛒";position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:120px;opacity:.12}
+  header .wrap{position:relative}
+  .kick{font-family:var(--body);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#bcd6c5;margin-bottom:14px}
+  header h1{font-size:clamp(30px,5.5vw,46px);font-weight:700;color:#fff;max-width:16ch}
+  header p{margin-top:14px;font-size:15.5px;color:#dcebe0;max-width:54ch}
+  .to{margin-top:24px;display:inline-flex;gap:9px;align-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:9px 16px;border-radius:10px;font-size:13.5px}
+  .to b{color:#fff}
+
+  section{padding:46px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:center;gap:13px;margin-bottom:8px}
+  .sec-head .em{font-size:24px}
+  .sec-head h2{font-size:clamp(22px,3.4vw,29px)}
+  .lead{color:var(--soft);max-width:64ch;margin:6px 0 22px}
+
+  /* SHOPPING LIST */
+  .cats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .cat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;break-inside:avoid}
+  .cat h3{font-size:16px;padding:13px 18px;background:var(--green-soft);color:var(--green-deep);display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--line)}
+  .cat ul{list-style:none}
+  .cat li{display:flex;align-items:flex-start;gap:11px;padding:10px 18px;border-top:1px solid var(--line);font-size:14px}
+  .cat li:first-child{border-top:none}
+  .cat li label{display:flex;align-items:flex-start;gap:11px;cursor:pointer;width:100%}
+  .cat input[type=checkbox]{appearance:none;-webkit-appearance:none;width:19px;height:19px;border:2px solid var(--green);border-radius:5px;margin-top:1px;flex:none;position:relative;cursor:pointer;transition:.15s}
+  .cat input[type=checkbox]:checked{background:var(--green);border-color:var(--green)}
+  .cat input[type=checkbox]:checked:after{content:"✓";position:absolute;color:#fff;font-size:13px;font-weight:700;left:3px;top:-2px}
+  .cat input:checked + .it{text-decoration:line-through;color:var(--faint)}
+  .it{flex:1}
+  .qty{font-weight:600;color:var(--green-deep);white-space:nowrap}
+  .hint{display:block;font-size:11.5px;color:var(--faint);margin-top:1px}
+
+  .note{border-left:3px solid var(--tom);background:var(--tom-soft);padding:13px 17px;border-radius:0 10px 10px 0;margin:20px 0 0;font-size:13.5px}
+  .note b{color:var(--tom-deep)}
+  .note.green{border-left-color:var(--green);background:var(--green-soft)}
+  .note.green b{color:var(--green-deep)}
+
+  /* DAILY DIET */
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--soft);margin-bottom:18px}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .pill{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px}
+  .pill.marm{background:var(--tom-soft);color:var(--tom-deep)}
+  .pill.quick{background:var(--green-soft);color:var(--green-deep)}
+
+  .day{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;break-inside:avoid}
+  .day > .top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;background:var(--green-deep);color:#fdfbf6;flex-wrap:wrap}
+  .day .top .dname{font-family:var(--serif);font-weight:600;font-size:17px}
+  .day .top .prot{font-size:13px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:3px 11px;border-radius:999px}
+  .day .top .prot b{color:#fff;font-weight:600}
+  .day table{width:100%;border-collapse:collapse;font-size:13.5px}
+  .day td{padding:9px 18px;border-top:1px solid var(--line);vertical-align:top}
+  .day td.meal{width:140px;font-weight:600;color:var(--ink);white-space:nowrap}
+  .day td.meal .tag{display:inline-block;margin-top:4px;font-size:10px;font-weight:600;padding:1px 7px;border-radius:999px}
+  .day td.meal .tag.marm{background:var(--tom-soft);color:var(--tom-deep)}
+  .day td.meal .tag.quick{background:var(--green-soft);color:var(--green-deep)}
+  .day td.food{color:var(--soft)}
+  .day td.food b{color:var(--ink)}
+  .day tr.marm td{background:rgba(196,90,51,.045)}
+
+  /* PREP */
+  .steps{counter-reset:s;display:grid;gap:12px}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px 16px 56px;position:relative}
+  .step:before{counter-increment:s;content:counter(s);position:absolute;left:16px;top:15px;width:28px;height:28px;border-radius:8px;background:var(--green);color:#fff;font-family:var(--serif);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .step h4{font-family:var(--serif);font-size:15px;margin-bottom:3px}
+  .step p{font-size:13.5px;color:var(--soft);margin:0}
+
+  .storebox{margin-top:16px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .storebox table{width:100%;border-collapse:collapse;font-size:13px}
+  .storebox th{background:var(--green-soft);color:var(--green-deep);text-align:left;padding:9px 16px;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+  .storebox td{padding:8px 16px;border-top:1px solid var(--line)}
+  .storebox td.c{white-space:nowrap;font-weight:600;color:var(--green-deep)}
+
+  footer{padding:30px 0 50px;color:var(--soft);font-size:13px}
+
+  @media(max-width:680px){
+    .cats{grid-template-columns:1fr}
+    .day td.meal{width:auto;display:block}
+    .day table,.day tbody,.day tr,.day td{display:block;width:100%}
+    .day td{border-top:none;padding:6px 18px}
+    .day tr{border-top:1px solid var(--line);padding:8px 0}
+    header:before{display:none}
+  }
+  @media print{
+    body{background:#fff;font-size:12px}
+    header{background:var(--green-deep)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .cat,.day,.step,.storebox,.note,header:before{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    section{page-break-inside:auto;padding:24px 0}
+    .cat,.day,.step{page-break-inside:avoid}
+    header:before{display:none}
+  }
+  /* editaveis + barra de ferramentas */
+  body{padding-bottom:64px}
+  .qty-edit{background:#FFFDF5;border-radius:5px;padding:1px 6px;outline:1px dashed var(--line);cursor:text;min-width:30px;display:inline-block}
+  .qty-edit:focus{outline:2px solid var(--green)}
+  #obs-area{width:100%;min-height:80px;font-family:var(--body);font-size:14px;color:var(--ink);border:1px solid var(--line);background:#FFFDF5;border-radius:10px;padding:12px 14px;resize:vertical}
+  #obs-area:focus{outline:2px solid var(--green-soft);border-color:var(--green)}
+  #pp-bar{position:fixed;left:0;right:0;bottom:0;z-index:9000;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--green-deep);color:#fff;padding:8px 14px;font-family:var(--body);font-size:13px;box-shadow:0 -4px 18px rgba(0,0,0,.18)}
+  #pp-bar #pp-stamp{font-family:monospace;font-size:11px;color:#bcd6c5;margin-right:auto;min-width:120px}
+  #pp-bar button{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 10px;font-size:12.5px;cursor:pointer;font-family:inherit}
+  #pp-bar button:hover{background:rgba(255,255,255,.26)}
+  #pp-modal{position:fixed;inset:0;z-index:9100;background:rgba(20,24,21,.55);display:none;align-items:center;justify-content:center;padding:18px}
+  #pp-modal.open{display:flex}
+  #pp-modal .pp-card{background:#FFFDF8;border-radius:14px;max-width:480px;width:100%;max-height:82vh;overflow:auto;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .pp-head{display:flex;justify-content:space-between;align-items:center}
+  .pp-head h3{font-size:18px;color:var(--green-deep)}
+  #pp-close{border:none;background:none;font-size:18px;cursor:pointer;color:var(--soft)}
+  .pp-sub{font-size:12.5px;color:var(--soft);margin:6px 0 14px}
+  .pp-hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+  .pp-hrow span{display:block;font-size:11px;color:var(--faint);font-family:monospace;margin-top:2px}
+  .pp-hbtns{display:flex;gap:6px;flex:none}
+  .pp-hbtns button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;color:var(--ink)}
+  .pp-hbtns button.del{color:#b3402a;border-color:#e7c4bb}
+  .pp-empty{font-size:13px;color:var(--faint);padding:12px 0}
+  @media print{#pp-bar,#pp-modal{display:none!important}body{padding-bottom:0}.qty-edit{outline:none;background:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kick">Lista semanal · 1 pessoa</div>
+    <h1>Lista de Compras — Letícia</h1>
+    <p class="sub">Tudo o que precisa comprar e como montar as refeições da semana. Quantidades para 1 pessoa por 1 semana. Simples, barato e do mercado comum.</p>
+    <a href="protocolo-leticia.html" class="btn-back">⬅ Voltar ao Protocolo Principal</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section id="compras">
+  <div class="sec-head"><span class="em">🛒</span><h2>Lista de compras</h2></div>
+  <p class="lead">Quantidades para 1 pessoa por 1 semana (pesos crus, com folga). <b>Toque nas quantidades para editar</b> e marque os itens conforme for comprando — tudo fica salvo no aparelho.</p>
+  <div class="to">📋 <span><b>Para:</b> quem faz a compra &nbsp;·&nbsp; <b>Marque</b> os itens conforme comprar</span></div>
+  <div style="margin:14px 0 8px"><label style="display:block;font-family:var(--serif);font-weight:600;color:var(--green-deep);margin-bottom:6px">Observações (marca, troca de item, recado)</label><textarea id="obs-area" data-edit placeholder="Escreva aqui suas anotações…"></textarea></div>
+
+  <div class="cats">
+
+    <div class="cat">
+      <h3>🥩 Proteínas</h3>
+      <ul>
+        <li><label><input type="checkbox"><span class="it">Frango — peito/filé <span class="hint">limpo, sem pele</span></span><span class="qty">~1 kg</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Patinho (carne magra) <span class="hint">bife ou moído</span></span><span class="qty">~600 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Fígado bovino <span class="hint">ferro + B12</span></span><span class="qty">~150 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Tilápia (filé)</span><span class="qty">~300 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Sardinha em lata <span class="hint">em água/óleo</span></span><span class="qty">1–2 latas</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Ovos</span><span class="qty">2 dúzias</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Iogurte natural</span><span class="qty">~1 kg</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Queijo minas frescal ou ricota <span class="hint">café/lanche · magro</span></span><span class="qty">~400 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Leite</span><span class="qty">1 L</span></label></li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <h3>🍚 Carboidratos</h3>
+      <ul>
+        <li><label><input type="checkbox"><span class="it">Arroz</span><span class="qty">1 kg</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Pão integral</span><span class="qty">1 pacote</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Aveia em flocos</span><span class="qty">~250 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Batata inglesa</span><span class="qty">~500 g</span></label></li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <h3>🥬 Legumes e verduras</h3>
+      <ul>
+        <li><label><input type="checkbox"><span class="it">Folhas verde-escuras <span class="hint">couve, espinafre, rúcula — ferro</span></span><span class="qty">2–3 maços</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Alface / mix de folhas</span><span class="qty">1–2 maços</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Tomate <span class="hint">vitamina C p/ absorver ferro</span></span><span class="qty">~8 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Cenoura</span><span class="qty">~4 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Abobrinha</span><span class="qty">~2 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Brócolis / vagem</span><span class="qty">mix ~1 kg</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Cebola e alho <span class="hint">tempero base</span></span><span class="qty">à vontade</span></label></li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <h3>🍊 Frutas</h3>
+      <ul>
+        <li><label><input type="checkbox"><span class="it">Laranja / limão <span class="hint">vitamina C · absorção de ferro</span></span><span class="qty">~8 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Banana</span><span class="qty">~7 un</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Frutas variadas <span class="hint">maçã, mamão, melão</span></span><span class="qty">~7 un</span></label></li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <h3>🫒 Gorduras e extras</h3>
+      <ul>
+        <li><label><input type="checkbox"><span class="it">Azeite de oliva</span><span class="qty">500 ml</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Castanhas / amendoim <span class="hint">sem sal, p/ lanche</span></span><span class="qty">~200 g</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Café</span><span class="qty">conf. estoque</span></label></li>
+        <li><label><input type="checkbox"><span class="it">Chocolate 70% <span class="hint">opcional, p/ vontade de doce</span></span><span class="qty">1 barra</span></label></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="note">
+    <b>Não precisa comprar toda semana:</b> azeite, aveia, café e castanhas duram bastante. Confira o estoque antes de ir ao mercado. <b>Dica de economia:</b> troque a proteína conforme o preço da semana (frango ↔ patinho ↔ tilápia ↔ ovos) — todas cabem no plano.
+  </div>
+</section>
+
+<section id="dieta">
+  <div class="sec-head"><span class="em">🍽️</span><h2>Dieta diária — o que preparar</h2></div>
+  <p class="lead">Cardápio dos 7 dias, igual ao protocolo principal. As <b>marmitas</b> (almoço e jantar) você prepara em lote e congela; o resto é montado na hora. Sempre inclua algo com <b>vitamina C</b> (tomate, laranja, limão) junto do almoço para absorver melhor o ferro.</p>
+  <div class="legend">
+    <span><span class="pill marm">Marmita</span> preparada em casa (almoço/jantar)</span>
+    <span><span class="pill quick">Rápido</span> montado na hora (café, lanche)</span>
+  </div>
+
+  <div class="day">
+    <div class="top"><span class="dname">Segunda</span><span class="prot">Proteína: <b>Frango</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">2 ovos mexidos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 120 g · <b>frango grelhado 140 g</b> · couve/espinafre refogado · salada de folhas + tomate c/ 1 fio de azeite</td></tr>
+      <tr><td class="meal">Lanche da tarde<span class="tag quick">Rápido</span></td><td class="food">Iogurte natural 170 g · 1 fruta · aveia 10 g</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food"><b>Frango 100 g</b> · legumes refogados (abobrinha, cenoura) · arroz 100 g · 1 fio de azeite</td></tr>
+    </table>
+  </div>
+
+  <div class="day">
+    <div class="top"><span class="dname">Terça</span><span class="prot">Proteína: <b>Carne moída (patinho)</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">2 ovos mexidos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 120 g · <b>carne moída patinho 120 g</b> · couve refogada · salada + tomate c/ 1 fio de azeite</td></tr>
+      <tr><td class="meal">Lanche da tarde<span class="tag quick">Rápido</span></td><td class="food">Iogurte natural 170 g · castanhas 20 g</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food">Omelete de 3 ovos c/ queijo minas 30 g · legumes · 1 fatia pão integral</td></tr>
+    </table>
+  </div>
+
+  <div class="day">
+    <div class="top"><span class="dname">Quarta</span><span class="prot">Proteína: <b>Peixe (tilápia/sardinha)</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">2 ovos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 120 g · <b>tilápia 150 g</b> · couve refogada · salada + limão espremido · 1 fio de azeite</td></tr>
+      <tr><td class="meal">Lanche da tarde<span class="tag quick">Rápido</span></td><td class="food">Iogurte natural 170 g · aveia 10 g · 1 fruta</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food"><b>Sardinha 1 lata (ou 120 g)</b> · salada verde-escura · couve · arroz 100 g</td></tr>
+    </table>
+  </div>
+
+  <div class="day">
+    <div class="top"><span class="dname">Quinta</span><span class="prot">Proteína: <b>Fígado / carne (ferro)</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">Vitamina: leite 200 ml · 1 banana · aveia 10 g · queijo minas 30 g · café à parte</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 120 g · <b>fígado acebolado 120 g</b> (ou patinho) · couve refogada · salada + tomate · 1 fio de azeite</td></tr>
+      <tr><td class="meal">Lanche da tarde<span class="tag quick">Rápido</span></td><td class="food">1 fatia pão integral · 1 ovo cozido · queijo minas 30 g · 1 fruta</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food"><b>Frango desfiado 120 g</b> · legumes no vapor · arroz 100 g</td></tr>
+    </table>
+  </div>
+
+  <div class="day">
+    <div class="top"><span class="dname">Sexta</span><span class="prot">Proteína: <b>Frango</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">2 ovos mexidos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Batata 150 g · <b>frango grelhado 130 g</b> · couve refogada · salada + tomate · 1 fio de azeite</td></tr>
+      <tr><td class="meal">Lanche da tarde<span class="tag quick">Rápido</span></td><td class="food">Iogurte natural 170 g · 1 fruta · aveia 10 g</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food">Omelete de 2 ovos + queijo minas 40 g · salada verde-escura · 1 fatia pão integral</td></tr>
+    </table>
+  </div>
+
+  <div class="day">
+    <div class="top"><span class="dname">Sábado</span><span class="prot">Proteína: <b>Carne / peixe</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">2 ovos mexidos · 1 fatia pão integral · 1 fruta · queijo minas 30 g · café</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 120 g · <b>patinho 120 g</b> · couve refogada · salada + tomate + limão · 1 fio de azeite</td></tr>
+      <tr><td class="meal">Lanche da tarde<span class="tag quick">Rápido</span></td><td class="food">Iogurte natural 170 g · castanhas 20 g · café</td></tr>
+      <tr class="marm"><td class="meal">Jantar<span class="tag marm">Marmita</span></td><td class="food"><b>Tilápia 130 g</b> · legumes refogados · arroz 100 g · 1 fio de azeite</td></tr>
+    </table>
+  </div>
+
+  <div class="day">
+    <div class="top"><span class="dname">Domingo · descanso</span><span class="prot">Proteína: <b>Ovos + livre leve</b></span></div>
+    <table>
+      <tr><td class="meal">Café da manhã<span class="tag quick">Rápido</span></td><td class="food">Omelete de 3 ovos · 1 fatia pão integral · queijo minas 30 g · 1 fruta · café</td></tr>
+      <tr class="marm"><td class="meal">Almoço<span class="tag marm">Marmita</span></td><td class="food">Arroz 120 g · <b>carne ou frango 130 g</b> · couve refogada · salada colorida · 1 fio de azeite</td></tr>
+      <tr><td class="meal">Lanche da tarde<span class="tag quick">Rápido</span></td><td class="food">Iogurte natural 170 g · 1 fruta</td></tr>
+      <tr class="marm"><td class="meal">Jantar (leve)<span class="tag marm">Marmita</span></td><td class="food">Sopa de legumes c/ <b>frango desfiado 120 g</b> · 1 fatia pão integral</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="preparo" style="border-bottom:none">
+  <div class="sec-head"><span class="em">🍳</span><h2>Como preparar as marmitas</h2></div>
+  <p class="lead">Cozinhe em lote 2× por semana (sugestão: <b>domingo e quarta</b>) e congele. Assim sempre há marmita pronta e não falta refeição.</p>
+  <div class="steps">
+    <div class="step"><h4>Cozinhe a base</h4><p>Faça arroz em quantidade maior, de uma vez. Rende para vários dias.</p></div>
+    <div class="step"><h4>Prepare as proteínas</h4><p>Grelhe ou asse frango, carne e peixe. Tempere com alho, cebola, sal e limão. Para o fígado, refogue com bastante cebola.</p></div>
+    <div class="step"><h4>Monte e guarde</h4><p>Monte as marmitas (carboidrato + proteína + legume) em potes individuais. O que não for comer em 3 dias, congele. Etiquete com a data.</p></div>
+  </div>
+  <div class="scroll" style="margin-top:16px"><table class="stbl">
+    <tr><th>Item</th><th>Geladeira</th><th>Congelador</th></tr>
+    <tr><td>Arroz</td><td class="c">3–4 dias</td><td class="c">até 3 meses</td></tr>
+    <tr><td>Frango / carne</td><td class="c">3 dias</td><td class="c">até 3 meses</td></tr>
+    <tr><td>Peixe cozido</td><td class="c">2 dias</td><td class="c">até 2 meses</td></tr>
+    <tr><td>Marmita completa</td><td class="c">3 dias</td><td class="c">até 1 mês</td></tr>
+    <tr><td>Legumes cozidos</td><td class="c">3–4 dias</td><td class="c">até 2 meses</td></tr>
+  </table></div>
+  <div class="note" style="margin-top:16px">
+    <b>Segurança alimentar:</b> deixe esfriar antes de congelar; descongele na geladeira (na véspera), nunca na bancada; reaqueça bem; não recongele o que já descongelou.
+  </div>
+</section>
+
+</div>
+
+<script>window.__DOC_NS__="leticia-compras";</script>
+<script>
+(function(){
+  "use strict";
+  var NS=window.__DOC_NS__||"doc", K_STATE=NS+":state", K_HIST=NS+":history";
+  function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function lsSet(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}}
+  // torna quantidades editaveis
+  Array.prototype.forEach.call(document.querySelectorAll('#compras .qty'),function(el){el.setAttribute('contenteditable','true');el.setAttribute('data-edit','');el.classList.add('qty-edit');});
+  function cbs(){return Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]'));}
+  function eds(){return Array.prototype.slice.call(document.querySelectorAll('[data-edit]'));}
+  function isF(el){return el.tagName==="INPUT"||el.tagName==="TEXTAREA"||el.tagName==="SELECT";}
+  function read(){var s={cb:{},ed:{}};cbs().forEach(function(el,i){s.cb[i]=el.checked;});eds().forEach(function(el,i){s.ed[i]=isF(el)?el.value:el.innerHTML;});return s;}
+  function apply(s){if(!s)return;cbs().forEach(function(el,i){if(s.cb&&i in s.cb)el.checked=!!s.cb[i];});eds().forEach(function(el,i){if(s.ed&&i in s.ed){if(isF(el))el.value=s.ed[i];else el.innerHTML=s.ed[i];}});}
+  var t;function save(){clearTimeout(t);t=setTimeout(function(){var ok=lsSet(K_STATE,JSON.stringify(read()));stamp(ok?"Salvo "+hhmm():"Sem permissao para salvar");},250);}
+  function loadState(){try{return JSON.parse(lsGet(K_STATE));}catch(e){return null;}}
+  function hist(){try{return JSON.parse(lsGet(K_HIST))||[];}catch(e){return [];}}
+  function setHist(a){lsSet(K_HIST,JSON.stringify(a.slice(0,30)));}
+  function snapshot(label){var a=hist();a.unshift({ts:Date.now(),label:label||("Versao "+now()),state:read()});setHist(a);renderHist();stamp("Versao salva");}
+  function pad(n){return (n<10?"0":"")+n;}
+  function hhmm(){var d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes());}
+  function now(){var d=new Date();return pad(d.getDate())+"/"+pad(d.getMonth()+1)+" "+hhmm();}
+  function fmt(ts){var d=new Date(ts);return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear()+" "+pad(d.getHours())+":"+pad(d.getMinutes());}
+  function stamp(x){var s=document.getElementById("pp-stamp");if(s)s.textContent=x;}
+  function exportData(){try{var blob=new Blob([JSON.stringify({ns:NS,state:read(),history:hist(),exported:new Date().toISOString()},null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download=NS+"-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1500);stamp("Backup exportado");}catch(e){alert("Nao foi possivel exportar.");}}
+  function importData(file){var r=new FileReader();r.onload=function(){try{var d=JSON.parse(r.result);if(d.state){apply(d.state);lsSet(K_STATE,JSON.stringify(d.state));}if(d.history){setHist(d.history);renderHist();}stamp("Backup importado");}catch(e){alert("Arquivo invalido.");}};r.readAsText(file);}
+  function renderHist(){var box=document.getElementById("pp-histlist");if(!box)return;var a=hist();if(!a.length){box.innerHTML='<p class="pp-empty">Nenhuma versao salva ainda.</p>';return;}box.innerHTML="";a.forEach(function(h,idx){var row=document.createElement("div");row.className="pp-hrow";var info=document.createElement("div");info.innerHTML='<b>'+(h.label||"Versao")+'</b><span>'+fmt(h.ts)+'</span>';var btns=document.createElement("div");btns.className="pp-hbtns";var rb=document.createElement("button");rb.textContent="Restaurar";rb.onclick=function(){if(confirm("Restaurar esta versao? O estado atual sera substituido.")){apply(h.state);save();}};var db=document.createElement("button");db.className="del";db.textContent="Excluir";db.onclick=function(){var arr=hist();arr.splice(idx,1);setHist(arr);renderHist();};btns.appendChild(rb);btns.appendChild(db);row.appendChild(info);row.appendChild(btns);box.appendChild(row);});}
+  function buildUI(){var bar=document.createElement("div");bar.id="pp-bar";bar.innerHTML='<span id="pp-stamp">Pronto</span><button id="pp-snap">\uD83D\uDCBE Salvar versao</button><button id="pp-hist">\uD83D\uDD58 Historico</button><button id="pp-exp">\u2B07\uFE0F Exportar</button><button id="pp-imp">\u2B06\uFE0F Importar</button><button id="pp-print">\uD83D\uDDA8\uFE0F</button><input type="file" id="pp-file" accept="application/json" hidden>';document.body.appendChild(bar);var modal=document.createElement("div");modal.id="pp-modal";modal.innerHTML='<div class="pp-card"><div class="pp-head"><h3>Historico de versoes</h3><button id="pp-close">\u2715</button></div><p class="pp-sub">As versoes ficam salvas neste navegador. Use Exportar para um backup permanente no aparelho.</p><div id="pp-histlist"></div></div>';document.body.appendChild(modal);document.getElementById("pp-snap").onclick=function(){var l=prompt("Nome da versao (opcional):","");snapshot(l&&l.trim()?l.trim():null);};document.getElementById("pp-hist").onclick=function(){renderHist();modal.classList.add("open");};document.getElementById("pp-close").onclick=function(){modal.classList.remove("open");};modal.onclick=function(e){if(e.target===modal)modal.classList.remove("open");};document.getElementById("pp-exp").onclick=exportData;document.getElementById("pp-imp").onclick=function(){document.getElementById("pp-file").click();};document.getElementById("pp-file").onchange=function(e){if(e.target.files[0])importData(e.target.files[0]);e.target.value="";};document.getElementById("pp-print").onclick=function(){window.print();};}
+  function wire(){document.addEventListener("input",function(e){var el=e.target;if(el.matches&&(el.matches('input[type=checkbox]')||el.matches('[data-edit]')))save();});document.addEventListener("change",function(e){if(e.target.matches&&e.target.matches('input[type=checkbox]'))save();});}
+  function pwa(){try{var man={name:document.title,short_name:NS,start_url:".",display:"standalone",background_color:"#F4F2EC",theme_color:"#2B5641",icons:[]};var blob=new Blob([JSON.stringify(man)],{type:"application/manifest+json"});var link=document.createElement("link");link.rel="manifest";link.href=URL.createObjectURL(blob);document.head.appendChild(link);}catch(e){}if("serviceWorker" in navigator){try{var sw="self.addEventListener('install',function(e){self.skipWaiting()});self.addEventListener('fetch',function(e){});";var b=new Blob([sw],{type:"text/javascript"});navigator.serviceWorker.register(URL.createObjectURL(b)).catch(function(){});}catch(e){}}}
+  buildUI();wire();apply(loadState());renderHist();pwa();stamp("Pronto");
+})();
+</script>
+</body>
+</html>
